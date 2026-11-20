@@ -16,7 +16,7 @@ These tests do not connect to hardware and do not replace Wi-Fi traffic, DMA/int
 
 ## Reader text rules
 
-`test_text_break.py` compiles `test_text_break.cpp` against the header-only reader rules in `main/reader/vertical_text.h` and runs it. It checks horizontal word-boundary breaking for English and Vietnamese, hanging spaces and combining marks, word-gap justification, and that Chinese break positions match the original per-character rule.
+`test_text_break.py` compiles `test_text_break.cpp` against the header-only reader rules in `main/reader/vertical_text.h` and runs it. It checks horizontal word-boundary breaking for English and Vietnamese, hanging spaces and combining marks, word-gap justification, and that Chinese break positions match the original per-character rule. It also covers the pure rules in `main/reader/screen_cover_rules.h` (book-cover fit, resize and tag match).
 
 ```powershell
 python tools/tests/test_text_break.py

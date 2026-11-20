@@ -16,7 +16,7 @@ python tools/tests/test_lifecycle_fixes.py
 
 ## 阅读排版规则
 
-`test_text_break.py` 以 `main/reader/vertical_text.h` 中的纯头文件阅读规则编译并运行 `test_text_break.cpp`，验证英文、越南语横排按词断行，空白与组合附加符悬挂，按词间距两端对齐，以及中文断点与原逐字规则一致。
+`test_text_break.py` 以 `main/reader/vertical_text.h` 中的纯头文件阅读规则编译并运行 `test_text_break.cpp`，验证英文、越南语横排按词断行，空白与组合附加符悬挂，按词间距两端对齐，以及中文断点与原逐字规则一致；并覆盖 `main/reader/screen_cover_rules.h` 中的书籍封面适配、缩放与归属标记规则。
 
 ```powershell
 python tools/tests/test_text_break.py

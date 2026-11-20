@@ -6,6 +6,7 @@
 
 #include "vertical_text.h"
 #include "book_margin_rules.h"
+#include "screen_cover_rules.h"
 
 using namespace reader;
 
@@ -227,6 +228,48 @@ static void line_start_digits() {
     CHECK(SeededSlots("1990 was a year") == 3);
 }
 
+static void fit_to_panel() {
+    int w = 0, h = 0;
+    CHECK(FitToPanel(600, 800, 684, 1216, &w, &h) && w == 684 && h == 912);
+    CHECK(FitToPanel(320, 428, 684, 1216, &w, &h) && w == 684 && h == 914);
+    CHECK(FitToPanel(2000, 1000, 684, 1216, &w, &h) && w == 684 && h == 342);
+    CHECK(FitToPanel(100, 150, 684, 1216, &w, &h) && w == 684 && h == 1026);
+    CHECK(FitToPanel(684, 1216, 684, 1216, &w, &h) && w == 684 && h == 1216);
+    CHECK(!FitToPanel(0, 800, 684, 1216, &w, &h));
+    CHECK(!FitToPanel(600, 800, 684, 1216, nullptr, &h));
+}
+
+static void resize_bilinear() {
+    const uint8_t checker[4] = {0, 255, 255, 0};
+    uint8_t big[16] = {};
+    ResizeL8Bilinear(checker, 2, 2, big, 4, 4);
+    CHECK(big[0] == 0 && big[3] == 255 && big[12] == 255 && big[15] == 0);
+    uint8_t flat[9];
+    for (uint8_t& p : flat) p = 128;
+    uint8_t out[35] = {};
+    ResizeL8Bilinear(flat, 3, 3, out, 7, 5);
+    bool all = true;
+    for (uint8_t p : out) all = all && p == 128;
+    CHECK(all);
+    const uint8_t one[1] = {77};
+    uint8_t six[6] = {};
+    ResizeL8Bilinear(one, 1, 1, six, 3, 2);
+    bool same = true;
+    for (uint8_t p : six) same = same && p == 77;
+    CHECK(same);
+}
+
+static void tag_matches() {
+    const char* book = "/sdcard/a.epub";
+    CHECK(ScreenCoverTagMatches("/sdcard/a.epub", 14, book));
+    CHECK(ScreenCoverTagMatches("/sdcard/a.epub\n", 15, book));
+    CHECK(ScreenCoverTagMatches("/sdcard/a.epub\r\n", 16, book));
+    CHECK(!ScreenCoverTagMatches("/sdcard/b.epub", 14, book));
+    CHECK(!ScreenCoverTagMatches("/sdcard/a.ep", 12, book));
+    CHECK(!ScreenCoverTagMatches("", 0, book));
+    CHECK(!ScreenCoverTagMatches("/sdcard/a.epub", 14, nullptr));
+}
+
 static void margin_rules() {
     CHECK(ReaderSymmetricSideMargin(16, 24) == 24);
     CHECK(ReaderSymmetricSideMargin(56, 56) == 40);
@@ -235,6 +278,9 @@ static void margin_rules() {
 }
 
 int main() {
+    fit_to_panel();
+    resize_bilinear();
+    tag_matches();
     zhuyin_tone_marks_neutral();
     hanging_only_in_latin_context();
     line_start_digits();
