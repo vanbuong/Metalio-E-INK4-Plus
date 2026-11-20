@@ -78,6 +78,7 @@ std::atomic<uint32_t> s_txt_work_id{0}; // 区分异步回收期间重叠的 TXT
 constexpr size_t kMaxTxtBytes = static_cast<size_t>(INT32_MAX) - 1; // 源偏移和 fseek 的表示边界
 constexpr size_t kTxtReadChunk = 1024;
 constexpr uint32_t kMaxLineSourceBytes = 512;
+constexpr uint32_t kLayoutRulesVersion = 2; // 横排按词断行；变化时分页缓存失效
 constexpr uint32_t kTxtIdxVersion = 24; // 中英文标题与副标题样式写入行索引
 constexpr uint16_t kTxtLineParaStart = 0x8000u;
 constexpr uint16_t kTxtLineJustify = 0x4000u;
@@ -1130,8 +1131,9 @@ lv_coord_t BookSession::LayoutIndentWidth() const {
 }
 
 uint32_t BookSession::FontFingerprint() const {
-    // 行高、步进及字形边界共同决定断行和安全字距。
-    uint32_t h = static_cast<uint32_t>(LayoutLineHeight());
+    // 行高、步进及字形边界共同决定断行和安全字距；断行规则版本变化时重建分页缓存。
+    uint32_t h = kLayoutRulesVersion;
+    h = h * 131u + static_cast<uint32_t>(LayoutLineHeight());
     h = h * 131u + static_cast<uint32_t>(LineLayout().count);
     static const uint32_t kSamples[] = {
         0x4E2Du,  // 中
@@ -2019,9 +2021,10 @@ bool BookSession::StreamPaginateTxt(FILE* fp, size_t file_size) {
         TextSpacingState candidate_spacing = spacing;
         if (!vertical_writing_ && line_w + cw > viewport_w_) ObserveTextGlyph(candidate_spacing, glyph_font_, cp, text_style_.letter_gap);
         VerticalBreakState candidate = breaks;
-        candidate.Observe(cp, goff, para_bytes);
+        candidate.Observe(cp, goff, para_bytes, !vertical_writing_);
+        // 横排空白与组合附加符悬挂于行尾，由其后的字符触发换行
         if (line_started && ((line_w + cw > viewport_w_ && (vertical_writing_ ||
-            !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing))) ||
+            (!IsHangingGlyph(cp) && !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing)))) ||
             line_len + glen > kMaxLineSourceBytes)) {
             if (candidate.valid && candidate.offset < goff) {
                 const uint32_t cut = candidate.offset;
@@ -2064,7 +2067,7 @@ bool BookSession::StreamPaginateTxt(FILE* fp, size_t file_size) {
             }
         }
         if (!vertical_writing_) ObserveTextGlyph(spacing, glyph_font_, cp, text_style_.letter_gap);
-        breaks.Observe(cp, goff, para_bytes);
+        breaks.Observe(cp, goff, para_bytes, !vertical_writing_);
         line_len += glen;
         line_w += cw;
         para_bytes += cp < 0x80 ? 1 : cp < 0x800 ? 2 : cp < 0x10000 ? 3 : 4;
@@ -2479,9 +2482,10 @@ bool BookSession::PaginateChapter(int chapter, BookPageStore& built, uint32_t ge
                 TextSpacingState candidate_spacing = spacing;
                 if (!vertical_writing_ && line_w + width > viewport_w_) ObserveTextGlyph(candidate_spacing, glyph_font_, cp, text_style_.letter_gap);
                 VerticalBreakState candidate = breaks;
-                candidate.Observe(cp, offset, line.size());
+                candidate.Observe(cp, offset, line.size(), !vertical_writing_);
+                // 横排空白与组合附加符悬挂于行尾，由其后的字符触发换行
                 if (!line.empty() && ((line_w + width > viewport_w_ && (vertical_writing_ ||
-                    !CanFitTrailingPunctuation(cp, line_w + width, viewport_w_, candidate_spacing))) ||
+                    (!IsHangingGlyph(cp) && !CanFitTrailingPunctuation(cp, line_w + width, viewport_w_, candidate_spacing)))) ||
                     line.size() + n > kMaxLineSourceBytes)) {
                     if (candidate.valid && candidate.offset < offset) {
                         const uint32_t cut = candidate.offset;
@@ -2500,7 +2504,7 @@ bool BookSession::PaginateChapter(int chapter, BookPageStore& built, uint32_t ge
                                                          line.size() - j, &tail_cp);
                             if (!count) return false;
                             if (!vertical_writing_) ObserveTextGlyph(spacing, glyph_font_, tail_cp, text_style_.letter_gap);
-                            breaks.Observe(tail_cp, cut + j, j);
+                            breaks.Observe(tail_cp, cut + j, j, !vertical_writing_);
                             line_w += LayoutGlyphWidth(tail_cp);
                             j += count;
                         }
@@ -2508,7 +2512,7 @@ bool BookSession::PaginateChapter(int chapter, BookPageStore& built, uint32_t ge
                 }
                 if (line.empty()) { line_begin = offset; line_w = first_line && !block.chapter_title ? LayoutIndentWidth() : 0; }
                 if (!vertical_writing_) ObserveTextGlyph(spacing, glyph_font_, cp, text_style_.letter_gap);
-                breaks.Observe(cp, offset, line.size());
+                breaks.Observe(cp, offset, line.size(), !vertical_writing_);
                 line.append(block.text.data() + i, n); line_w += width; i += n; offset += n;
             }
             if (!apply_epub_breaks(block.chapter_title)) return false;
@@ -3487,9 +3491,10 @@ bool BookSession::FillTxtLivePreview(uint32_t byte_off, bool at_para_start) {
         TextSpacingState candidate_spacing = spacing;
         if (!vertical_writing_ && line_w + cw > viewport_w_) ObserveTextGlyph(candidate_spacing, glyph_font_, cp, text_style_.letter_gap);
         VerticalBreakState candidate = breaks;
-        candidate.Observe(cp, goff, line.size());
+        candidate.Observe(cp, goff, line.size(), !vertical_writing_);
+        // 横排空白与组合附加符悬挂于行尾，由其后的字符触发换行
         if (line_started && ((line_w + cw > viewport_w_ && (vertical_writing_ ||
-            !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing))) ||
+            (!IsHangingGlyph(cp) && !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing)))) ||
             line.size() + 4 > kMaxLineSourceBytes)) {
             const bool rewind = candidate.valid && candidate.offset < goff;
             const uint32_t cut = rewind ? candidate.offset : goff;
@@ -3522,7 +3527,7 @@ bool BookSession::FillTxtLivePreview(uint32_t byte_off, bool at_para_start) {
             }
         }
         if (!vertical_writing_) ObserveTextGlyph(spacing, glyph_font_, cp, text_style_.letter_gap);
-        breaks.Observe(cp, goff, line.size());
+        breaks.Observe(cp, goff, line.size(), !vertical_writing_);
         if (!append_cp(cp)) {
             return false;
         }
