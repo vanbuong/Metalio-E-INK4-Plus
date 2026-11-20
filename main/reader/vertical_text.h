@@ -85,21 +85,65 @@ inline bool CanFitTrailingPunctuation(uint32_t cp, int width, int available,
         width > available && width - available <= spacing.capacity + spacing.tail_blank;
 }
 
+// 横排断行的字符分组：中日韩（强）、拉丁等字母文字（强）、其余中性（数字、标点、空白）。
+enum class BreakClass : uint8_t { kNeutral, kCjk, kLatin };
+
+inline BreakClass ClassifyBreak(uint32_t cp) {
+    if ((cp >= 0x1100 && cp <= 0x11FF) || (cp >= 0x2E80 && cp <= 0x2FFF) || (cp >= 0x3000 && cp <= 0x9FFF) ||
+        (cp >= 0xA960 && cp <= 0xA97F) || (cp >= 0xAC00 && cp <= 0xD7FF) || (cp >= 0xF900 && cp <= 0xFAFF) ||
+        (cp >= 0xFE30 && cp <= 0xFE4F) || (cp >= 0xFF00 && cp <= 0xFFEF) || (cp >= 0x20000 && cp <= 0x3FFFF)) {
+        return BreakClass::kCjk;
+    }
+    if ((cp >= 'A' && cp <= 'Z') || (cp >= 'a' && cp <= 'z') ||
+        (cp >= 0x00C0 && cp <= 0x024F && cp != 0x00D7 && cp != 0x00F7) ||
+        (cp >= 0x0250 && cp <= 0x04FF) || (cp >= 0x1E00 && cp <= 0x1EFF)) {
+        return BreakClass::kLatin; // 含越南语扩展字母及组合附加符 U+0300–036F
+    }
+    return BreakClass::kNeutral;
+}
+
+/** @brief 可断行空白：仅半角空格与制表符，不含不换行空格 U+00A0 */
+inline bool IsBreakingSpace(uint32_t cp) { return cp == ' ' || cp == '\t'; }
+
+/** @brief 溢出时允许悬挂于行尾、不触发换行的字符：可断行空白与组合附加符 */
+inline bool IsHangingGlyph(uint32_t cp) { return IsBreakingSpace(cp) || (cp >= 0x0300 && cp <= 0x036F); }
+
+/** @brief 中性字符不改变语境；强字符决定其后中性字符按中文还是按词断行 */
+inline bool NextCjkContext(bool cjk_context, uint32_t cp) {
+    const BreakClass cls = ClassifyBreak(cp);
+    return cls == BreakClass::kNeutral ? cjk_context : cls == BreakClass::kCjk;
+}
+
+/** @brief 横排断点：中文语境沿用逐字规则；拉丁语境只在空白后或连字符、破折号后断开 */
+inline bool CanBreakBetween(uint32_t before, uint32_t after, bool cjk_context) {
+    const BreakClass b = ClassifyBreak(before), a = ClassifyBreak(after);
+    if (b == BreakClass::kCjk || a == BreakClass::kCjk ||
+        (b == BreakClass::kNeutral && a == BreakClass::kNeutral && cjk_context)) {
+        return VerticalCanBreak(before, after);
+    }
+    if (IsBreakingSpace(before)) return !IsBreakingSpace(after);
+    const bool dash = before == '-' || before == 0x2010 || before == 0x2013 || before == 0x2014;
+    return dash && !cjk_context && (a == BreakClass::kLatin || (after >= '0' && after <= '9'));
+}
+
 // 仅记录最后一个合法断点；源偏移与 UTF-8 长度分开保存，兼容 GBK TXT。
 // ponytail: 不可分字符超过整行或整列容量时按容量换行或换列，避免越界或无限回退。
+// 语境随每行重置为中文，使 TXT 分页与从页首重排得到相同断点。
 struct VerticalBreakState {
     size_t glyphs = 0; // 当前行或列的码点数，不含段首缩进
     uint32_t previous = 0; // 前一码点，零表示行首或列首
     uint32_t offset = 0; // 合法断点的源偏移
     size_t text_size = 0; // 合法断点前的 UTF-8 字节数
     bool valid = false; // 当前行或列存在合法断点
+    bool cjk_context = true; // 本行最近强字符为中日韩文字
 
-    void Observe(uint32_t cp, uint32_t source_offset, size_t bytes) {
-        if (previous && VerticalCanBreak(previous, cp)) {
+    void Observe(uint32_t cp, uint32_t source_offset, size_t bytes, bool words = false) {
+        if (previous && (words ? CanBreakBetween(previous, cp, cjk_context) : VerticalCanBreak(previous, cp))) {
             offset = source_offset;
             text_size = bytes;
             valid = true;
         }
+        if (words) cjk_context = NextCjkContext(cjk_context, cp);
         previous = cp;
         ++glyphs;
     }
