@@ -175,6 +175,29 @@ bool SaveBookCoverSidecarFromL8(const char* book_path, const RasterImage& l8) {
     return true;
 }
 
+bool DecodeBookCoverToL8(const char* book_path, int max_w, int max_h, RasterImage& out) {
+    out.Reset();
+    if (book_path == nullptr || book_path[0] == '\0' || max_w <= 0 || max_h <= 0) {
+        return false;
+    }
+    const BookFormat fmt = DetectFormatByPath(book_path);
+    if (fmt == BookFormat::kEbook) {
+        std::vector<uint8_t> bytes;
+        return EbookDocument::PeekCoverImageBytes(book_path, bytes) && !bytes.empty() &&
+               DecodeImageToL8(bytes.data(), bytes.size(), max_w, max_h, out) && !out.empty();
+    }
+    if (fmt != BookFormat::kEpub) {
+        return false;
+    }
+    EpubDocument doc;
+    if (!doc.Open(book_path)) {
+        return false;
+    }
+    const bool ok = doc.DecodeCoverImageToL8(max_w, max_h, out);
+    doc.Close();
+    return ok && !out.empty();
+}
+
 bool SaveBookCoverSidecar(const char* book_path) {
     if (book_path == nullptr || book_path[0] == '\0') {
         return false;

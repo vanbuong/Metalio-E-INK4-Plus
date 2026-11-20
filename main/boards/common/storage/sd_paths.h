@@ -95,6 +95,8 @@ static inline size_t SdUtf8PrefixLength(const char* text, size_t max_bytes) {
 #define SD_PATH_BOOK_TEMP SD_PATH_TEMP "/books" // 阅读应用缓存
 #define SD_PATH_BOOK_WORK SD_PATH_BOOK_TEMP "/work" // 阅读会话工作文件
 #define SD_PATH_BOOK_CACHE SD_PATH_BOOK_TEMP "/cache" // 可重建的封面和索引
+#define SD_PATH_SCREEN_COVER SD_PATH_BOOK_CACHE "/screen_cover.a2l8" // 当前书籍整屏封面（待机/关机）
+#define SD_PATH_SCREEN_COVER_TAG SD_PATH_BOOK_CACHE "/screen_cover.txt" // 整屏封面所属书籍绝对路径
 #define SD_PATH_BWCHAT_TEMP SD_PATH_TEMP "/bwchat" // 百问 AI 会话缓存
 #define SD_PATH_WALLPAPER_APP_TEMP SD_PATH_TEMP "/wallpaper" // 壁纸应用缓存
 #define SD_PATH_WALLPAPER_TEMP SD_PATH_WALLPAPER_APP_TEMP "/work" // 图片解码系数后备文件

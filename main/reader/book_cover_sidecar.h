@@ -21,6 +21,9 @@ bool SaveBookCoverSidecar(const char* book_path);
 /** @brief 保存已解码的 L8 封面，仅在尺寸更大时覆盖已有缓存。 */
 bool SaveBookCoverSidecarFromL8(const char* book_path, const RasterImage& l8);
 
+/** @brief 从 EPUB/.ebook 解出内嵌封面为 L8，按 max_w×max_h 等比缩小（不放大）；无封面或其他格式返回 false。 */
+bool DecodeBookCoverToL8(const char* book_path, int max_w, int max_h, RasterImage& out);
+
 /** @brief 删除封面缓存；路径无效或无文件时直接返回。 */
 void DeleteBookCoverSidecar(const char* book_path);
 

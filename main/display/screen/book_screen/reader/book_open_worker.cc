@@ -18,6 +18,7 @@
 #include "book_screen/book_nav.h"
 #include "book_screen/reader/book_reader_body.h"
 #include "book_screen/reader/book_reader_overlay.h"
+#include "wallpaper_screen/book_cover_wallpaper.h"
 
 #include <freertos/FreeRTOS.h>
 #include <lvgl.h>
@@ -248,6 +249,10 @@ void OpenBookWorker(void* arg) {
                 access(sidecar, R_OK) != 0) {
                 reader::SaveBookCoverSidecar(ctx->info.path.c_str());
             }
+        }
+        // 待机/关机封面选项开启时，后台准备整屏封面；不等待，TXT 会清除旧封面归属
+        if (ok && ctx->token == st.reader.open_token.load()) {
+            BookCoverWallpaper_RequestPrepare(ctx->info.path.c_str());
         }
     }
 
