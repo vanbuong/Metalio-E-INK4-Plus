@@ -43,6 +43,17 @@ inline void ObserveTextGlyph(TextSpacingState& spacing, const lv_font_t* font, u
     ObserveTextGlyph(spacing, font, cp, glyph, known, letter_gap);
 }
 
+/** @brief 整行首个强字符决定起始语境，避免英文行首数字按中文逐字拉伸 */
+inline bool TextLineCjkContext(const char* text, size_t size) {
+    size_t i = 0;
+    return LineCjkContext([&](uint32_t& cp) {
+        const size_t n = i < size ? Utf8Next(reinterpret_cast<const uint8_t*>(text) + i, size - i, &cp) : 0;
+        if (!n || cp == '\n' || cp == '\r') return false;
+        i += n;
+        return true;
+    });
+}
+
 struct TextLineSpacing {
     int width = 0; // 最终行宽，含压缩及两端对齐
     int trim = 0; // 仅在溢出时收回行尾小标点的尾部空白
@@ -63,6 +74,7 @@ inline TextLineSpacing MakeTextLineSpacing(const lv_font_t* font, const std::str
     TextLineSpacing spacing;
     if (!font) return spacing;
     TextSpacingState state;
+    state.cjk_context = TextLineCjkContext(text.data(), text.size());
     int glyphs = 0;
     int trailing_blank = 0; // 行尾可断行空白的步进，拉丁语境下悬挂于行外
     uint32_t last_cp = 0;

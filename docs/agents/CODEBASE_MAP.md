@@ -8,8 +8,8 @@ before relying on them if `git log fd3fa03..HEAD -- <area>` shows changes. Areas
 - Toolchain: ESP-IDF v6.1 via EIM; always go through `./tools/idf.ps1 <args>` (picks the newest
   6.1.x from `C:\Espressif\tools\eim_idf.json`, override `$env:GW_EIM_JSON` / `$env:GW_IDF_PATH`
   which must match an EIM-listed path — `tools/idf.ps1:13,22-30,44-46`). **Build verified
-  2026-11-21** (`./tools/idf.ps1 build` exit 0). ⚠ The app is 0x4f35b0 B in a 0x500000 B OTA
-  slot — **~51.8 KB (1 %) free**; the build already prints "smallest app partition is nearly
+  2026-11-21** (`./tools/idf.ps1 build` exit 0). ⚠ The app is 0x4f38d0 B in a 0x500000 B OTA
+  slot — **~49.8 KB (1 %) free**; the build already prints "smallest app partition is nearly
   full". Pre-existing warnings: `main/display/font/ttf_convert.cc:125`, `main/display/a2ui/a2ui_image.cc:490`.
 - Project version: `PROJECT_VER` in `CMakeLists.txt:5`. `main/assets/fonts/font.fontpack` is
   flashed to `font_data` by `esptool_py_flash_to_partition` (`CMakeLists.txt:12-19`).
@@ -186,7 +186,9 @@ Storage: books in `/sdcard/metalio/e-ink/books` (`book_session.h:32`); sidecars 
 build this code — keep them.
 Line breaking (horizontal): one shared rule, `CanBreakBetween` / `VerticalBreakState::Observe(...,
 words)` in `vertical_text.h` — CJK context keeps the per-character rule, Latin context (English,
-Vietnamese) breaks only after spaces/hyphens; spaces and combining marks hang at line end.
+Vietnamese) breaks only after spaces/hyphens; in Latin context spaces and combining marks hang at line
+end (`HangsAtLineEnd`). Drawers seed the line's context from its first strong character
+(`TextLineCjkContext`).
 Justification stretches only `JustifySlot` gaps (word gaps in Latin text). Changing the rules
 needs a bump of `kLayoutRulesVersion` (`book_session.cc`) so page caches rebuild. Alignment
 (Justified/Left) is draw-time only (`TextStyle::justify`, NVS `justify`); side margins are one

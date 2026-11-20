@@ -2024,7 +2024,7 @@ bool BookSession::StreamPaginateTxt(FILE* fp, size_t file_size) {
         candidate.Observe(cp, goff, para_bytes, !vertical_writing_);
         // 横排空白与组合附加符悬挂于行尾，由其后的字符触发换行
         if (line_started && ((line_w + cw > viewport_w_ && (vertical_writing_ ||
-            (!IsHangingGlyph(cp) && !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing)))) ||
+            (!HangsAtLineEnd(candidate, cp) && !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing)))) ||
             line_len + glen > kMaxLineSourceBytes)) {
             if (candidate.valid && candidate.offset < goff) {
                 const uint32_t cut = candidate.offset;
@@ -2485,7 +2485,7 @@ bool BookSession::PaginateChapter(int chapter, BookPageStore& built, uint32_t ge
                 candidate.Observe(cp, offset, line.size(), !vertical_writing_);
                 // 横排空白与组合附加符悬挂于行尾，由其后的字符触发换行
                 if (!line.empty() && ((line_w + width > viewport_w_ && (vertical_writing_ ||
-                    (!IsHangingGlyph(cp) && !CanFitTrailingPunctuation(cp, line_w + width, viewport_w_, candidate_spacing)))) ||
+                    (!HangsAtLineEnd(candidate, cp) && !CanFitTrailingPunctuation(cp, line_w + width, viewport_w_, candidate_spacing)))) ||
                     line.size() + n > kMaxLineSourceBytes)) {
                     if (candidate.valid && candidate.offset < offset) {
                         const uint32_t cut = candidate.offset;
@@ -2508,6 +2508,8 @@ bool BookSession::PaginateChapter(int chapter, BookPageStore& built, uint32_t ge
                             line_w += LayoutGlyphWidth(tail_cp);
                             j += count;
                         }
+                        // 回退后的整词可能已接近满行：当前字符重新判断溢出，与 TXT 回退重扫一致
+                        continue;
                     } else if (!flush_line(block.chapter_title, true)) return false;
                 }
                 if (line.empty()) { line_begin = offset; line_w = first_line && !block.chapter_title ? LayoutIndentWidth() : 0; }
@@ -3494,7 +3496,7 @@ bool BookSession::FillTxtLivePreview(uint32_t byte_off, bool at_para_start) {
         candidate.Observe(cp, goff, line.size(), !vertical_writing_);
         // 横排空白与组合附加符悬挂于行尾，由其后的字符触发换行
         if (line_started && ((line_w + cw > viewport_w_ && (vertical_writing_ ||
-            (!IsHangingGlyph(cp) && !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing)))) ||
+            (!HangsAtLineEnd(candidate, cp) && !CanFitTrailingPunctuation(cp, line_w + cw, viewport_w_, candidate_spacing)))) ||
             line.size() + 4 > kMaxLineSourceBytes)) {
             const bool rewind = candidate.valid && candidate.offset < goff;
             const uint32_t cut = rewind ? candidate.offset : goff;

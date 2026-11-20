@@ -1090,7 +1090,7 @@ static void BuildSheetSettings(lv_obj_t* body) {
         SettingsRow(body, BOOK_AA_STRENGTH, 3, strengths, TextChoice, levels, 10 + TextValue(BookTextOption::AaStrength), false, 0, column);
     } else if (page == kSettingsSpacing) {
         const int row_height = LV_HOR_RES > LV_VER_RES
-            ? std::max<int>(UiSy(40), std::min<int>(UiSy(52), lv_obj_get_content_height(body) / 6)) : UiSy(60);
+            ? std::max<int>(UiSy(40), std::min<int>(UiSy(52), lv_obj_get_content_height(body) / 7)) : UiSy(60);
         const int column = SettingsColumn(body, {BOOK_PARA_GAP_TITLE, BOOK_LETTER_GAP, BOOK_LINE_GAP, BOOK_MARGIN, BOOK_INDENT, BOOK_ALIGNMENT});
         AddNumericRow(body, BOOK_PARA_GAP_TITLE, static_cast<int>(BookTextOption::ParaGap), TextValue(BookTextOption::ParaGap), 0, 104, 2, true, column, row_height);
         AddNumericRow(body, BOOK_LETTER_GAP, static_cast<int>(BookTextOption::LetterGap), TextValue(BookTextOption::LetterGap), -2, 12, 1, true, column, row_height);
@@ -1149,7 +1149,7 @@ static int SettingsBodyHeight(int page) {
             content = row * (BookReaderPrefsWritingMode() ? 2 : 1);
             break;
         case kSettingsSpacing:
-            content = (LV_HOR_RES > LV_VER_RES ? UiSy(52) : row) * 6;
+            content = (LV_HOR_RES > LV_VER_RES ? UiSy(52) : row) * 7; // 段距、字距、行距、边距两行、缩进、对齐
             break;
         case kSettingsTurning:
             content = row * 5;

@@ -99,8 +99,9 @@ inline BreakClass ClassifyBreak(uint32_t cp) {
     }
     if ((cp >= 'A' && cp <= 'Z') || (cp >= 'a' && cp <= 'z') ||
         (cp >= 0x00C0 && cp <= 0x024F && cp != 0x00D7 && cp != 0x00F7) ||
-        (cp >= 0x0250 && cp <= 0x04FF) || (cp >= 0x1E00 && cp <= 0x1EFF)) {
-        return BreakClass::kLatin; // 含越南语扩展字母及组合附加符 U+0300–036F
+        (cp >= 0x0250 && cp <= 0x02AF) || (cp >= 0x0300 && cp <= 0x04FF) || (cp >= 0x1E00 && cp <= 0x1EFF)) {
+        // 含越南语扩展字母及组合附加符 U+0300–036F；U+02B0–02FF（含注音声调符号）按中性处理
+        return BreakClass::kLatin;
     }
     return BreakClass::kNeutral;
 }
@@ -127,6 +128,17 @@ inline bool CanBreakBetween(uint32_t before, uint32_t after, bool cjk_context) {
     if (IsBreakingSpace(before)) return !IsBreakingSpace(after);
     const bool dash = before == '-' || before == 0x2010 || before == 0x2013 || before == 0x2014;
     return dash && !cjk_context && (a == BreakClass::kLatin || (after >= '0' && after <= '9'));
+}
+
+/** @brief 由整行首个强字符决定绘制起始语境；无强字符时按中文。next(cp) 依次取码点，取完返回 false */
+template <typename NextCp>
+inline bool LineCjkContext(NextCp next) {
+    uint32_t cp = 0;
+    while (next(cp)) {
+        const BreakClass cls = ClassifyBreak(cp);
+        if (cls != BreakClass::kNeutral) return cls == BreakClass::kCjk;
+    }
+    return true;
 }
 
 /** @brief cp 之前的间隔是否参与两端对齐：中文语境逐字分配；拉丁语境仅词间空白处分配 */
@@ -161,6 +173,11 @@ struct VerticalBreakState {
         ++glyphs;
     }
 };
+
+/** @brief 横排溢出时 cp 是否悬挂于行尾：仅拉丁语境的空白与组合附加符；中文语境保持原换行 */
+inline bool HangsAtLineEnd(const VerticalBreakState& state, uint32_t cp) {
+    return !state.cjk_context && IsHangingGlyph(cp);
+}
 
 inline uint32_t VerticalGlyph(uint32_t cp) {
     switch (cp) {

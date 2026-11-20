@@ -73,6 +73,7 @@ inline void DrawSpacedTextLabel(lv_event_t* event, bool justify) {
     if (align == LV_TEXT_ALIGN_CENTER) pen += (lv_area_get_width(&area) - spacing.width) / 2;
     else if (align == LV_TEXT_ALIGN_RIGHT) pen += lv_area_get_width(&area) - spacing.width;
     TextSpacingState state;
+    state.cjk_context = TextLineCjkContext(text.data(), text.size());
     for (size_t i = 0; i < text.size();) {
         uint32_t cp = 0;
         const size_t n = Utf8Next(reinterpret_cast<const uint8_t*>(text.data()) + i, text.size() - i, &cp);

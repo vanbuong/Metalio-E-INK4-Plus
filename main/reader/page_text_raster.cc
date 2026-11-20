@@ -144,6 +144,7 @@ bool DrawUtf8Line(RasterImage& img, const lv_font_t* font, int x, int line_top, 
 
     int glyph_index = 0;
     TextSpacingState spacing_state;
+    spacing_state.cjk_context = TextLineCjkContext(utf8, left);
     while (left > 0) {
         uint32_t cp = 0;
         const size_t n = Utf8Next(p, left, &cp);

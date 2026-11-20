@@ -183,6 +183,50 @@ static void squeeze_latin_off() {
     CHECK(CanFitTrailingPunctuation('.', 101, 100, s));
 }
 
+// Context a drawer seeds from the whole line before measuring it.
+static bool SeedContext(const std::string& text) {
+    const std::vector<Cp> cps = Decode(text);
+    size_t i = 0;
+    return LineCjkContext([&](uint32_t& cp) {
+        if (i >= cps.size()) return false;
+        cp = cps[i++].cp;
+        return true;
+    });
+}
+
+static int SeededSlots(const std::string& text) {
+    int slots = 0;
+    uint32_t previous = 0;
+    bool context = SeedContext(text);
+    for (const Cp& c : Decode(text)) {
+        if (previous && JustifySlot(previous, c.cp, context)) ++slots;
+        context = NextCjkContext(context, c.cp);
+        previous = c.cp;
+    }
+    return slots;
+}
+
+static void zhuyin_tone_marks_neutral() {
+    for (uint32_t cp : {0x02C7u, 0x02CAu, 0x02CBu, 0x02D9u}) CHECK(ClassifyBreak(cp) == BreakClass::kNeutral);
+    CHECK(ClassifyBreak(0x0259) == BreakClass::kLatin);  // ə stays Latin
+}
+
+static void hanging_only_in_latin_context() {
+    VerticalBreakState s;
+    CHECK(!HangsAtLineEnd(s, ' '));  // CJK context: space breaks as before
+    s.cjk_context = false;
+    CHECK(HangsAtLineEnd(s, ' '));
+    CHECK(HangsAtLineEnd(s, 0x0301));
+    CHECK(!HangsAtLineEnd(s, 'a'));
+}
+
+static void line_start_digits() {
+    CHECK(!SeedContext("1990 was a year"));
+    CHECK(SeedContext("2023\xE5\xB9\xB4"));  // 2023年
+    CHECK(SeedContext("1234"));              // no strong character: CJK default
+    CHECK(SeededSlots("1990 was a year") == 3);
+}
+
 static void margin_rules() {
     CHECK(ReaderSymmetricSideMargin(16, 24) == 24);
     CHECK(ReaderSymmetricSideMargin(56, 56) == 40);
@@ -191,6 +235,9 @@ static void margin_rules() {
 }
 
 int main() {
+    zhuyin_tone_marks_neutral();
+    hanging_only_in_latin_context();
+    line_start_digits();
     margin_rules();
     justify_slots_latin();
     justify_slots_cjk_unchanged();
