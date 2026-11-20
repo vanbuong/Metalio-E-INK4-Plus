@@ -24,6 +24,7 @@ static constexpr const char* kNvsMarginKey = "margin";
 static constexpr const char* kNvsHideProgKey = "hide_prog";
 static constexpr const char* kNvsFooterMaskKey = "foot_msk";
 static constexpr const char* kNvsAaKey = "aa";
+static constexpr const char* kNvsJustifyKey = "justify";
 static constexpr const char* kNvsUnderlineKey = "underline";
 static constexpr const char* kNvsShelfViewKey = "shelf_view";
 static constexpr const char* kNvsShelfPctKey = "shelf_pct";
@@ -62,6 +63,7 @@ static int s_para_gap_preset = kDefaultParaGapPreset;
 static int s_margin_preset = kDefaultMarginPreset;
 static int s_footer_mask = kDefaultFooterMask;
 static int s_aa = 0;
+static int s_justify = 1; // 横排正文对齐：1 两端对齐，0 左对齐
 static int s_underline = 0;
 static int s_background = 0;
 static int s_shake_turn = 0;
@@ -158,6 +160,7 @@ static void LoadFromNvs() {
         s_footer_mask = hide ? 0 : kDefaultFooterMask;
     }
     s_aa = settings.GetInt(kNvsAaKey, 0) != 0 ? 1 : 0;
+    s_justify = settings.GetInt(kNvsJustifyKey, 1) != 0 ? 1 : 0;
     s_underline = ClampUnderline(settings.GetInt(kNvsUnderlineKey, 0));
     s_shake_turn = settings.GetInt("shake_turn", 0) != 0;
     const int shake_level = settings.GetInt("shake_level5", -1);
@@ -211,6 +214,7 @@ enum class BookPrefsPersistKind : uint8_t {
     kTextValues = 15,
     kShakeTurn,
     kShakeLevel,
+    kJustify,
     kCount,
 };
 
@@ -263,6 +267,9 @@ static void PersistOne(BookPrefsPersistArg* p) {
             case BookPrefsPersistKind::kAntialias:
                 settings.SetInt(kNvsAaKey, p->ival);
                 ESP_LOGI(TAG, "nvs save aa=%d", p->ival);
+                break;
+            case BookPrefsPersistKind::kJustify:
+                settings.SetInt(kNvsJustifyKey, p->ival);
                 break;
             case BookPrefsPersistKind::kShakeTurn:
                 settings.SetInt("shake_turn", p->ival);
@@ -563,6 +570,20 @@ int BookReaderPrefsToggleFooterBit(int bit) {
     return next;
 }
 
+int BookReaderPrefsJustify(void) {
+    BookReaderPrefsEnsureLoaded();
+    return s_justify != 0 ? 1 : 0;
+}
+
+void BookReaderPrefsSetJustify(int enabled) {
+    BookReaderPrefsEnsureLoaded();
+    s_justify = enabled != 0 ? 1 : 0;
+    auto* arg = NewPersistArg(BookPrefsPersistKind::kJustify);
+    if (!arg) return;
+    arg->ival = s_justify;
+    StartPersist(arg);
+}
+
 int BookReaderPrefsAntialias(void) {
     BookReaderPrefsEnsureLoaded();
     return s_aa != 0 ? 1 : 0;
@@ -786,6 +807,7 @@ reader::TextStyle BookReaderPrefsTextStyle() {
     style.indent_chars = s_text_values[4];
     style.underline_offset = s_text_values[5];
     style.aa_strength = s_text_values[6];
+    style.justify = s_justify != 0;
     return style;
 }
 
@@ -798,6 +820,7 @@ void BookReaderPrefsResetReading() {
     BookReaderPrefsSetMarginPreset(kDefaultMarginPreset);
     BookReaderPrefsSetFooterMask(kBookReaderFooterDefault);
     BookReaderPrefsSetAntialias(0);
+    BookReaderPrefsSetJustify(1);
     BookReaderPrefsSetUnderlineMode(0);
     BookReaderPrefsSetOrient(kBookReaderOrientPortrait);
     BookReaderPrefsSetBackground(0);

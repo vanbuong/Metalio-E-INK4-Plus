@@ -128,6 +128,7 @@ bool StartReaderPageWork(std::unique_ptr<ReaderPageResult> result) {
     work->style = work->result->cursor->Style();
     work->style.underline_offset = BookReaderPrefsTextValue(BookTextOption::UnderlineOffset);
     work->style.aa_strength = BookReaderPrefsTextValue(BookTextOption::AaStrength);
+    work->style.justify = BookReaderPrefsJustify() != 0;
     work->width = st.reader.viewport_w; work->height = st.reader.viewport_h;
     work->vertical = st.reader.session->VerticalWriting();
     work->rtl = BookReaderPrefsTextDirection() == kBookReaderTextRightToLeft;

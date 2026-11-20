@@ -414,7 +414,8 @@ void RenderReaderPage() {
                     ? static_cast<lv_coord_t>(para_gap + reader::kReaderChapterTitleAfterGap)
                     : para_gap;
             reader::CreatePageTextLabel(col, item, col_w, book_font, lines, row_index, gap,
-                [](lv_obj_t* label) { AttachReaderUnderline(label, BookReaderPrefsUnderlineMode()); }, st.reader.session->Style().indent_chars);
+                [](lv_obj_t* label) { AttachReaderUnderline(label, BookReaderPrefsUnderlineMode()); }, st.reader.session->Style().indent_chars,
+                BookReaderPrefsJustify() != 0);
             prev_chapter_title = item.chapter_title;
         } else {
             prev_chapter_title = false;

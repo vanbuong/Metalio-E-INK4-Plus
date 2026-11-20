@@ -73,6 +73,7 @@ struct TextStyle {
     int indent_chars = 2; // 首行缩进字数
     int underline_offset = 0; // 装饰线相对默认位置的像素偏移
     int aa_strength = 1; // 抗锯齿强度：0 弱、1 中、2 强
+    bool justify = true; // 两端对齐；false 为左对齐，仅影响横排绘制，不参与分页
 };
 
 // 阅读排版默认值（与 BookReaderPrefs 标准档一致；经 BookSession::SetLineSpacing 注入）

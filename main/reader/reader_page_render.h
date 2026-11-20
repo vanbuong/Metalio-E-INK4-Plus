@@ -108,7 +108,8 @@ inline bool IsCompactTextLabel(lv_obj_t* label) {
 inline lv_obj_t* CreatePageTextLabel(lv_obj_t* col, const PageItem& item, lv_coord_t max_w,
                                      const lv_font_t* book_font, const TextLineLayout& layout,
                                      int& row_index, lv_coord_t para_gap,
-                                     void (*decorate_label)(lv_obj_t*) = nullptr, int indent_chars = 2) {
+                                     void (*decorate_label)(lv_obj_t*) = nullptr, int indent_chars = 2,
+                                     bool justify_enabled = true) {
     if (!col || !book_font || row_index >= layout.count || item.text.empty()) return nullptr;
     const bool need_para_gap = item.para_gap_before && lv_obj_get_child_count(col) > 0;
     const int gap_before = need_para_gap ? std::max<lv_coord_t>(0, para_gap) : 0;
@@ -191,7 +192,7 @@ inline lv_obj_t* CreatePageTextLabel(lv_obj_t* col, const PageItem& item, lv_coo
     lv_obj_clear_flag(label, LV_OBJ_FLAG_CLICKABLE);
     DisableObjScroll(label);
     lv_obj_set_style_text_opa(label, LV_OPA_TRANSP, 0);
-    lv_obj_add_event_cb(label, item.justify ? DrawJustifiedTextLabel : DrawCompactTextLabel,
+    lv_obj_add_event_cb(label, item.justify && justify_enabled ? DrawJustifiedTextLabel : DrawCompactTextLabel,
                         LV_EVENT_DRAW_MAIN_END, nullptr);
     if (decorate_label) decorate_label(label);
     return label;

@@ -905,6 +905,17 @@ static void SheetTextDirection(lv_event_t* e) {
     if (DeferComicTextSetting()) return;
     RequestRenderReaderPage();
 }
+static void SheetJustify(lv_event_t* e) {
+    lv_event_stop_bubbling(e);
+    const int justify = static_cast<int>(reinterpret_cast<intptr_t>(lv_event_get_user_data(e)));
+    if (justify == BookReaderPrefsJustify()) return;
+    BookReaderPrefsSetJustify(justify);
+    RequestSettingsSheetPaint();
+    if (DeferComicTextSetting()) return;
+    // 对齐只改变绘制，不影响断行与页码
+    CancelReaderPageWork();
+    RequestRenderReaderPage();
+}
 static void SheetBackground(lv_event_t* e) {
     lv_event_stop_bubbling(e);
     const int mode = static_cast<int>(reinterpret_cast<intptr_t>(lv_event_get_user_data(e)));
@@ -1073,7 +1084,7 @@ static void BuildSheetSettings(lv_obj_t* body) {
     } else if (page == kSettingsSpacing) {
         const int row_height = LV_HOR_RES > LV_VER_RES
             ? std::max<int>(UiSy(40), std::min<int>(UiSy(52), lv_obj_get_content_height(body) / 6)) : UiSy(60);
-        const int column = SettingsColumn(body, {BOOK_PARA_GAP_TITLE, BOOK_LETTER_GAP, BOOK_LINE_GAP, BOOK_MARGIN, BOOK_INDENT});
+        const int column = SettingsColumn(body, {BOOK_PARA_GAP_TITLE, BOOK_LETTER_GAP, BOOK_LINE_GAP, BOOK_MARGIN, BOOK_INDENT, BOOK_ALIGNMENT});
         AddNumericRow(body, BOOK_PARA_GAP_TITLE, static_cast<int>(BookTextOption::ParaGap), TextValue(BookTextOption::ParaGap), 0, 104, 2, true, column, row_height);
         AddNumericRow(body, BOOK_LETTER_GAP, static_cast<int>(BookTextOption::LetterGap), TextValue(BookTextOption::LetterGap), -2, 12, 1, true, column, row_height);
         AddNumericRow(body, BOOK_LINE_GAP, static_cast<int>(BookTextOption::LineGap), TextValue(BookTextOption::LineGap), 0, 48, 1, true, column, row_height);
@@ -1089,6 +1100,8 @@ static void BuildSheetSettings(lv_obj_t* body) {
         AddNumericRow(margin, "", static_cast<int>(s_margin_option), TextValue(s_margin_option), 0, 64, 2, true, column, row_height);
         const char* labels[] = {BOOK_TAP_ZONE_NONE, BOOK_INDENT_ONE, BOOK_INDENT_TWO, BOOK_INDENT_THREE}; const int values[] = {0, 1, 2, 3};
         SettingsRow(body, BOOK_INDENT, 4, labels, TextChoice, values, TextValue(BookTextOption::Indent), false, 0, column, row_height);
+        const char* aligns[] = {BOOK_ALIGN_JUSTIFY, BOOK_ALIGN_LEFT}; const int align_values[] = {1, 0};
+        SettingsRow(body, BOOK_ALIGNMENT, 2, aligns, SheetJustify, align_values, BookReaderPrefsJustify(), false, 0, column, row_height);
     } else if (page == kSettingsUnderline) {
         const int column = SettingsColumn(body, {BOOK_UNDERLINE, BOOK_UNDERLINE_POSITION});
         const char* labels[] = {BOOK_TAP_ZONE_NONE, BOOK_UNDERLINE_SOLID, BOOK_UNDERLINE_DASHED}; const int values[] = {0, 1, 2};
@@ -1890,6 +1903,7 @@ bool RefreshReadingSheetInPlace() {
         else if(binding.event==SheetAutoTurnToggle)selected=ReaderAutoTurnEnabled()?1:0;
         else if(binding.event==SheetWritingMode)selected=BookReaderPrefsWritingMode();
         else if(binding.event==SheetTextDirection)selected=BookReaderPrefsTextDirection();
+        else if(binding.event==SheetJustify)selected=BookReaderPrefsJustify();
         else if(binding.event==SheetPageTurn)selected=BookReaderPrefsPageTurn();
         else if(binding.event==SheetBackground)selected=BookReaderPrefsBackground();
         else if(binding.event==SheetAntialias)selected=BookReaderPrefsAntialias();

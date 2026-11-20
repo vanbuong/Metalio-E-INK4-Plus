@@ -1120,6 +1120,9 @@
     X(BOOK_MARGIN_STANDARD, "标准", "Standard") \
     X(BOOK_MARGIN_VERY_WIDE, "很宽", "Very wide") \
     X(BOOK_MARGIN_WIDE, "宽", "Wide") \
+    X(BOOK_ALIGNMENT, "对齐", "Alignment") \
+    X(BOOK_ALIGN_JUSTIFY, "两端对齐", "Justified") \
+    X(BOOK_ALIGN_LEFT, "左对齐", "Left") \
     X(BOOK_NET_NOT_READY, "网络未就绪", "Network not ready") \
     X(BOOK_NO_CONTINUE, "暂无可续", "Nothing to continue") \
     X(BOOK_NO_COVER_URL, "无封面地址", "No cover URL") \

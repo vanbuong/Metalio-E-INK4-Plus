@@ -109,6 +109,10 @@ void BookReaderPrefsSetFooterMask(int mask);
 int BookReaderPrefsToggleFooterBit(int bit);
 
 /** @brief 阅读抗锯齿偏好（默认关闭） */
+/** @brief 横排正文对齐：1 两端对齐（默认），0 左对齐；仅影响绘制，不重新分页 */
+int BookReaderPrefsJustify(void);
+/** @brief 设置并保存横排正文对齐方式 */
+void BookReaderPrefsSetJustify(int enabled);
 int BookReaderPrefsAntialias(void);
 /** @brief 设置并保存阅读抗锯齿开关 */
 void BookReaderPrefsSetAntialias(int enabled);
