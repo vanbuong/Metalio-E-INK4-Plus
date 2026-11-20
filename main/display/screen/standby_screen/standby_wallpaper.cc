@@ -3,6 +3,7 @@
 #include "config.h"
 
 #include "wallpaper_screen/wallpaper_active.h"
+#include "wallpaper_screen/book_cover_wallpaper.h"
 
 #include "image_util.h"
 #include "wallpaper_frame.h"
@@ -31,6 +32,7 @@ static bool s_alive = false;
 static uint32_t s_epoch = 0;
 static reader::RasterImage* s_raster = nullptr;
 static bool s_overlay = false;
+static bool s_cover = false; // 本次待机优先显示当前书籍封面
 static std::vector<uint8_t> s_alpha;
 static std::atomic<bool> s_load_busy{false};
 static std::atomic<int64_t> s_decode_started_us{0}; // 解码开始时间，完成后清零
@@ -42,6 +44,7 @@ struct StandbyWpLoadResult {
     char err[64] = {}; // 失败原因
     reader::RasterImage* img = nullptr; // 接收前由结果持有的像素
     bool overlay = false; // 等比缩小并保留透明度
+    bool cover = false; // 先尝试当前书籍整屏封面
     lv_point_t size{}; // 本次底图可绘区
     std::vector<uint8_t> alpha; // 图片自带的透明度
 };
@@ -92,7 +95,21 @@ static void LoadTask(void* arg) {
     {
         sd_access::Permit permit;
         char path[SD_FILE_PATH_CAPACITY] = {};
-        if (!Wallpaper_TryResolveStandbyWallpaperPath(path, sizeof(path))) {
+        if (msg->cover && BookCoverWallpaper_TryResolvePath(path, sizeof(path))) {
+            auto* img = new reader::RasterImage();
+            if (reader::DecodeImageFileToL8(path, msg->size.x, msg->size.y, *img) && !img->empty()) {
+                msg->ok = true;
+                msg->img = img;
+                ESP_LOGI(TAG, "decoded standby book cover (%ux%u)", static_cast<unsigned>(img->width),
+                         static_cast<unsigned>(img->height));
+            } else {
+                delete img;
+                ESP_LOGW(TAG, "standby book cover decode failed; fall back to wallpaper");
+            }
+        }
+        if (msg->ok) {
+            // 封面已就绪，跳过壁纸
+        } else if (!Wallpaper_TryResolveStandbyWallpaperPath(path, sizeof(path))) {
             std::snprintf(msg->err, sizeof(msg->err), "%s", Lang::Strings::STANDBY_WP_NOT_FOUND);
         } else {
             auto* img = new reader::RasterImage();
@@ -122,7 +139,9 @@ void StandbyWallpaper_Build(lv_obj_t* root) {
     }
     ++s_epoch;
     s_alive = true;
-    s_overlay = Wallpaper_IsOverlay(true) && WallpaperFrame_HasBase();
+    // 封面模式总是全屏显示，不叠加底层页面
+    s_cover = Wallpaper_BookCoverEnabled(true) && BookCoverWallpaper_Ready();
+    s_overlay = !s_cover && Wallpaper_IsOverlay(true) && WallpaperFrame_HasBase();
     MarkLoadDone(StandbyWpLoadState::Idle);
 
     // 解码期间保留底层页面，完整壁纸由 Park 直接写入帧缓冲。
@@ -145,6 +164,7 @@ void StandbyWallpaper_StartLoad() {
     auto* msg = new StandbyWpLoadResult{};
     msg->epoch = s_epoch;
     msg->overlay = s_overlay;
+    msg->cover = s_cover;
     msg->size = s_overlay ? WallpaperFrame_Size() : lv_point_t{DISPLAY_WIDTH, DISPLAY_HEIGHT};
     // 栈放 SPIRAM：解码峰值与壁纸缩略图任务同级
     if (xTaskCreatePinnedToCoreWithCaps(LoadTask, "stb_wp_load", kLoadStack, msg, 5, nullptr, 0,

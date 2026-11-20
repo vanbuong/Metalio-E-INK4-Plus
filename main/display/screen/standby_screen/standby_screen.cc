@@ -6,6 +6,7 @@
 #include "standby_screen/standby_wallpaper.h"
 
 #include "wallpaper_screen/wallpaper_active.h"
+#include "wallpaper_screen/book_cover_wallpaper.h"
 #include "wallpaper_screen/wallpaper_screen.h"
 
 #include "application.h"
@@ -92,7 +93,8 @@ static void ClearStatusBindings() {
 }
 
 static bool PreferWallpaperVariant() {
-    return Wallpaper_HasStandbySelection();
+    // 书籍封面就绪时也走壁纸形态；无封面回退原有壁纸或经典待机
+    return Wallpaper_HasStandbySelection() || (Wallpaper_BookCoverEnabled(true) && BookCoverWallpaper_Ready());
 }
 
 static void TeardownVariant() {

@@ -55,6 +55,7 @@ bool BlitL8ToEpdFullScreen(const reader::RasterImage& img);
 #include "image_geometry.h"
 #include "reader/book_home_snapshot.h"
 #include "wallpaper_screen/wallpaper_active.h"
+#include "wallpaper_screen/book_cover_wallpaper.h"
 
 #include <cstdio>
 #include <esp_heap_caps.h>
@@ -1065,6 +1066,7 @@ struct ShutdownWallpaperWork {
     reader::RasterImage img; // 当前关机流程持有的解码像素
     bool have_img = false; // 解码成功后由 done 发布
     bool overlay = false; // 本次关机使用原界面叠图
+    bool cover = false; // 先尝试当前书籍整屏封面
     lv_point_t size{}; // 原界面的可绘区尺寸
     std::vector<uint8_t> alpha; // 图片自带的透明度
     std::atomic<bool> done{false}; // 解码任务完成标记
@@ -1072,7 +1074,20 @@ struct ShutdownWallpaperWork {
 
 void DecodeShutdownWallpaperTask(void* arg) {
     auto* work = static_cast<ShutdownWallpaperWork*>(arg);
-    if (work->overlay) {
+    if (work->cover) {
+        // 仅解码已准备好的封面文件，不在关机流程中提取封面
+        sd_access::Permit permit;
+        char path[SD_FILE_PATH_CAPACITY] = {};
+        work->have_img = BookCoverWallpaper_TryResolvePath(path, sizeof(path)) &&
+            reader::DecodeImageFileToL8(path, DISPLAY_WIDTH, DISPLAY_HEIGHT, work->img) && !work->img.empty();
+        if (!work->have_img) {
+            work->img.Reset();
+            ESP_LOGW(TAG, "shutdown book cover unavailable; fall back to wallpaper");
+        }
+    }
+    if (work->have_img) {
+        // 封面已就绪
+    } else if (work->overlay) {
         sd_access::Permit permit;
         char path[SD_FILE_PATH_CAPACITY] = {};
         if (Wallpaper_TryResolveActiveWallpaperPath(path, sizeof(path)))
@@ -1100,7 +1115,9 @@ bool LvAdapterEpdiy::ShowPoweredOffScreen() {
         lv_indev_enable(indev, false);
     }
     if (!BookScreen::PreparePowerOff()) return false;
-    if (Wallpaper_IsOverlay(false)) PrepareWallpaperOverlay();
+    // 封面模式总是全屏显示，不准备原界面叠图
+    const bool use_cover = Wallpaper_BookCoverEnabled(false) && BookCoverWallpaper_Ready();
+    if (!use_cover && Wallpaper_IsOverlay(false)) PrepareWallpaperOverlay();
     // 加载期间保留原帧，提示局部叠加；解码完成后再生成完整关机画面。
     FreezeFlush(true);
     s_defer_standby_commit.store(true, std::memory_order_relaxed);
@@ -1111,7 +1128,8 @@ bool LvAdapterEpdiy::ShowPoweredOffScreen() {
     EpdSetTestActive(false);
     EpdCancelPageTurn();
     ShutdownWallpaperWork work;
-    work.overlay = Wallpaper_IsOverlay(false) && WallpaperFrame_HasBase();
+    work.cover = use_cover;
+    work.overlay = !use_cover && Wallpaper_IsOverlay(false) && WallpaperFrame_HasBase();
     work.size = WallpaperFrame_Size();
     const int64_t started = esp_timer_get_time();
     if (xTaskCreatePinnedToCoreWithCaps(DecodeShutdownWallpaperTask, "off_wp_load", 12 * 1024,
