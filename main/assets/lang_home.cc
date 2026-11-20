@@ -1115,6 +1115,7 @@
     X(BOOK_MARGIN_BOTTOM, "下", "Bottom") \
     X(BOOK_MARGIN_LEFT, "左", "Left") \
     X(BOOK_MARGIN_RIGHT, "右", "Right") \
+    X(BOOK_MARGIN_SIDES, "左右", "Sides") \
     X(BOOK_MARGIN, "边距", "Margin") \
     X(BOOK_MARGIN_NARROW, "窄", "Narrow") \
     X(BOOK_MARGIN_STANDARD, "标准", "Standard") \

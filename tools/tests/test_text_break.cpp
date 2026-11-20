@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "vertical_text.h"
+#include "book_margin_rules.h"
 
 using namespace reader;
 
@@ -182,7 +183,15 @@ static void squeeze_latin_off() {
     CHECK(CanFitTrailingPunctuation('.', 101, 100, s));
 }
 
+static void margin_rules() {
+    CHECK(ReaderSymmetricSideMargin(16, 24) == 24);
+    CHECK(ReaderSymmetricSideMargin(56, 56) == 40);
+    CHECK(ReaderSymmetricSideMargin(0, 3) == 5);
+    CHECK(ReaderSymmetricSideMargin(30, 30) == 30);
+}
+
 int main() {
+    margin_rules();
     justify_slots_latin();
     justify_slots_cjk_unchanged();
     squeeze_latin_off();

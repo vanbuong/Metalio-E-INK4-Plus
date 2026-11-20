@@ -605,6 +605,7 @@ extern const char* BOOK_MARGIN_TOP;
 extern const char* BOOK_MARGIN_BOTTOM;
 extern const char* BOOK_MARGIN_LEFT;
 extern const char* BOOK_MARGIN_RIGHT;
+extern const char* BOOK_MARGIN_SIDES;
 extern const char* BOOK_MARGIN;
 extern const char* BOOK_MARGIN_NARROW;
 extern const char* BOOK_MARGIN_STANDARD;

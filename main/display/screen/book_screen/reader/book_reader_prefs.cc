@@ -9,6 +9,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include "book_screen/reader/book_reader_prefs.h"
+#include "book_screen/reader/book_margin_rules.h"
 #include "assets/lang_config.h"
 #include "epd_reader_aa.h"
 #include "sd_paths.h"
@@ -53,7 +54,7 @@ static constexpr BookMarginPreset kMarginTable[kBookReaderMarginPresetCount] = {
     {16, 16, 16, 12},
     {24, 24, 24, 16},
     {40, 40, 36, 24},
-    {56, 56, 48, 32},
+    {40, 40, 48, 32},
 };
 
 static char s_font_file[kMaxFileLen + 1] = {};
@@ -80,8 +81,8 @@ static constexpr int kTextOptionCount = static_cast<int>(BookTextOption::Count);
 static constexpr const char* kTextKeys[] = {"para_px", "letter_px", "line_px", "margin_px", "indent_ch", "ul_offset", "aa_strength",
                                              "margin_top", "margin_bottom", "margin_left", "margin_right"};
 static constexpr int kTextDefaults[] = {-1, 0, -1, -1, 2, 0, 1, -1, -1, -1, -1};
-static constexpr int kTextMin[] = {0, -2, 0, 0, 0, -12, 0, 0, 0, 0, 0};
-static constexpr int kTextMax[] = {104, 12, 48, 64, 3, 12, 2, 64, 64, 64, 64};
+static constexpr int kTextMin[] = {0, -2, 0, 0, 0, -12, 0, 0, 0, kReaderSideMarginMin, kReaderSideMarginMin};
+static constexpr int kTextMax[] = {104, 12, 48, 64, 3, 12, 2, 64, 64, kReaderSideMarginMax, kReaderSideMarginMax};
 static int s_text_values[kTextOptionCount] = {-1, 0, -1, -1, 2, 0, 1, -1, -1, -1, -1};
 
 
@@ -501,8 +502,11 @@ static int MarginValue(BookTextOption option, int preset_value) {
 
 void BookReaderPrefsMarginBox(int preset, int* left, int* right, int* top, int* bottom) {
     const auto& margins = kMarginTable[ClampMargin(preset)];
-    if (left != nullptr) *left = MarginValue(BookTextOption::MarginLeft, margins.left);
-    if (right != nullptr) *right = MarginValue(BookTextOption::MarginRight, margins.right);
+    // 左右边距始终对称：取两侧生效值的较大者，限制在 5–40 像素
+    const int side = ReaderSymmetricSideMargin(MarginValue(BookTextOption::MarginLeft, margins.left),
+                                               MarginValue(BookTextOption::MarginRight, margins.right));
+    if (left != nullptr) *left = side;
+    if (right != nullptr) *right = side;
     if (top != nullptr) *top = MarginValue(BookTextOption::MarginTop, margins.top);
     if (bottom != nullptr) *bottom = MarginValue(BookTextOption::MarginBottom, margins.bottom);
 }
@@ -793,6 +797,14 @@ bool BookReaderPrefsSetTextValue(BookTextOption option, int value) {
     BookReaderPrefsEnsureLoaded();
     const int index = static_cast<int>(option);
     if (index < 0 || index >= kTextOptionCount || value < kTextMin[index] || value > kTextMax[index]) return false;
+    if (option == BookTextOption::MarginLeft || option == BookTextOption::MarginRight) {
+        // 左右边距同一值写入两侧
+        const int left = static_cast<int>(BookTextOption::MarginLeft), right = static_cast<int>(BookTextOption::MarginRight);
+        if (s_text_values[left] == value && s_text_values[right] == value) return false;
+        s_text_values[left] = s_text_values[right] = value;
+        SaveTextValues();
+        return true;
+    }
     if (s_text_values[index] == value) return false;
     s_text_values[index] = value;
     SaveTextValues();

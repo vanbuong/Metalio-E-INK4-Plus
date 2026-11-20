@@ -13,6 +13,7 @@
 #include "book_screen/settings/book_font_multi.h"
 #include "book_screen/book_font_runtime.h"
 #include "book_screen/reader/book_layout_debounce.h"
+#include "book_screen/reader/book_margin_rules.h"
 #include "book_screen/reader/book_layout_worker.h"
 #include "book_screen/reader/book_reader_prefs.h"
 #include "book_screen/reader/book_auto_turn.h"
@@ -821,6 +822,12 @@ static void AddNumericRow(lv_obj_t* parent, const char* title, int option, int v
     }
     UpdateNumericBounds(s_numeric_rows.back());
 }
+static int MarginMinimum(BookTextOption option) {
+    return option == BookTextOption::MarginLeft ? kReaderSideMarginMin : 0;
+}
+static int MarginMaximum(BookTextOption option) {
+    return option == BookTextOption::MarginLeft ? kReaderSideMarginMax : 64;
+}
 static void OnMarginSide(lv_event_t* event) {
     lv_event_stop_bubbling(event);
     const auto option = static_cast<BookTextOption>(reinterpret_cast<intptr_t>(lv_event_get_user_data(event)));
@@ -1088,16 +1095,19 @@ static void BuildSheetSettings(lv_obj_t* body) {
         AddNumericRow(body, BOOK_PARA_GAP_TITLE, static_cast<int>(BookTextOption::ParaGap), TextValue(BookTextOption::ParaGap), 0, 104, 2, true, column, row_height);
         AddNumericRow(body, BOOK_LETTER_GAP, static_cast<int>(BookTextOption::LetterGap), TextValue(BookTextOption::LetterGap), -2, 12, 1, true, column, row_height);
         AddNumericRow(body, BOOK_LINE_GAP, static_cast<int>(BookTextOption::LineGap), TextValue(BookTextOption::LineGap), 0, 48, 1, true, column, row_height);
-        const char* sides[] = {BOOK_MARGIN_TOP, BOOK_MARGIN_BOTTOM, BOOK_MARGIN_LEFT, BOOK_MARGIN_RIGHT};
+        // 左右边距合并为同一档，写入时同时更新两侧
+        const char* sides[] = {BOOK_MARGIN_TOP, BOOK_MARGIN_BOTTOM, BOOK_MARGIN_SIDES};
         const int options[] = {static_cast<int>(BookTextOption::MarginTop), static_cast<int>(BookTextOption::MarginBottom),
-                               static_cast<int>(BookTextOption::MarginLeft), static_cast<int>(BookTextOption::MarginRight)};
+                               static_cast<int>(BookTextOption::MarginLeft)};
         auto* margin = SheetBox(body, width, row_height * 2);
         lv_obj_set_flex_flow(margin, LV_FLEX_FLOW_COLUMN);
         auto* caption = SheetLabel(margin, BOOK_MARGIN);
         lv_obj_add_flag(caption, LV_OBJ_FLAG_FLOATING);
         PlaceSettingsCaption(caption, column);
-        SettingsRow(margin, "", 4, sides, OnMarginSide, options, static_cast<int>(s_margin_option), false, 0, column, row_height);
-        AddNumericRow(margin, "", static_cast<int>(s_margin_option), TextValue(s_margin_option), 0, 64, 2, true, column, row_height);
+        if (s_margin_option == BookTextOption::MarginRight) s_margin_option = BookTextOption::MarginLeft;
+        SettingsRow(margin, "", 3, sides, OnMarginSide, options, static_cast<int>(s_margin_option), false, 0, column, row_height);
+        AddNumericRow(margin, "", static_cast<int>(s_margin_option), TextValue(s_margin_option), MarginMinimum(s_margin_option),
+                      MarginMaximum(s_margin_option), 2, true, column, row_height);
         const char* labels[] = {BOOK_TAP_ZONE_NONE, BOOK_INDENT_ONE, BOOK_INDENT_TWO, BOOK_INDENT_THREE}; const int values[] = {0, 1, 2, 3};
         SettingsRow(body, BOOK_INDENT, 4, labels, TextChoice, values, TextValue(BookTextOption::Indent), false, 0, column, row_height);
         const char* aligns[] = {BOOK_ALIGN_JUSTIFY, BOOK_ALIGN_LEFT}; const int align_values[] = {1, 0};
@@ -1892,6 +1902,8 @@ bool RefreshReadingSheetInPlace() {
         if (row.option >= static_cast<int>(BookTextOption::MarginTop) &&
             row.option <= static_cast<int>(BookTextOption::MarginRight)) {
             row.option = static_cast<int>(s_margin_option);
+            row.minimum = MarginMinimum(s_margin_option);
+            row.maximum = MarginMaximum(s_margin_option);
         }
         if (row.option < static_cast<int>(BookTextOption::Count)) row.value = TextValue(static_cast<BookTextOption>(row.option));
         UpdateNumericValue(row);
