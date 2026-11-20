@@ -64,3 +64,8 @@ void Wallpaper_RequestHydrateFromNvs(Wallpaper_HydrateDoneFn done, void* user);
 
 /** @brief 同步灌入缓存；仅允许在非 LVGL 任务中调用。 */
 void Wallpaper_HydrateFromNvsNow();
+
+/** @brief 待机（true）或关机（false）是否显示当前书籍封面；读内存缓存，任意任务可调用。 */
+bool Wallpaper_BookCoverEnabled(bool for_standby);
+/** @brief 设置并保存书籍封面选项；会写 NVS，仅在内部 RAM 栈的非 LVGL 任务中调用。 */
+void Wallpaper_SetBookCoverEnabled(bool for_standby, bool enabled);

@@ -23,6 +23,8 @@ static constexpr const char* kLogTag = "WpActive";
 static constexpr const char* kNvsNs = "wallpaper";
 static constexpr const char* kNvsKeyShutdown = "shutdown";
 static constexpr const char* kNvsKeyStandby = "standby";
+static constexpr const char* kNvsKeyStandbyCover = "stb_cover"; // 待机显示当前书籍封面
+static constexpr const char* kNvsKeyShutdownCover = "off_cover"; // 关机显示当前书籍封面
 static constexpr size_t kNameMax = SD_FILE_NAME_MAX_BYTES;
 
 enum class WallpaperActiveSlot : uint8_t { Shutdown = 0, Standby = 1, Reading = 2, Count = 3 };
@@ -31,6 +33,7 @@ static char s_names[static_cast<size_t>(WallpaperActiveSlot::Count)][kNameMax + 
 static std::atomic<bool> s_cache_ready{false};
 static std::atomic<bool> s_hydrate_busy{false};
 static std::atomic<bool> s_standby_selected{false};
+static std::atomic<bool> s_book_cover[2]{}; // [0] 关机，[1] 待机；hydrate 后供任意任务读取
 static std::atomic<bool> s_overlay[static_cast<size_t>(WallpaperActiveSlot::Count)]{}; // 与文件槽一一对应
 
 struct WallpaperActiveHydrateWork {
@@ -135,6 +138,11 @@ static std::string ReadSlotNameFromNvs(Settings& settings, WallpaperActiveSlot s
 static void LoadAllFromNvsIntoCache() {
     // 先灌入所有槽；若 SD 未挂载则延迟标记缓存已就绪。
     bool defer_ready = false;
+    {
+        Settings settings(kNvsNs, false);
+        s_book_cover[0].store(settings.GetBool(kNvsKeyShutdownCover, false));
+        s_book_cover[1].store(settings.GetBool(kNvsKeyStandbyCover, false));
+    }
     for (uint8_t s = 0; s < static_cast<uint8_t>(WallpaperActiveSlot::Count); ++s) {
         const WallpaperActiveSlot slot = static_cast<WallpaperActiveSlot>(s);
         Settings settings(kNvsNs, false);
@@ -449,3 +457,13 @@ void Wallpaper_HydrateFromNvsNow() {
     s_hydrate_busy.store(false, std::memory_order_release);
 }
 
+bool Wallpaper_BookCoverEnabled(bool for_standby) {
+    return s_book_cover[for_standby ? 1 : 0].load(std::memory_order_acquire);
+}
+
+void Wallpaper_SetBookCoverEnabled(bool for_standby, bool enabled) {
+    s_book_cover[for_standby ? 1 : 0].store(enabled, std::memory_order_release);
+    Settings settings(kNvsNs, true);
+    settings.SetBool(for_standby ? kNvsKeyStandbyCover : kNvsKeyShutdownCover, enabled);
+    ESP_LOGI(kLogTag, "book cover %s=%d", for_standby ? "standby" : "shutdown", enabled ? 1 : 0);
+}
