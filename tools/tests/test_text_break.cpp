@@ -146,7 +146,46 @@ static void line_local() {
     CHECK(Breaks("so humans could get it", true) == Breaks("so humans could get it", true));
 }
 
+// Counts stretch slots the way ObserveTextGlyph does: decide with the context before cp.
+static int Slots(const std::string& text) {
+    int slots = 0;
+    uint32_t previous = 0;
+    bool context = true;
+    for (const Cp& c : Decode(text)) {
+        if (previous && JustifySlot(previous, c.cp, context)) ++slots;
+        context = NextCjkContext(context, c.cp);
+        previous = c.cp;
+    }
+    return slots;
+}
+
+static void justify_slots_latin() {
+    CHECK(Slots("a  quick brown") == 2);  // the double space counts once
+    CHECK(Slots("a quick word ") == 2);   // a trailing space adds nothing
+    CHECK(Slots("TemperatureSensor") == 0);
+}
+
+static void justify_slots_cjk_unchanged() {
+    const std::vector<Cp> cps = Decode("\xE4\xB8\xAD\xE6\x96\x87\xEF\xBC\x8C\xE6\xB5\x8B\xE8\xAF\x95\xE3\x80\x82");  // 中文，测试。
+    for (size_t i = 1; i < cps.size(); ++i) {
+        CHECK(JustifySlot(cps[i - 1].cp, cps[i].cp, true) == !VerticalClosing(cps[i].cp));
+    }
+}
+
+static void squeeze_latin_off() {
+    TextSpacingState s;
+    s.capacity = 10;
+    s.tail_blank = 2;
+    s.cjk_context = false;
+    CHECK(!CanFitTrailingPunctuation('.', 101, 100, s));
+    s.cjk_context = true;
+    CHECK(CanFitTrailingPunctuation('.', 101, 100, s));
+}
+
 int main() {
+    justify_slots_latin();
+    justify_slots_cjk_unchanged();
+    squeeze_latin_off();
     english_words();
     no_break_inside_word();
     hyphen_and_dash();

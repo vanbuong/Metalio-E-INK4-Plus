@@ -29,8 +29,10 @@ inline int TextTailBlank(uint32_t cp, const lv_font_glyph_dsc_t& glyph) {
 inline void ObserveTextGlyph(TextSpacingState& spacing, const lv_font_t* font, uint32_t cp,
                               const lv_font_glyph_dsc_t& glyph, bool known = true, int letter_gap = 0) {
     spacing.Observe(TextAdvanceWithGap(TextGlyphAdvance(glyph), letter_gap), glyph.ofs_x, glyph.box_w, known,
-        std::max(1, static_cast<int>(font->line_height) / 12), !VerticalClosing(cp),
+        std::max(1, static_cast<int>(font->line_height) / 12), JustifySlot(spacing.previous, cp, spacing.cjk_context),
         known ? std::max(0, TextTailBlank(cp, glyph) + letter_gap) : 0);
+    spacing.previous = cp;
+    spacing.cjk_context = NextCjkContext(spacing.cjk_context, cp);
 }
 
 /** @brief 按实际字形边界累计每处可收紧空白，闭合标点前不分配对齐空白。 */
@@ -62,6 +64,7 @@ inline TextLineSpacing MakeTextLineSpacing(const lv_font_t* font, const std::str
     if (!font) return spacing;
     TextSpacingState state;
     int glyphs = 0;
+    int trailing_blank = 0; // 行尾可断行空白的步进，拉丁语境下悬挂于行外
     uint32_t last_cp = 0;
     for (size_t i = 0; i < text.size();) {
         uint32_t cp = 0;
@@ -74,7 +77,9 @@ inline TextLineSpacing MakeTextLineSpacing(const lv_font_t* font, const std::str
             lv_font_glyph_dsc_t glyph{};
             const bool known = lv_font_get_glyph_dsc(font, &glyph, cp, 0);
             ObserveTextGlyph(state, font, cp, glyph, known, letter_gap);
-            spacing.width += TextAdvanceWithGap(TextGlyphAdvance(glyph), letter_gap);
+            const int advance = TextAdvanceWithGap(TextGlyphAdvance(glyph), letter_gap);
+            spacing.width += advance;
+            trailing_blank = IsBreakingSpace(cp) ? trailing_blank + advance : 0;
         }
         ++glyphs;
         last_cp = cp;
@@ -82,6 +87,7 @@ inline TextLineSpacing MakeTextLineSpacing(const lv_font_t* font, const std::str
     }
     spacing.gaps = vertical ? std::max(0, glyphs - 1) : state.slots;
     spacing.capacity = vertical ? 0 : state.capacity;
+    if (!vertical && !state.cjk_context) spacing.width -= trailing_blank;
     const int need = std::max(0, spacing.width - available);
     if (!vertical && CanFitTrailingPunctuation(last_cp, spacing.width, available, state)) {
         spacing.trim = std::min(need, state.tail_blank);

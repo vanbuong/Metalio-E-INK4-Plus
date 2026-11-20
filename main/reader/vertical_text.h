@@ -56,6 +56,8 @@ struct TextSpacingState {
     bool ink = false; // 已遇到非空字形
     bool seen = false; // 已遇到字符
     bool known = true; // 当前行的字形边界均已知
+    uint32_t previous = 0; // 前一码点，用于判断对齐间隔
+    bool cjk_context = true; // 本行最近强字符为中日韩文字
 
     void Observe(int glyph_advance, int offset, int box_width, bool glyph_known,
                  int gap_limit, bool expand, int trailing_blank = 0) {
@@ -79,9 +81,10 @@ struct TextSpacingState {
     }
 };
 
+// 行尾标点挤入仅用于中文语境；拉丁语境不压缩词距，整词移至下一行。
 inline bool CanFitTrailingPunctuation(uint32_t cp, int width, int available,
                                       const TextSpacingState& spacing) {
-    return (VerticalClosing(cp) || cp == 0x2014 || cp == 0x2026) &&
+    return spacing.cjk_context && (VerticalClosing(cp) || cp == 0x2014 || cp == 0x2026) &&
         width > available && width - available <= spacing.capacity + spacing.tail_blank;
 }
 
@@ -124,6 +127,16 @@ inline bool CanBreakBetween(uint32_t before, uint32_t after, bool cjk_context) {
     if (IsBreakingSpace(before)) return !IsBreakingSpace(after);
     const bool dash = before == '-' || before == 0x2010 || before == 0x2013 || before == 0x2014;
     return dash && !cjk_context && (a == BreakClass::kLatin || (after >= '0' && after <= '9'));
+}
+
+/** @brief cp 之前的间隔是否参与两端对齐：中文语境逐字分配；拉丁语境仅词间空白处分配 */
+inline bool JustifySlot(uint32_t before, uint32_t cp, bool cjk_context) {
+    const BreakClass b = ClassifyBreak(before), a = ClassifyBreak(cp);
+    if (b == BreakClass::kCjk || a == BreakClass::kCjk ||
+        (b == BreakClass::kNeutral && a == BreakClass::kNeutral && cjk_context)) {
+        return !VerticalClosing(cp);
+    }
+    return IsBreakingSpace(before) && !IsBreakingSpace(cp);
 }
 
 // 仅记录最后一个合法断点；源偏移与 UTF-8 长度分开保存，兼容 GBK TXT。
