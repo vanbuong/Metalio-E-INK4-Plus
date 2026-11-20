@@ -1,0 +1,14 @@
+# Paths graphify should not index (gitignore syntax). .gitignore is also honoured.
+# Vendored / generated / large non-source inputs:
+/components/
+/build/
+/managed_components/
+/main/assets/
+/tools/ttf-fonts/
+/docs/datasheets/
+/docs/images/
+# Vendored LVGL inside the PC e-book emulator (the emulator's own src/ stays indexed):
+/tools/ebook/emulator/lvgl/
+# Agent tooling, not firmware:
+/.claude/
+/metalio-claude-kit/

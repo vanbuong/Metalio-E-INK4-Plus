@@ -1,0 +1,4 @@
+# graphify project config (graphify 0.9.x). One key=value per line.
+# .h is ambiguous (C / C++ / ObjC); this firmware mixes C and C++ (.cc) and
+# many headers declare C++ classes, so parse every .h as C++.
+language.h=cpp

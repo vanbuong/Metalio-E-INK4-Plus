@@ -52,3 +52,6 @@ tools/elf_app/*/assets.bin
 
 # Distributed separately: exceeds the Git hosting file limit.
 /tools/fontpack/fonts/Extended-Fonts/metalio/e-ink/fonts/extended-fonts.fontpack
+
+# graphify knowledge-graph output (regenerate with: graphify update .)
+graphify-out/
