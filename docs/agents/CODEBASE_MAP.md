@@ -7,14 +7,19 @@ before relying on them if `git log fd3fa03..HEAD -- <area>` shows changes. Areas
 ## Build & run
 - Toolchain: ESP-IDF v6.1 via EIM; always go through `./tools/idf.ps1 <args>` (picks the newest
   6.1.x from `C:\Espressif\tools\eim_idf.json`, override `$env:GW_EIM_JSON` / `$env:GW_IDF_PATH`
-  which must match an EIM-listed path — `tools/idf.ps1:13,22-30,44-46`). **Build: unverified in
-  this mapping session.**
+  which must match an EIM-listed path — `tools/idf.ps1:13,22-30,44-46`). **Build verified
+  2026-11-21** (`./tools/idf.ps1 build` exit 0). ⚠ The app is 0x4f35b0 B in a 0x500000 B OTA
+  slot — **~51.8 KB (1 %) free**; the build already prints "smallest app partition is nearly
+  full". Pre-existing warnings: `main/display/font/ttf_convert.cc:125`, `main/display/a2ui/a2ui_image.cc:490`.
 - Project version: `PROJECT_VER` in `CMakeLists.txt:5`. `main/assets/fonts/font.fontpack` is
   flashed to `font_data` by `esptool_py_flash_to_partition` (`CMakeLists.txt:12-19`).
 - Board variant (Kconfig `BOARD_TYPE`, `main/Kconfig.projbuild:3-15`): `METALIO_E_INK4_PLUS`
   (current `sdkconfig`) or `..._GLOBAL` (same sources; sets `en-US` default and forces Wi-Fi —
   `main/CMakeLists.txt:366-368`, `main/boards/common/board/dual_network_board.cc:32,63`).
-- Host tests: `python tools/tests/test_lifecycle_fixes.py` — the only host test. Compiles C
+- Host tests (reader text rules): `python tools/tests/test_text_break.py` → `text_break: PASS`
+  (g++ ≥ C++17 on PATH or `CXX`; tests the header-only rules in `main/reader/vertical_text.h`
+  and `book_screen/reader/book_margin_rules.h`). Verified 2026-11-21 with MinGW g++ 13.1.
+- Host tests (lifecycle): `python tools/tests/test_lifecycle_fixes.py`. Compiles C
   harnesses with MSVC; paths hard-coded to VS2022 BuildTools 14.44.35207 / SDK 10.0.26100.0
   (`tools/tests/test_lifecycle_fixes.py:12-13`). Covers Wi-Fi scan init cleanup and display feeder
   teardown via fault injection; no pytest. **Not run in this session.**
@@ -179,6 +184,13 @@ Storage: books in `/sdcard/metalio/e-ink/books` (`book_session.h:32`); sidecars 
 `reader` keys `rec0..3`, `hs_*` (`book_home_snapshot.cc:32-36`). PNG/JPEG decode in
 `image_stream.cc`, `jpeg/` (PSRAM, internal fallback). `EBOOK_EMULATOR` guards let the PC emulator
 build this code — keep them.
+Line breaking (horizontal): one shared rule, `CanBreakBetween` / `VerticalBreakState::Observe(...,
+words)` in `vertical_text.h` — CJK context keeps the per-character rule, Latin context (English,
+Vietnamese) breaks only after spaces/hyphens; spaces and combining marks hang at line end.
+Justification stretches only `JustifySlot` gaps (word gaps in Latin text). Changing the rules
+needs a bump of `kLayoutRulesVersion` (`book_session.cc`) so page caches rebuild. Alignment
+(Justified/Left) is draw-time only (`TextStyle::justify`, NVS `justify`); side margins are one
+symmetric value 5–40 px (`book_margin_rules.h`). Spec: `docs/specs/2026-11-21-reader-word-wrap-design.md`.
 
 ### Services — top-level `main/`
 - OTA: `ota.cc/.h` (`MarkCurrentVersionValid` `:344`, `StartUpgrade*` `:516-526`; writes next
