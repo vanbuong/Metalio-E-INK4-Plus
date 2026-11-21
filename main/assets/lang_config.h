@@ -258,6 +258,8 @@ extern const char* SETTINGS_POWER_STANDBY_TITLE;
 extern const char* SETTINGS_POWER_STANDBY_HINT;
 extern const char* SETTINGS_POWER_OFF_TITLE;
 extern const char* SETTINGS_POWER_OFF_HINT;
+extern const char* SETTINGS_POWER_SCREEN_WALLPAPER;
+extern const char* SETTINGS_POWER_SCREEN_COVER;
 extern const char* SETTINGS_CONV_TITLE;
 extern const char* SETTINGS_CONV_HINT;
 extern const char* SETTINGS_CONV_TTS_ON;

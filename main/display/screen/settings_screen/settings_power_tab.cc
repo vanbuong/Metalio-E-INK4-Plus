@@ -7,6 +7,13 @@
 #include "settings_common.h"
 #include "ui_scale.h"
 #include "screen_text.h"
+#include "application.h"
+#include "screen_common.h"
+#include "reader/book_home_snapshot.h"
+#include "wallpaper_screen/book_cover_wallpaper.h"
+#include "wallpaper_screen/wallpaper_active.h"
+
+#include <string>
 
 namespace {
 
@@ -56,6 +63,8 @@ const char* SecOptionTitle(int sec) {
 struct PowerUi {
     lv_obj_t* mhz_btns[kMhzCount] = {};
     lv_obj_t* grace_btns[kNetGraceCount] = {};
+    lv_obj_t* cover_btns[2][2] = {}; // [0] 关机 / [1] 待机，[0] 壁纸 / [1] 书籍封面
+    bool cover_on[2] = {}; // 界面当前选择，保存在后台进行
 };
 
 PowerUi s_ui;
@@ -76,6 +85,37 @@ void RefreshOptions() {
             SettingsStyleSelectable(s_ui.grace_btns[i], lv_obj_get_child(s_ui.grace_btns[i], 0),
                                     kNetGraceOptions[i].sec == grace_s);
         }
+    }
+    for (int screen = 0; screen < 2; ++screen) {
+        for (int choice = 0; choice < 2; ++choice) {
+            lv_obj_t* btn = s_ui.cover_btns[screen][choice];
+            if (btn != nullptr) {
+                SettingsStyleSelectable(btn, lv_obj_get_child(btn, 0), s_ui.cover_on[screen] == (choice == 1));
+            }
+        }
+    }
+}
+
+// user_data：bit1 为待机，bit0 为书籍封面
+void OnCoverChoiceClicked(lv_event_t* e) {
+    const intptr_t data = reinterpret_cast<intptr_t>(lv_event_get_user_data(e));
+    const bool for_standby = (data & 2) != 0;
+    const bool on = (data & 1) != 0;
+    const int screen = for_standby ? 1 : 0;
+    if (s_ui.cover_on[screen] == on) {
+        return;
+    }
+    s_ui.cover_on[screen] = on;
+    RefreshOptions();
+    // NVS 写入需在内部 RAM 栈任务中进行；开启时为最近书籍准备整屏封面
+    const std::string latest = on ? reader::book_home_snapshot::LoadLatestAbsPath() : std::string();
+    if (!Application::GetInstance().Schedule([for_standby, on, latest]() {
+            Wallpaper_SetBookCoverEnabled(for_standby, on);
+            if (on) BookCoverWallpaper_RequestPrepare(latest.c_str());
+        }, Application::TaskDomain::Storage)) {
+        s_ui.cover_on[screen] = !on;
+        RefreshOptions();
+        ScreenShowToast(Lang::Strings::WALLPAPER_ENABLE_FAIL);
     }
 }
 
@@ -160,6 +200,18 @@ lv_obj_t* CreateOptionRow(lv_obj_t* page) {
     return row;
 }
 
+/** @brief 待机或关机画面：壁纸 / 书籍封面 */
+void AddCoverChoiceRow(lv_obj_t* page, bool for_standby) {
+    const int screen = for_standby ? 1 : 0;
+    s_ui.cover_on[screen] = Wallpaper_BookCoverEnabled(for_standby);
+    lv_obj_t* row = CreateOptionRow(page);
+    const intptr_t base = for_standby ? 2 : 0;
+    s_ui.cover_btns[screen][0] = CreateCompactOption(row, Lang::Strings::SETTINGS_POWER_SCREEN_WALLPAPER,
+                                                     OnCoverChoiceClicked, base);
+    s_ui.cover_btns[screen][1] = CreateCompactOption(row, Lang::Strings::SETTINGS_POWER_SCREEN_COVER,
+                                                     OnCoverChoiceClicked, base | 1);
+}
+
 }  // namespace
 
 void SettingsPowerTab_Reset() {
@@ -197,11 +249,13 @@ void SettingsPowerTab_Build(lv_obj_t* page) {
 
     AddSectionTitle(page, Lang::Strings::SETTINGS_POWER_STANDBY_TITLE);
     AddSectionHint(page, Lang::Strings::SETTINGS_POWER_STANDBY_HINT);
+    AddCoverChoiceRow(page, true);
 
     AddSectionDivider(page);
 
     AddSectionTitle(page, Lang::Strings::SETTINGS_POWER_OFF_TITLE);
     AddSectionHint(page, Lang::Strings::SETTINGS_POWER_OFF_HINT);
+    AddCoverChoiceRow(page, false);
 
     RefreshOptions();
 }

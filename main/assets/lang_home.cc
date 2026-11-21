@@ -705,6 +705,8 @@
     X(SETTINGS_POWER_STANDBY_HINT, "无操作 5 分钟后进入浅睡待机", "Enters light sleep after 5 minutes of inactivity")                     \
     X(SETTINGS_POWER_OFF_TITLE, "自动关机（默认 30 分钟）", "Auto power-off (def 30 min)")                      \
     X(SETTINGS_POWER_OFF_HINT, "待机累计 30 分钟后自动关机", "Powers off after 30 minutes in standby")                      \
+    X(SETTINGS_POWER_SCREEN_WALLPAPER, "壁纸", "Wallpaper") \
+    X(SETTINGS_POWER_SCREEN_COVER, "书籍封面", "Book cover") \
     X(SETTINGS_CONV_TITLE, "语音播报", "Voice playback")                                                       \
     X(SETTINGS_CONV_HINT, "控制百问AI是否播报语音\n关闭后仅显示文字", "Whether Ask AI speaks aloud\nOff = text only") \
     X(SETTINGS_CONV_TTS_ON, "开启 TTS", "TTS on")                                                              \
