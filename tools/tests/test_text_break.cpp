@@ -270,6 +270,16 @@ static void tag_matches() {
     CHECK(!ScreenCoverTagMatches("/sdcard/a.epub", 14, nullptr));
 }
 
+static void cover_usable() {
+    const char* book = "/sdcard/a.epub";
+    CHECK(ScreenCoverUsable(book, book, true, 3, 3));
+    CHECK(!ScreenCoverUsable(book, "/sdcard/b.epub", true, 3, 3));  // a newer book is open
+    CHECK(!ScreenCoverUsable(book, book, false, 3, 3));             // card removed
+    CHECK(!ScreenCoverUsable(book, book, true, 3, 4));              // card re-mounted / swapped
+    CHECK(!ScreenCoverUsable("", "", true, 3, 3));                  // nothing prepared
+    CHECK(!ScreenCoverUsable(nullptr, book, true, 3, 3));
+}
+
 static void margin_rules() {
     CHECK(ReaderSymmetricSideMargin(16, 24) == 24);
     CHECK(ReaderSymmetricSideMargin(56, 56) == 40);
@@ -281,6 +291,7 @@ int main() {
     fit_to_panel();
     resize_bilinear();
     tag_matches();
+    cover_usable();
     zhuyin_tone_marks_neutral();
     hanging_only_in_latin_context();
     line_start_digits();

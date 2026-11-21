@@ -58,4 +58,12 @@ inline bool ScreenCoverTagMatches(const char* tag, size_t tag_len, const char* b
     return tag_len > 0 && tag_len == std::strlen(book_path) && std::memcmp(tag, book_path, tag_len) == 0;
 }
 
+/** @brief 整屏封面可用：属于最近书籍，且 SD 仍是准备封面时的同一次挂载 */
+inline bool ScreenCoverUsable(const char* ready_book, const char* latest_book, bool sd_mounted,
+                              unsigned ready_mount_generation, unsigned mount_generation) {
+    return ready_book != nullptr && latest_book != nullptr && ready_book[0] != '\0' &&
+           std::strcmp(ready_book, latest_book) == 0 && sd_mounted &&
+           ready_mount_generation == mount_generation;
+}
+
 } // namespace reader

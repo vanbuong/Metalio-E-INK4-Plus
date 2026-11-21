@@ -94,7 +94,7 @@ static void ClearStatusBindings() {
 
 static bool PreferWallpaperVariant() {
     // 书籍封面就绪时也走壁纸形态；无封面回退原有壁纸或经典待机
-    return Wallpaper_HasStandbySelection() || (Wallpaper_BookCoverEnabled(true) && BookCoverWallpaper_Ready());
+    return Wallpaper_StandbyShowsImage();
 }
 
 static void TeardownVariant() {

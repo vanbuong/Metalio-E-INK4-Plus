@@ -8,10 +8,12 @@
 #include "screen_cover_rules.h"
 #include "sd_access.h"
 #include "sd_paths.h"
+#include "SdCardManager.hpp"
 
 #include <atomic>
 #include <cstdio>
 #include <mutex>
+#include <new>
 #include <string>
 #include <vector>
 
@@ -32,6 +34,7 @@ constexpr size_t kTagMaxBytes = SD_FILE_PATH_CAPACITY;
 std::mutex s_mu; // 保护待处理请求、运行标志与就绪书籍
 std::string s_pending; // 最新请求的书籍绝对路径，空表示无待处理
 std::string s_ready_book; // 已就绪整屏封面所属书籍
+unsigned s_ready_mount_generation = 0; // 准备封面时的 SD 挂载代次
 bool s_running = false; // 准备任务是否存活
 std::atomic<uint32_t> s_generation{0}; // 每次请求递增，旧任务据此放弃写入
 
@@ -43,6 +46,7 @@ bool FileNonEmpty(const char* path) {
 void SetReady(const std::string& book) {
     std::lock_guard<std::mutex> lock(s_mu);
     s_ready_book = book;
+    s_ready_mount_generation = sd_access::MountGeneration();
 }
 
 void ClearReady() {
@@ -63,7 +67,18 @@ bool Stale(uint32_t generation) {
     return s_generation.load(std::memory_order_acquire) != generation;
 }
 
+void PrepareLocked(const std::string& book, uint32_t generation);
+
+// 整屏缓冲约 0.8 MB：PSRAM 不足时放弃本次准备，回退壁纸，不让任务异常终止
 void Prepare(const std::string& book, uint32_t generation) {
+    try {
+        PrepareLocked(book, generation);
+    } catch (const std::bad_alloc&) {
+        ESP_LOGW(TAG, "screen cover skipped reason=no_memory");
+    }
+}
+
+void PrepareLocked(const std::string& book, uint32_t generation) {
     sd_access::Transaction access;
     if (!access || sd_access::IsQuiescing()) {
         ESP_LOGW(TAG, "screen cover skipped reason=sd_busy");
@@ -93,6 +108,7 @@ void Prepare(const std::string& book, uint32_t generation) {
         reader::ResizeL8Bilinear(src.pixels.data(), src.width, src.height, panel.pixels.data(), fit_w, fit_h);
         panel.width = static_cast<uint16_t>(fit_w);
         panel.height = static_cast<uint16_t>(fit_h);
+        std::vector<uint8_t>().swap(src.pixels); // 编码前释放源图，降低 PSRAM 峰值
         src.Reset();
     }
     std::vector<uint8_t> bytes;
@@ -155,11 +171,19 @@ void BookCoverWallpaper_RequestPrepare(const char* book_abs_path) {
 
 bool BookCoverWallpaper_Ready() {
     std::string ready;
+    unsigned ready_generation = 0;
     {
         std::lock_guard<std::mutex> lock(s_mu);
         ready = s_ready_book;
+        ready_generation = s_ready_mount_generation;
     }
-    return !ready.empty() && ready == reader::book_home_snapshot::LoadLatestAbsPath();
+    const std::string latest = reader::book_home_snapshot::LoadLatestAbsPath();
+    return reader::ScreenCoverUsable(ready.c_str(), latest.c_str(), SdCardManager::GetInstance().IsMounted(),
+                                     ready_generation, sd_access::MountGeneration());
+}
+
+bool Wallpaper_StandbyShowsImage() {
+    return Wallpaper_HasStandbySelection() || (Wallpaper_BookCoverEnabled(true) && BookCoverWallpaper_Ready());
 }
 
 bool BookCoverWallpaper_TryResolvePath(char* out_path, size_t out_len) {
