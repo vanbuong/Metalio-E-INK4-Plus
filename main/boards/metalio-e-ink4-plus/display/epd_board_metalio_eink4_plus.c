@@ -16,6 +16,7 @@
 
 #include <driver/gpio.h>
 #include <driver/i2c_master.h>
+#include <driver/uart.h>
 #include <esp_rom_sys.h>
 #include <esp_log.h>
 #include <esp_system.h>
@@ -260,6 +261,19 @@ esp_err_t epd_board_metalio_eink4_plus_pa_set(bool on) {
     return output_update(CFG_PORT_CTRL, CFG_PIN_PA_EN, on ? CFG_PIN_PA_EN : 0);
 }
 
+// P14 断电期间释放蓝牙 UART 引脚：主控 TX 空闲为高，会经蓝牙芯片 RX 反向供电，使其无法真正复位。
+static void bt_uart_pins_release(void) {
+    gpio_set_direction(BT_AUDIO_TX_PIN, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(BT_AUDIO_TX_PIN, GPIO_FLOATING);
+    gpio_set_direction(BT_AUDIO_RX_PIN, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(BT_AUDIO_RX_PIN, GPIO_FLOATING);
+}
+
+// 上电后把引脚交还 UART1（恢复 TX 输出与 RX 上拉）。
+static esp_err_t bt_uart_pins_restore(void) {
+    return uart_set_pin(UART_NUM_1, BT_AUDIO_TX_PIN, BT_AUDIO_RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+}
+
 esp_err_t epd_board_metalio_eink4_plus_bt_power_reset(void) {
     output_lock();
     if (!s_ioexp_ok || s_bt_reset_active) {
@@ -284,6 +298,7 @@ esp_err_t epd_board_metalio_eink4_plus_bt_power_reset(void) {
     }
     output_unlock();
     if (low_err == ESP_OK) {
+        bt_uart_pins_release();
         ESP_LOGI(TAG, "BT reset: P14 low, motor pulse %u ms, power wait %lu ms",
                  (unsigned)POWER_DISCHARGE_MOTOR_PULSE_MS, (unsigned long)kBtResetLowMs);
         if (motor_on_err == ESP_OK) {
@@ -308,12 +323,17 @@ esp_err_t epd_board_metalio_eink4_plus_bt_power_reset(void) {
     const esp_err_t high_err = output_write_locked(CFG_PORT_INT);
     const bool rail_on = (s_outputs[CFG_PORT_INT].desired & CFG_PIN_BT_PA_PWR) != 0;
     output_unlock();
+    const esp_err_t pin_err = low_err == ESP_OK ? bt_uart_pins_restore() : ESP_OK;
+    if (pin_err != ESP_OK) {
+        ESP_LOGE(TAG, "BT reset: UART pin restore failed: %s", esp_err_to_name(pin_err));
+    }
     if (high_err != ESP_OK) return high_err;
     if (off_err != ESP_OK) return off_err;
     if (!rail_on) return ESP_ERR_INVALID_STATE;
     if (low_err != ESP_OK) return low_err;
     if (motor_on_err != ESP_OK) return motor_on_err;
     if (motor_off_err != ESP_OK) return motor_off_err;
+    if (pin_err != ESP_OK) return pin_err;
     ESP_LOGI(TAG, "BT reset: P14 high");
     return ESP_OK;
 }
