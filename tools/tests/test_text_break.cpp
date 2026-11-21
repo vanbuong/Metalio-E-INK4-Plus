@@ -7,6 +7,7 @@
 #include "vertical_text.h"
 #include "book_margin_rules.h"
 #include "screen_cover_rules.h"
+#include "system_font_rules.h"
 
 using namespace reader;
 
@@ -228,6 +229,76 @@ static void line_start_digits() {
     CHECK(SeededSlots("1990 was a year") == 3);
 }
 
+static void sysfont_ttf_names() {
+    using sysfont::TtfStyle;
+    auto r = sysfont::ParseTtfName("Bookerly.ttf");
+    CHECK(r.ok && r.family == "Bookerly" && r.style == TtfStyle::kRegular);
+    r = sysfont::ParseTtfName("Bookerly Bold.ttf");
+    CHECK(r.ok && r.family == "Bookerly" && r.style == TtfStyle::kBold);
+    r = sysfont::ParseTtfName("Bookerly-Regular.TTF");
+    CHECK(r.ok && r.family == "Bookerly" && r.style == TtfStyle::kRegular);
+    r = sysfont::ParseTtfName("Bookerly-BoldItalic.ttf");
+    CHECK(r.ok && r.style == TtfStyle::kOther);
+    r = sysfont::ParseTtfName("Bookerly Bold Italic.ttf");
+    CHECK(r.ok && r.style == TtfStyle::kOther);
+    r = sysfont::ParseTtfName("Bookerly Italic.otf");
+    CHECK(r.ok && r.style == TtfStyle::kOther);
+    r = sysfont::ParseTtfName("Bookerly Display Bold.ttf");
+    CHECK(r.ok && r.family == "Bookerly Display" && r.style == TtfStyle::kBold);
+    r = sysfont::ParseTtfName("Noto Sans-SemiBold.ttf");
+    CHECK(r.ok && r.family == "Noto Sans" && r.style == TtfStyle::kBold);
+    CHECK(!sysfont::ParseTtfName("Bookerly.zip").ok);
+    CHECK(!sysfont::ParseTtfName(".ttf").ok);
+}
+
+static void sysfont_pick_files() {
+    const std::vector<std::string> names = {"Bookerly Italic.ttf", "bookerly bold.ttf", "Bookerly.ttf",
+                                            "Literata-Bold.ttf"};
+    auto f = sysfont::PickTtfFiles(names, "Bookerly");
+    CHECK(f.regular == "Bookerly.ttf" && f.bold == "bookerly bold.ttf");
+    f = sysfont::PickTtfFiles(names, "Literata");
+    CHECK(f.regular.empty());  // no regular file: family not usable
+    f = sysfont::PickTtfFiles({"Bookerly.ttf"}, "BOOKERLY");
+    CHECK(f.regular == "Bookerly.ttf" && f.bold.empty());
+}
+
+static void sysfont_ef_names() {
+    auto e = sysfont::ParseEfName("literata_30_2.ef");
+    CHECK(e.ok && e.family == "literata" && e.px == 30 && e.bpp == 2);
+    e = sysfont::ParseEfName("font_misans_regular_25_2.ef");
+    CHECK(e.ok && e.family == "font_misans_regular" && sysfont::IsBuiltinFamily(e.family));
+    CHECK(sysfont::IsBuiltinFamily("MiSans") && !sysfont::IsBuiltinFamily("Bookerly"));
+    CHECK(!sysfont::ParseEfName("literata.ef").ok);
+    CHECK(!sysfont::ParseEfName("literata_30_2.ttf").ok);
+    CHECK(sysfont::EfRoleFile("literata", 30, 4) == "literata_30_4.ef");
+}
+
+static void sysfont_roles_metrics() {
+    CHECK(sysfont::RoleIndex(30, 2) == 0 && sysfont::RoleIndex(30, 4) == 1);
+    CHECK(sysfont::RoleIndex(25, 2) == 2 && sysfont::RoleIndex(18, 2) == 3);
+    CHECK(sysfont::RoleIndex(28, 2) < 0 && sysfont::RoleIndex(36, 2) < 0 && sysfont::RoleIndex(30, 1) < 0);
+    auto m = sysfont::CombineMetrics(35, 8, 20, 5);  // MiSans taller: unchanged
+    CHECK(m.line_height == 35 && m.base_line == 8);
+    m = sysfont::CombineMetrics(35, 8, 30, 10);      // face taller both ways
+    CHECK(m.line_height == 40 && m.base_line == 10);
+}
+
+static void sysfont_coverage_choice() {
+    CHECK(sysfont::InCoverage('A') && sysfont::InCoverage(0x7E) && !sysfont::InCoverage(0x7F));
+    CHECK(sysfont::InCoverage(0x1EA0) && sysfont::InCoverage(0x1EF9) && !sysfont::InCoverage(0x1EFA));
+    CHECK(sysfont::InCoverage(0x01B0) && !sysfont::InCoverage(0x4E2D));  // ư yes, 中 no
+    auto c = sysfont::ParseChoice("");
+    CHECK(c.kind == sysfont::FontKind::kTtf && c.family == "Bookerly");
+    c = sysfont::ParseChoice("builtin");
+    CHECK(c.kind == sysfont::FontKind::kBuiltin);
+    c = sysfont::ParseChoice("ef:literata");
+    CHECK(c.kind == sysfont::FontKind::kEf && c.family == "literata");
+    c = sysfont::ParseChoice("ttf:");
+    CHECK(c.kind == sysfont::FontKind::kTtf && c.family == "Bookerly");  // malformed → default
+    CHECK(sysfont::FormatChoice({sysfont::FontKind::kTtf, "Bookerly"}) == "ttf:Bookerly");
+    CHECK(sysfont::FormatChoice({sysfont::FontKind::kBuiltin, ""}) == "builtin");
+}
+
 static void fit_to_panel() {
     int w = 0, h = 0;
     CHECK(FitToPanel(600, 800, 684, 1216, &w, &h) && w == 684 && h == 912);
@@ -288,6 +359,11 @@ static void margin_rules() {
 }
 
 int main() {
+    sysfont_ttf_names();
+    sysfont_pick_files();
+    sysfont_ef_names();
+    sysfont_roles_metrics();
+    sysfont_coverage_choice();
     fit_to_panel();
     resize_bilinear();
     tag_matches();

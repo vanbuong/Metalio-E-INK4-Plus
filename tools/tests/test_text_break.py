@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CXX = os.environ.get("CXX", "g++")
-INCLUDES = [ROOT / "main/reader", ROOT / "main/display/screen/book_screen/reader"]
+INCLUDES = [ROOT / "main/reader", ROOT / "main/display/screen/book_screen/reader", ROOT / "main/display/font"]
 
 with tempfile.TemporaryDirectory(prefix="metalio-text-break-") as output:
     exe = Path(output) / "text_break.exe"
