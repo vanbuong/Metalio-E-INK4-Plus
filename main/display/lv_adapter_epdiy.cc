@@ -27,6 +27,7 @@
 #include "epd_font24.h" // EPD_LOGICAL_W/H、epd_logical_to_physical
 #include "epdiy.h"
 #include "fontpack_lvgl.h"
+#include "system_font.h"
 #include "frontlight.h"
 #include "home_screen/home_screen.h"
 #include "metalio_epd.h"
@@ -467,6 +468,7 @@ bool LvAdapterEpdiy::Init() {
     }
 
     Lang::InitFromNvs();
+    SystemFontInitAtBoot(); // 仅读取 NVS 选择；SD 挂载后由 Application::Start 开始加载
     HomeScreen::LoadCardStyle();
     // 对齐 397：开机在 Init 线程预读 NVS，避免首次进阅读时 FontFile 未 ready 落默认字
     BookReaderPrefsEnsureLoaded();

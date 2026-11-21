@@ -28,6 +28,7 @@
 #include "settings_screen/settings_test/settings_test_margin_screen.h"
 #include "vk_key_handler.h"
 #include "sd_access.h"
+#include "system_font.h"
 #include "sd_log_writer.h"
 
 #include <atomic>
@@ -238,6 +239,7 @@ void StandbyScreen::Dismiss() {
     ExitEpdSleep();
     sd_access::Resume();
     SdLogWriter_OnSdMounted();
+    SystemFontOnResume(); // 重试待机时中断的系统字体加载
     ESP_LOGI(TAG, "dismiss overlay (under=%p variant=%u)", static_cast<void*>(s_underlying_scr),
              static_cast<unsigned>(s_variant));
 

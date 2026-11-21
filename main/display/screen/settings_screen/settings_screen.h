@@ -17,6 +17,8 @@ public:
     static lv_obj_t* CreateTest();
     /** @brief 切换语言后重建设置页文案与布局 */
     static void ReloadAfterLanguageChange();
+    /** @brief 系统字体生效后重建设置页并停留在主题页 */
+    static void ReloadAfterSystemFontChange();
 };
 
 /** @brief 进入待机时暂停设置页实时刷新（前光等） */

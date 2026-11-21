@@ -23,6 +23,7 @@
 #include "epd_board_metalio_eink4_plus.h"
 #include "lv_adapter_display.h"
 #include "sd_access.h"
+#include "system_font.h"
 #include "display/font/ttf_convert.h"
 #include "standby_screen/standby_screen.h"
 
@@ -388,7 +389,8 @@ PowerHwCpuFreqHold::~PowerHwCpuFreqHold() {
 
 static void PwrOffTask(void* /*arg*/) {
     ttf_convert::Cancel();
-    while (ttf_convert::Busy()) vTaskDelay(pdMS_TO_TICKS(20));
+    SystemFontCancel();
+    while (ttf_convert::Busy() || SystemFontBusy()) vTaskDelay(pdMS_TO_TICKS(20));
     power_hw_pa_set(false);
     while (power_hw_standby_rails_restore() != ESP_OK) {
         ESP_LOGE(TAG, "power-off: rail restore failed; retry before drawing");

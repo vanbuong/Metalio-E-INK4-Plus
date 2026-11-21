@@ -34,6 +34,7 @@
 #include "ota_ignore.h"
 #include "reader/book_home_snapshot.h"
 #include "wallpaper_screen/book_cover_wallpaper.h"
+#include "system_font.h"
 #include "device_wifi_location.h"
 #include "api_endpoints.h"
 #include "chat_cloud.h"
@@ -1822,6 +1823,8 @@ void Application::Start() {
 
     // 首页仅恢复已有 NVS 快照，不扫描 SD 书库。
     reader::book_home_snapshot::HydrateFromNvs();
+    // SD 已挂载：后台加载所选系统字体，完成后在界面线程生效
+    SystemFontStartBoot();
     // 封面选项开启时后台核对整屏封面归属，常规情况只读标记文件
     BookCoverWallpaper_RequestPrepare(reader::book_home_snapshot::LoadLatestAbsPath().c_str());
 

@@ -438,6 +438,11 @@ void SettingsScreen::ReloadAfterLanguageChange() {
     ScreenLoadReplace(CreateInternal());
 }
 
+void SettingsScreen::ReloadAfterSystemFontChange() {
+    s_pending_tab = SettingsTab::kTheme;
+    ScreenLoadReplace(CreateInternal());
+}
+
 void SettingsScreen_OnEnterStandby() {
     SettingsLogUpload_Teardown();
 }
