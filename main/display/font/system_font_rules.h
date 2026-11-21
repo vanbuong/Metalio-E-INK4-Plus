@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-// 系统字体纯规则：文件名解析、角色表、行度量合并、覆盖范围、NVS 选择串。
+// 系统字体纯规则：文件名解析、角色表、覆盖范围、NVS 选择串。
 // 不依赖 IDF / LVGL，供固件与主机测试共用。
 
 namespace sysfont {
@@ -36,11 +36,6 @@ struct TtfFiles {
 struct Choice {
     FontKind kind = FontKind::kTtf;
     std::string family;
-};
-
-struct Metrics {
-    int line_height = 0;
-    int base_line = 0;
 };
 
 struct Role {
@@ -140,15 +135,6 @@ inline int RoleIndex(uint16_t size, uint16_t bpp) {
         if (kRoles[i].size == size && kRoles[i].bpp == bpp) return i;
     }
     return -1;
-}
-
-/** @brief 合并 MiSans 与新字体的行度量：取较大上伸与下伸，避免裁切 */
-inline Metrics CombineMetrics(int misans_line_height, int misans_base_line, int face_ascent, int face_descent) {
-    Metrics m;
-    m.base_line = std::max(misans_base_line, face_descent);
-    const int ascent = std::max(misans_line_height - misans_base_line, face_ascent);
-    m.line_height = ascent + m.base_line;
-    return m;
 }
 
 /** @brief 快照覆盖的码位：拉丁基础 / 补充 / 扩展 A、越南语、常用标点与符号；其余回退 MiSans */

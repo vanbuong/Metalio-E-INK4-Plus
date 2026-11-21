@@ -273,14 +273,10 @@ static void sysfont_ef_names() {
     CHECK(sysfont::EfRoleFile("literata", 30, 4) == "literata_30_4.ef");
 }
 
-static void sysfont_roles_metrics() {
+static void sysfont_roles() {
     CHECK(sysfont::RoleIndex(30, 2) == 0 && sysfont::RoleIndex(30, 4) == 1);
     CHECK(sysfont::RoleIndex(25, 2) == 2 && sysfont::RoleIndex(18, 2) == 3);
     CHECK(sysfont::RoleIndex(28, 2) < 0 && sysfont::RoleIndex(36, 2) < 0 && sysfont::RoleIndex(30, 1) < 0);
-    auto m = sysfont::CombineMetrics(35, 8, 20, 5);  // MiSans taller: unchanged
-    CHECK(m.line_height == 35 && m.base_line == 8);
-    m = sysfont::CombineMetrics(35, 8, 30, 10);      // face taller both ways
-    CHECK(m.line_height == 40 && m.base_line == 10);
 }
 
 static void sysfont_coverage_choice() {
@@ -362,7 +358,7 @@ int main() {
     sysfont_ttf_names();
     sysfont_pick_files();
     sysfont_ef_names();
-    sysfont_roles_metrics();
+    sysfont_roles();
     sysfont_coverage_choice();
     fit_to_panel();
     resize_bilinear();

@@ -66,8 +66,11 @@ struct SettingsThemeUi {
     lv_obj_t* font_status = nullptr; // 系统字体状态文案
     std::vector<lv_obj_t*> font_btns; // [0] 内置 MiSans，其后为 SD 字体族
     std::vector<SystemFontEntry> fonts; // 与 font_btns[1..] 对应
-    lv_timer_t* font_timer = nullptr; // 轮询扫描结果与加载状态
+    lv_timer_t* font_timer = nullptr; // 轮询扫描结果与加载状态；空闲时暂停
     bool fonts_listed = false;
+    std::string shown_choice; // 上次刷新时的选择、状态与按钮数，未变化则不重绘
+    int shown_state = -1;
+    size_t shown_buttons = 0;
 };
 
 static SettingsThemeUi s_ui;
@@ -113,6 +116,13 @@ static void SetLabelIfChanged(lv_obj_t* label, const char* text) {
 
 static void RefreshFontOptions() {
     const std::string choice = SystemFontChoiceId();
+    const int state_now = static_cast<int>(SystemFontStatus());
+    if (choice == s_ui.shown_choice && state_now == s_ui.shown_state && s_ui.font_btns.size() == s_ui.shown_buttons) {
+        return; // 无变化：不重设样式，避免墨水屏反复刷新
+    }
+    s_ui.shown_choice = choice;
+    s_ui.shown_state = state_now;
+    s_ui.shown_buttons = s_ui.font_btns.size();
     for (size_t i = 0; i < s_ui.font_btns.size(); ++i) {
         SettingsStyleSelectable(s_ui.font_btns[i], lv_obj_get_child(s_ui.font_btns[i], 0), FontIdAt(i) == choice);
     }
@@ -144,6 +154,7 @@ static void OnFontClicked(lv_event_t* e) {
     if (id == SystemFontChoiceId() && state != SystemFontState::kMissing && state != SystemFontState::kFailed) return;
     if (!SystemFontSelect(id.c_str(), OnFontApplied)) ScreenShowToast(Lang::Strings::SYSTEM_FONT_LOAD_FAILED);
     RefreshFontOptions();
+    if (s_ui.font_timer != nullptr) lv_timer_resume(s_ui.font_timer); // 跟踪加载状态
 }
 
 static void AddFontButton(size_t index, const char* title) {
@@ -158,6 +169,10 @@ static void OnFontTimer(lv_timer_t* /*timer*/) {
         if (s_ui.font_status != nullptr) lv_obj_move_to_index(s_ui.font_status, -1); // 状态文案保持在列表末尾
     }
     RefreshFontOptions();
+    // 列表已显示且不在加载中：暂停轮询，下次点击时恢复
+    if (s_ui.fonts_listed && SystemFontStatus() != SystemFontState::kLoading && s_ui.font_timer != nullptr) {
+        lv_timer_pause(s_ui.font_timer);
+    }
 }
 
 void SettingsThemeTab_Reset() {

@@ -4,6 +4,7 @@
 #include "epd_refresh.h"
 #include "epdfont.h"
 #include "fontpack_lvgl.h"
+#include "home_screen/home_screen.h"
 #include "screen_common.h"
 #include "sd_access.h"
 #include "sd_paths.h"
@@ -34,6 +35,7 @@ constexpr const char* kNvsKey = "sys_font";
 constexpr uint32_t kWorkerStack = 12 * 1024; // 字形回调经 TTF 自有工作任务渲染，本任务只做拷贝
 constexpr size_t kScratchBytes = 128 * 128; // 单字 A8 暂存上限
 constexpr size_t kMaxScanEntries = 16;
+constexpr uint32_t kRetireFreeMs = 1000; // 替换后延迟释放旧快照，等待可能的离线测量结束
 
 struct SysGlyph {
     uint32_t cp;
@@ -46,16 +48,14 @@ struct SysGlyph {
 struct SysFace {
     std::vector<SysGlyph> glyphs;
     std::vector<uint8_t> pixels;
-    int ascent = 0;
-    int descent = 0;
 };
 
 struct RoleSlot {
     lv_font_t font{};                       // 地址固定，供界面长期持有
     const lv_font_t* builtin = nullptr;     // 同规格内置 MiSans，亦为回退
     std::atomic<const SysFace*> face{nullptr};
-    const SysFace* retired = nullptr;       // 上一次替换下来的快照，下次替换时释放
-    bool inited = false;
+    const SysFace* retired = nullptr;       // 被替换下来的快照，稍后释放
+    std::atomic<bool> inited{false};
 };
 
 RoleSlot s_roles[sysfont::kRoleCount];
@@ -66,16 +66,14 @@ struct BuildResult {
     const SysFace* faces[sysfont::kRoleCount] = {};
     SystemFontState state = SystemFontState::kFailed;
     bool from_select = false;
-    std::string prev_choice;
-    SystemFontState prev_state = SystemFontState::kBuiltin;
 };
 
-std::mutex s_mu;                 // 保护以下字符串与请求
-std::string s_choice = "ttf:Bookerly";
+std::mutex s_mu;                 // 保护以下字符串、请求与回调
+std::string s_choice = "ttf:Bookerly"; // 用户当前选择（含正在加载的）
+std::string s_settled_id = "builtin";  // 最近一次已生效或已确定结果的选择
+SystemFontState s_settled_state = SystemFontState::kBuiltin;
 std::string s_pending;           // 待构建的选择串，空表示无
 bool s_pending_from_select = false;
-std::string s_prev_choice;
-SystemFontState s_prev_state = SystemFontState::kBuiltin;
 void (*s_done_cb)(bool) = nullptr;
 std::vector<SystemFontEntry> s_scan;
 
@@ -138,9 +136,10 @@ const void* GetBitmap(lv_font_glyph_dsc_t* dsc, lv_draw_buf_t* buf) {
 
 RoleSlot* EnsureRole(int index) {
     if (index < 0 || index >= sysfont::kRoleCount) return nullptr;
-    std::lock_guard<std::mutex> lock(s_role_mutex);
     RoleSlot& slot = s_roles[index];
-    if (slot.inited) return &slot;
+    if (slot.inited.load(std::memory_order_acquire)) return &slot;
+    std::lock_guard<std::mutex> lock(s_role_mutex);
+    if (slot.inited.load(std::memory_order_relaxed)) return &slot;
     const sysfont::Role role = sysfont::kRoles[index];
     const lv_font_t* builtin = fontpack_lv_font_builtin(role.size, role.bpp);
     if (builtin == nullptr) return nullptr;
@@ -151,6 +150,7 @@ RoleSlot* EnsureRole(int index) {
     slot.font.subpx = LV_FONT_SUBPX_NONE;
     slot.font.kerning = LV_FONT_KERNING_NONE;
     slot.font.static_bitmap = 0;
+    // 行高与基线固定沿用内置字体：界面布局与阅读页脚（进而分页缓存）不随系统字体变化
     slot.font.line_height = builtin->line_height;
     slot.font.base_line = builtin->base_line;
     slot.font.underline_position = builtin->underline_position;
@@ -158,12 +158,8 @@ RoleSlot* EnsureRole(int index) {
     slot.font.dsc = &slot;
     slot.font.fallback = builtin;
     slot.font.user_data = nullptr;
-    slot.inited = true;
+    slot.inited.store(true, std::memory_order_release);
     return &slot;
-}
-
-void FreeFace(const SysFace* face) {
-    delete face;
 }
 
 bool Aborted() {
@@ -197,8 +193,6 @@ bool BuildFace(const lv_font_t* src, SysFace& face, bool* aborted) {
                 const uint8_t* row = static_cast<const uint8_t*>(buf.data) + static_cast<size_t>(y) * stride;
                 face.pixels.insert(face.pixels.end(), row, row + d.box_w);
             }
-            face.ascent = std::max(face.ascent, d.ofs_y + static_cast<int>(d.box_h));
-            face.descent = std::max(face.descent, -static_cast<int>(d.ofs_y));
         }
         face.glyphs.push_back(g);
     }
@@ -223,29 +217,41 @@ bool FileExists(const std::string& path) {
     return stat(path.c_str(), &st) == 0 && S_ISREG(st.st_mode) && st.st_size > 0;
 }
 
-// 逐角色构建；角色源文件缺失时该角色保持内置字体
+// SD 访问未获准：待机/关机中为中断（稍后重试），否则视为无卡
+SystemFontState NotAdmitted(bool* aborted) {
+    if (Aborted()) *aborted = true;
+    return SystemFontState::kMissing;
+}
+
+// 逐角色构建，每个角色单独持有 SD 事务，避免长时间阻塞 U 盘模式与卸卡
 SystemFontState BuildChoice(const sysfont::Choice& c, const SysFace* faces[], bool* aborted) {
     std::string files[sysfont::kRoleCount];
-    if (c.kind == sysfont::FontKind::kTtf) {
-        const sysfont::TtfFiles f = sysfont::PickTtfFiles(ListDir(SD_PATH_FONT_SRC), c.family);
-        if (f.regular.empty()) return SystemFontState::kMissing;
-        for (int i = 0; i < sysfont::kRoleCount; ++i) {
-            // 粗体角色优先用粗体文件，没有时用常规字重
-            files[i] = std::string(SD_PATH_FONT_SRC) + "/" + (i == 1 && !f.bold.empty() ? f.bold : f.regular);
-        }
-    } else {
-        for (int i = 0; i < sysfont::kRoleCount; ++i) {
-            const sysfont::Role r = sysfont::kRoles[i];
-            std::string path = std::string(SD_PATH_FONTS) + "/" + sysfont::EfRoleFile(c.family, r.size, r.bpp);
-            if (!FileExists(path) && r.bpp != 2) {
-                path = std::string(SD_PATH_FONTS) + "/" + sysfont::EfRoleFile(c.family, r.size, 2);
+    {
+        sd_access::Transaction transaction;
+        if (!transaction) return NotAdmitted(aborted);
+        if (c.kind == sysfont::FontKind::kTtf) {
+            const sysfont::TtfFiles f = sysfont::PickTtfFiles(ListDir(SD_PATH_FONT_SRC), c.family);
+            if (f.regular.empty()) return SystemFontState::kMissing;
+            for (int i = 0; i < sysfont::kRoleCount; ++i) {
+                // 粗体角色优先用粗体文件，没有时用常规字重
+                files[i] = std::string(SD_PATH_FONT_SRC) + "/" + (i == 1 && !f.bold.empty() ? f.bold : f.regular);
             }
-            if (FileExists(path)) files[i] = path;
+        } else {
+            for (int i = 0; i < sysfont::kRoleCount; ++i) {
+                const sysfont::Role r = sysfont::kRoles[i];
+                std::string path = std::string(SD_PATH_FONTS) + "/" + sysfont::EfRoleFile(c.family, r.size, r.bpp);
+                if (!FileExists(path) && r.bpp != 2) {
+                    path = std::string(SD_PATH_FONTS) + "/" + sysfont::EfRoleFile(c.family, r.size, 2);
+                }
+                if (FileExists(path)) files[i] = path;
+            }
+            if (files[0].empty()) return SystemFontState::kMissing;
         }
-        if (files[0].empty()) return SystemFontState::kMissing;
     }
     for (int i = 0; i < sysfont::kRoleCount; ++i) {
         if (files[i].empty()) continue;
+        sd_access::Transaction transaction;
+        if (!transaction) return NotAdmitted(aborted);
         const sysfont::Role r = sysfont::kRoles[i];
         const int64_t started = esp_timer_get_time();
         auto* face = new (std::nothrow) SysFace;
@@ -264,6 +270,7 @@ SystemFontState BuildChoice(const sysfont::Choice& c, const SysFace* faces[], bo
                 epdfont_close(ef);
             }
         }
+        if (!built && Aborted()) *aborted = true; // 打开期间进入待机：按中断处理，恢复后重试
         if (*aborted) {
             delete face;
             return SystemFontState::kFailed;
@@ -283,7 +290,7 @@ SystemFontState BuildChoice(const sysfont::Choice& c, const SysFace* faces[], bo
 }
 
 void FreeResult(BuildResult* r) {
-    for (const SysFace* f : r->faces) FreeFace(f);
+    for (const SysFace* f : r->faces) delete f;
     delete r;
 }
 
@@ -294,6 +301,14 @@ void Persist(const std::string& id) {
     }, Application::TaskDomain::Storage);
 }
 
+void FreeRetired(lv_timer_t* timer) {
+    lv_timer_delete(timer);
+    for (RoleSlot& slot : s_roles) {
+        delete slot.retired;
+        slot.retired = nullptr;
+    }
+}
+
 void ApplyOnUi(void* arg);
 
 void ApplyRetry(lv_timer_t* timer) {
@@ -302,57 +317,63 @@ void ApplyRetry(lv_timer_t* timer) {
     ApplyOnUi(arg);
 }
 
-// LVGL 线程：在界面绘制空闲时替换快照，旧快照延后到下次替换再释放
+// LVGL 线程：在界面绘制空闲时替换快照；仅接受与当前选择一致的结果
 void ApplyOnUi(void* arg) {
     auto* r = static_cast<BuildResult*>(arg);
-    if (!EpdTryBeginUiRender()) {
-        lv_timer_create(ApplyRetry, 100, r);
-        return;
+    {
+        std::lock_guard<std::mutex> lock(s_mu);
+        if (r->id != s_choice) { // 已被更新的选择取代，丢弃且不保存
+            ESP_LOGI(TAG, "drop stale %s (now %s)", r->id.c_str(), s_choice.c_str());
+            FreeResult(r);
+            return;
+        }
     }
     const bool swap = r->state == SystemFontState::kActive || r->state == SystemFontState::kBuiltin;
     if (swap) {
+        if (!EpdTryBeginUiRender()) {
+            lv_timer_create(ApplyRetry, 100, r);
+            return;
+        }
         for (int i = 0; i < sysfont::kRoleCount; ++i) {
             RoleSlot* slot = EnsureRole(i);
-            if (slot == nullptr) {
-                FreeFace(r->faces[i]);
-                r->faces[i] = nullptr;
-                continue;
-            }
-            FreeFace(slot->retired);
-            slot->retired = slot->face.load(std::memory_order_acquire);
             const SysFace* face = r->faces[i];
             r->faces[i] = nullptr;
-            if (face != nullptr) {
-                const sysfont::Metrics m = sysfont::CombineMetrics(slot->builtin->line_height,
-                                                                   slot->builtin->base_line, face->ascent, face->descent);
-                slot->font.line_height = static_cast<int32_t>(m.line_height);
-                slot->font.base_line = static_cast<int32_t>(m.base_line);
-            } else {
-                slot->font.line_height = slot->builtin->line_height;
-                slot->font.base_line = slot->builtin->base_line;
+            if (slot == nullptr) {
+                delete face;
+                continue;
             }
+            delete slot->retired;
+            slot->retired = slot->face.load(std::memory_order_acquire);
             slot->face.store(face, std::memory_order_release);
         }
+        EpdEndUiRender();
+        lv_timer_create(FreeRetired, kRetireFreeMs, nullptr);
     }
-    EpdEndUiRender();
     void (*done)(bool) = nullptr;
+    SystemFontState state = r->state;
     {
         std::lock_guard<std::mutex> lock(s_mu);
         if (r->from_select) {
             done = s_done_cb;
             s_done_cb = nullptr;
-            if (!swap) s_choice = r->prev_choice; // 选择失败：保留原字体与原选择
+        }
+        if (swap || !r->from_select) {
+            s_settled_id = r->id; // 生效，或开机选择确定为缺失/失败
+            s_settled_state = r->state;
+        } else {
+            s_choice = s_settled_id; // 选择失败：恢复上一次确定的选择与状态
+            state = s_settled_state;
         }
     }
-    s_state.store(swap || !r->from_select ? r->state : r->prev_state);
+    s_state.store(state);
     if (swap) {
-        lv_obj_report_style_change(nullptr); // 字体地址不变，通知所有标签按新字形重排
+        lv_obj_report_style_change(nullptr); // 字体地址与行高不变，标签按新字形重新测量
         Persist(r->id);
+        if (!r->from_select && ScreenIsHome()) ScreenLoadReplace(HomeScreen::Create()); // 开机后到的字体：重建首页
     }
     ESP_LOGI(TAG, "applied %s state=%u", r->id.c_str(), static_cast<unsigned>(r->state));
-    const bool ok = swap;
     FreeResult(r);
-    if (done != nullptr) done(ok);
+    if (done != nullptr) done(swap);
 }
 
 void Worker(void*) {
@@ -367,22 +388,15 @@ void Worker(void*) {
             }
             r->id.swap(s_pending);
             r->from_select = s_pending_from_select;
-            r->prev_choice = s_prev_choice;
-            r->prev_state = s_prev_state;
         }
-        bool aborted = false;
-        {
-            sd_access::Transaction transaction;
-            if (!transaction || Aborted()) {
-                aborted = true;
-            } else {
-                r->state = BuildChoice(sysfont::ParseChoice(r->id), r->faces, &aborted);
-            }
-        }
+        bool aborted = Aborted();
+        if (!aborted) r->state = BuildChoice(sysfont::ParseChoice(r->id), r->faces, &aborted);
+        aborted = aborted || s_cancel.load();
         bool superseded = false;
         {
             std::lock_guard<std::mutex> lock(s_mu);
-            superseded = !s_pending.empty(); // 更新的选择已到达，丢弃本次结果
+            superseded = !s_pending.empty() || r->id != s_choice;
+            if (aborted && !superseded) s_done_cb = nullptr; // 中断后由恢复流程重试，不再通知原选择
         }
         if (aborted || superseded) {
             if (aborted && !s_cancel.load()) s_resume.store(true); // 待机中断：恢复后重试
@@ -401,6 +415,15 @@ void Worker(void*) {
     vTaskDeleteWithCaps(nullptr);
 }
 
+// 恢复到上一次确定的选择与状态（启动任务失败时）
+void RestoreSettled() {
+    std::lock_guard<std::mutex> lock(s_mu);
+    s_choice = s_settled_id;
+    s_done_cb = nullptr;
+    s_pending.clear();
+    s_state.store(s_settled_state);
+}
+
 bool StartBuild(const std::string& id, bool from_select) {
     {
         std::lock_guard<std::mutex> lock(s_mu);
@@ -413,8 +436,7 @@ bool StartBuild(const std::string& id, bool from_select) {
     if (xTaskCreatePinnedToCoreWithCaps(Worker, "sys_font", kWorkerStack, nullptr, 2, nullptr, tskNO_AFFINITY,
                                         MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT) != pdPASS) {
         s_busy.store(false);
-        std::lock_guard<std::mutex> lock(s_mu);
-        s_pending.clear();
+        RestoreSettled();
         ESP_LOGW(TAG, "worker create failed");
         return false;
     }
@@ -476,7 +498,11 @@ void SystemFontStartBoot() {
         std::lock_guard<std::mutex> lock(s_mu);
         id = s_choice;
     }
-    if (sysfont::ParseChoice(id).kind == sysfont::FontKind::kBuiltin) return;
+    if (sysfont::ParseChoice(id).kind == sysfont::FontKind::kBuiltin) {
+        std::lock_guard<std::mutex> lock(s_mu);
+        s_settled_id = id;
+        return;
+    }
     StartBuild(id, false);
 }
 
@@ -485,14 +511,15 @@ bool SystemFontSelect(const char* id, void (*done)(bool ok)) {
     const std::string norm = sysfont::FormatChoice(sysfont::ParseChoice(id));
     {
         std::lock_guard<std::mutex> lock(s_mu);
-        s_prev_choice = s_choice;
-        s_prev_state = s_state.load();
         s_choice = norm;
         s_done_cb = done;
     }
     if (sysfont::ParseChoice(norm).kind == sysfont::FontKind::kBuiltin) {
         auto* r = new (std::nothrow) BuildResult;
-        if (r == nullptr) return false;
+        if (r == nullptr) {
+            RestoreSettled();
+            return false;
+        }
         r->id = norm;
         r->state = SystemFontState::kBuiltin;
         r->from_select = true;
@@ -500,7 +527,12 @@ bool SystemFontSelect(const char* id, void (*done)(bool ok)) {
             std::lock_guard<std::mutex> lock(s_mu);
             s_pending.clear(); // 放弃尚未开始的 SD 字体请求
         }
-        ApplyOnUi(r);
+        // 经 UI 队列执行，避免在按钮点击回调中重建设置页
+        if (!ScreenLvAsync(ApplyOnUi, r)) {
+            FreeResult(r);
+            RestoreSettled();
+            return false;
+        }
         return true;
     }
     return StartBuild(norm, true);
