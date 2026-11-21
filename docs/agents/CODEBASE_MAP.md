@@ -8,8 +8,8 @@ before relying on them if `git log fd3fa03..HEAD -- <area>` shows changes. Areas
 - Toolchain: ESP-IDF v6.1 via EIM; always go through `./tools/idf.ps1 <args>` (picks the newest
   6.1.x from `C:\Espressif\tools\eim_idf.json`, override `$env:GW_EIM_JSON` / `$env:GW_IDF_PATH`
   which must match an EIM-listed path — `tools/idf.ps1:13,22-30,44-46`). **Build verified
-  2026-11-21** (`./tools/idf.ps1 build` exit 0). ⚠ The app is 0x4f38d0 B in a 0x500000 B OTA
-  slot — **~49.8 KB (1 %) free**; the build already prints "smallest app partition is nearly
+  2026-11-21** (`./tools/idf.ps1 build` exit 0). ⚠ The app is 0x4f52d0 B in a 0x500000 B OTA
+  slot — **~43.3 KB (1 %) free**; the build already prints "smallest app partition is nearly
   full". Pre-existing warnings: `main/display/font/ttf_convert.cc:125`, `main/display/a2ui/a2ui_image.cc:490`.
 - Project version: `PROJECT_VER` in `CMakeLists.txt:5`. `main/assets/fonts/font.fontpack` is
   flashed to `font_data` by `esptool_py_flash_to_partition` (`CMakeLists.txt:12-19`).
@@ -205,6 +205,12 @@ symmetric value 5–40 px (`book_margin_rules.h`). Spec: `docs/specs/2026-11-21-
   audio_speaker.set_volume, screen.set_brightness, camera.take_photo, screen.set_theme, plus
   user-only get_system_info, reboot, upgrade_firmware, screen.get_info, screen.snapshot,
   screen.preview_image, assets.set_download_url. Add via `AddTool` / `AddUserOnlyTool`.
+- Book cover on standby / power-off: Settings → Power choice per screen (NVS `wallpaper`
+  `stb_cover` / `off_cover`, RAM cache in `wallpaper_active.cc`). `wallpaper_screen/book_cover_wallpaper.cc`
+  prepares one panel-fit `SD_PATH_SCREEN_COVER` (+ tag file = book path) on a low-priority task after a
+  book opens (`book_open_worker.cc`) and at boot (`application.cc`); standby (`standby_wallpaper.cc`) and
+  power-off (`lv_adapter_epdiy.cc` `DecodeShutdownWallpaperTask`) try it first, then the old paths.
+  Pure rules: `main/reader/screen_cover_rules.h`. Spec: `docs/specs/2026-11-21-book-cover-standby-design.md`.
 - `settings.{h,cc}`: NVS wrapper (`Settings ns(...)`). `system_info`, `ntp_server`, `assets`,
   `haptic_feedback`, `device_state_event`.
 - Cloud endpoints: hosts only in `cloudzao_endpoints.c` (empty strings in this checkout; Global
