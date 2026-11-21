@@ -283,6 +283,9 @@ static void sysfont_coverage_choice() {
     CHECK(sysfont::InCoverage('A') && sysfont::InCoverage(0x7E) && !sysfont::InCoverage(0x7F));
     CHECK(sysfont::InCoverage(0x1EA0) && sysfont::InCoverage(0x1EF9) && !sysfont::InCoverage(0x1EFA));
     CHECK(sysfont::InCoverage(0x01B0) && !sysfont::InCoverage(0x4E2D));  // ư yes, 中 no
+    CHECK(sysfont::InClockCoverage('0') && sysfont::InClockCoverage('9') && sysfont::InClockCoverage(':'));
+    CHECK(sysfont::InClockCoverage(' ') && !sysfont::InClockCoverage('A') && !sysfont::InClockCoverage('/'));
+    CHECK(sysfont::kClockSize == 160);
     auto c = sysfont::ParseChoice("");
     CHECK(c.kind == sysfont::FontKind::kTtf && c.family == "Bookerly");
     c = sysfont::ParseChoice("builtin");

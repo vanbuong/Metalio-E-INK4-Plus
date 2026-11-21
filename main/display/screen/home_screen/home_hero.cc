@@ -27,7 +27,7 @@ const lv_font_t* HomeHero_SlashTimeFont() {
         font.base_line = 10;
         inited = true;
     }
-    return &font;
+    return SystemFontClock(&font); // 数字随系统字体变化，行高沿用斜杠卡片的设定
 }
 
 const lv_font_t* HomeHero_WeatherFont() {

@@ -10,6 +10,7 @@
 #include <lvgl.h>
 
 LV_FONT_DECLARE(font_misans_regular_160_2);
+#include "system_font.h" // 首页时钟数字随系统字体
 
 enum class HeroKind : uint8_t { Classic = 0, Slash = 1 };
 

@@ -33,7 +33,7 @@ constexpr const char* TAG = "SysFont";
 constexpr const char* kNvsNs = "ui";
 constexpr const char* kNvsKey = "sys_font";
 constexpr uint32_t kWorkerStack = 12 * 1024; // 字形回调经 TTF 自有工作任务渲染，本任务只做拷贝
-constexpr size_t kScratchBytes = 128 * 128; // 单字 A8 暂存上限
+constexpr size_t kScratchBytes = 160 * 160; // 单字 A8 暂存上限（含 160px 时钟数字）
 constexpr size_t kMaxScanEntries = 16;
 constexpr uint32_t kRetireFreeMs = 1000; // 替换后延迟释放旧快照，等待可能的离线测量结束
 
@@ -55,15 +55,21 @@ struct RoleSlot {
     const lv_font_t* builtin = nullptr;     // 同规格内置 MiSans，亦为回退
     std::atomic<const SysFace*> face{nullptr};
     const SysFace* retired = nullptr;       // 被替换下来的快照，稍后释放
+    std::atomic<const SysFace*>* source = nullptr; // 字形来源：角色自身快照或共享的时钟快照
     std::atomic<bool> inited{false};
 };
 
 RoleSlot s_roles[sysfont::kRoleCount];
+// 首页大时钟：两个变体（经典 / 斜杠卡片行高不同）共享一个 160px 数字快照
+RoleSlot s_clock_slots[2];
+std::atomic<const SysFace*> s_clock_face{nullptr};
+const SysFace* s_clock_retired = nullptr;
 std::mutex s_role_mutex;
 
 struct BuildResult {
     std::string id;
     const SysFace* faces[sysfont::kRoleCount] = {};
+    const SysFace* clock = nullptr;
     SystemFontState state = SystemFontState::kFailed;
     bool from_select = false;
 };
@@ -92,7 +98,7 @@ const SysGlyph* Find(const SysFace* face, uint32_t cp) {
 
 bool GetDsc(const lv_font_t* font, lv_font_glyph_dsc_t* dsc, uint32_t letter, uint32_t /*next*/) {
     const auto* slot = static_cast<const RoleSlot*>(font->dsc);
-    const SysFace* face = slot != nullptr ? slot->face.load(std::memory_order_acquire) : nullptr;
+    const SysFace* face = slot != nullptr && slot->source != nullptr ? slot->source->load(std::memory_order_acquire) : nullptr;
     if (face == nullptr || dsc == nullptr) return false; // 无快照或缺字：由 LVGL 回退内置字体
     if (letter == '\t') letter = ' ';
     const SysGlyph* g = Find(face, letter);
@@ -112,7 +118,7 @@ bool GetDsc(const lv_font_t* font, lv_font_glyph_dsc_t* dsc, uint32_t letter, ui
 const void* GetBitmap(lv_font_glyph_dsc_t* dsc, lv_draw_buf_t* buf) {
     if (dsc == nullptr || dsc->resolved_font == nullptr) return nullptr;
     const auto* slot = static_cast<const RoleSlot*>(dsc->resolved_font->dsc);
-    const SysFace* face = slot != nullptr ? slot->face.load(std::memory_order_acquire) : nullptr;
+    const SysFace* face = slot != nullptr && slot->source != nullptr ? slot->source->load(std::memory_order_acquire) : nullptr;
     const SysGlyph* g = face != nullptr ? Find(face, dsc->gid.index) : nullptr;
     if (g == nullptr || g->box_w != dsc->box_w || g->box_h != dsc->box_h || g->box_w == 0 || g->box_h == 0) {
         return nullptr;
@@ -134,6 +140,8 @@ const void* GetBitmap(lv_font_glyph_dsc_t* dsc, lv_draw_buf_t* buf) {
     return buf;
 }
 
+void InitSlot(RoleSlot& slot, const lv_font_t* builtin, std::atomic<const SysFace*>* source);
+
 RoleSlot* EnsureRole(int index) {
     if (index < 0 || index >= sysfont::kRoleCount) return nullptr;
     RoleSlot& slot = s_roles[index];
@@ -143,7 +151,14 @@ RoleSlot* EnsureRole(int index) {
     const sysfont::Role role = sysfont::kRoles[index];
     const lv_font_t* builtin = fontpack_lv_font_builtin(role.size, role.bpp);
     if (builtin == nullptr) return nullptr;
+    InitSlot(slot, builtin, &slot.face);
+    return &slot;
+}
+
+// 以内置字体为回退和行度量初始化固定地址的字体
+void InitSlot(RoleSlot& slot, const lv_font_t* builtin, std::atomic<const SysFace*>* source) {
     slot.builtin = builtin;
+    slot.source = source;
     slot.font.get_glyph_dsc = GetDsc;
     slot.font.get_glyph_bitmap = GetBitmap;
     slot.font.release_glyph = nullptr;
@@ -159,7 +174,6 @@ RoleSlot* EnsureRole(int index) {
     slot.font.fallback = builtin;
     slot.font.user_data = nullptr;
     slot.inited.store(true, std::memory_order_release);
-    return &slot;
 }
 
 bool Aborted() {
@@ -167,10 +181,10 @@ bool Aborted() {
 }
 
 // 把源字体覆盖范围内的字形一次栅格化为快照；源字体缺字或经其自身回退得到的字形不收录
-bool BuildFace(const lv_font_t* src, SysFace& face, bool* aborted) {
+bool BuildFace(const lv_font_t* src, SysFace& face, bool* aborted, bool (*cover)(uint32_t) = sysfont::InCoverage) {
     std::vector<uint8_t> scratch(kScratchBytes);
     for (uint32_t cp = 0x20; cp <= 0x2122; ++cp) {
-        if (!sysfont::InCoverage(cp)) continue;
+        if (!cover(cp)) continue;
         if (Aborted()) {
             *aborted = true;
             return false;
@@ -289,8 +303,37 @@ SystemFontState BuildChoice(const sysfont::Choice& c, const SysFace* faces[], bo
     return SystemFontState::kActive;
 }
 
+// 首页时钟数字（仅 TTF/OTF，.ef 无 160px 档）；失败不影响其他角色
+const SysFace* BuildClock(const sysfont::Choice& c, bool* aborted) {
+    if (c.kind != sysfont::FontKind::kTtf) return nullptr;
+    sd_access::Transaction transaction;
+    if (!transaction) {
+        if (Aborted()) *aborted = true;
+        return nullptr;
+    }
+    const sysfont::TtfFiles f = sysfont::PickTtfFiles(ListDir(SD_PATH_FONT_SRC), c.family);
+    if (f.regular.empty()) return nullptr;
+    const std::string path = std::string(SD_PATH_FONT_SRC) + "/" + f.regular;
+    TtfRuntime* rt = TtfRuntimeOpen(path.c_str(), sysfont::kClockSize);
+    if (rt == nullptr) {
+        if (Aborted()) *aborted = true;
+        return nullptr;
+    }
+    auto* face = new (std::nothrow) SysFace;
+    const bool built = face != nullptr && BuildFace(TtfRuntimeFont(rt), *face, aborted, sysfont::InClockCoverage);
+    TtfRuntimeClose(rt);
+    if (!built) {
+        delete face;
+        return nullptr;
+    }
+    ESP_LOGI(TAG, "clock %u glyphs=%u bytes=%u", sysfont::kClockSize, static_cast<unsigned>(face->glyphs.size()),
+             static_cast<unsigned>(face->pixels.size()));
+    return face;
+}
+
 void FreeResult(BuildResult* r) {
     for (const SysFace* f : r->faces) delete f;
+    delete r->clock;
     delete r;
 }
 
@@ -307,6 +350,8 @@ void FreeRetired(lv_timer_t* timer) {
         delete slot.retired;
         slot.retired = nullptr;
     }
+    delete s_clock_retired;
+    s_clock_retired = nullptr;
 }
 
 void ApplyOnUi(void* arg);
@@ -346,6 +391,10 @@ void ApplyOnUi(void* arg) {
             slot->retired = slot->face.load(std::memory_order_acquire);
             slot->face.store(face, std::memory_order_release);
         }
+        delete s_clock_retired;
+        s_clock_retired = s_clock_face.load(std::memory_order_acquire);
+        s_clock_face.store(r->clock, std::memory_order_release);
+        r->clock = nullptr;
         EpdEndUiRender();
         lv_timer_create(FreeRetired, kRetireFreeMs, nullptr);
     }
@@ -391,6 +440,7 @@ void Worker(void*) {
         }
         bool aborted = Aborted();
         if (!aborted) r->state = BuildChoice(sysfont::ParseChoice(r->id), r->faces, &aborted);
+        if (!aborted && r->state == SystemFontState::kActive) r->clock = BuildClock(sysfont::ParseChoice(r->id), &aborted);
         aborted = aborted || s_cancel.load();
         bool superseded = false;
         {
@@ -482,6 +532,22 @@ void ScanWorker(void*) {
 const lv_font_t* SystemFontRole(uint16_t size, uint16_t bpp) {
     RoleSlot* slot = EnsureRole(sysfont::RoleIndex(size, bpp));
     return slot != nullptr ? &slot->font : nullptr;
+}
+
+const lv_font_t* SystemFontClock(const lv_font_t* builtin) {
+    if (builtin == nullptr) return nullptr;
+    for (RoleSlot& slot : s_clock_slots) {
+        if (slot.inited.load(std::memory_order_acquire) && slot.builtin == builtin) return &slot.font;
+    }
+    std::lock_guard<std::mutex> lock(s_role_mutex);
+    for (RoleSlot& slot : s_clock_slots) {
+        if (slot.inited.load(std::memory_order_relaxed) && slot.builtin == builtin) return &slot.font;
+        if (!slot.inited.load(std::memory_order_relaxed)) {
+            InitSlot(slot, builtin, &s_clock_face);
+            return &slot.font;
+        }
+    }
+    return builtin; // 变体超出预留数量时退回内置字体
 }
 
 void SystemFontInitAtBoot() {

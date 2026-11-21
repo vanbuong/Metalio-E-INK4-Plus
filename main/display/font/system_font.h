@@ -15,6 +15,9 @@ extern "C" {
 /** @brief 角色字体：size/bpp 为系统字体角色时返回固定地址的字体，否则 nullptr */
 const lv_font_t* SystemFontRole(uint16_t size, uint16_t bpp);
 
+/** @brief 首页大时钟字体：以 builtin（内置 160px 字体或其行高变体）为回退，数字随系统字体变化 */
+const lv_font_t* SystemFontClock(const lv_font_t* builtin);
+
 #ifdef __cplusplus
 }
 

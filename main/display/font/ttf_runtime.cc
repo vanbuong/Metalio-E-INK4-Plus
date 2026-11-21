@@ -454,7 +454,7 @@ const void* GetBitmap(lv_font_glyph_dsc_t* dsc, lv_draw_buf_t* output) {
 
 TtfRuntime* TtfRuntimeOpen(const char* path, int size_px) {
     // 系统字体 18px 角色也用本运行时栅格化；阅读字体的 20..80 范围由 PrepareBookFont 自行限制
-    if (!path || size_px < 16 || size_px > 80) return nullptr;
+    if (!path || size_px < 16 || size_px > 160) return nullptr; // 160：首页时钟数字
     auto* font = new(std::nothrow) TtfRuntime;
     if (!font) {
         ESP_LOGE(TAG, "font context allocation failed size=%d", size_px);

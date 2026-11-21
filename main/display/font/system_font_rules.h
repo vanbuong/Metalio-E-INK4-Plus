@@ -149,6 +149,14 @@ inline bool InCoverage(uint32_t cp) {
     return false;
 }
 
+// 首页大时钟：160px，只显示 "HH:MM"
+inline constexpr uint16_t kClockSize = 160;
+
+/** @brief 时钟快照覆盖的码位：数字、冒号、空格；其余回退内置 160px 字体 */
+inline bool InClockCoverage(uint32_t cp) {
+    return (cp >= '0' && cp <= '9') || cp == ':' || cp == ' ';
+}
+
 /** @brief NVS 选择串：builtin | ttf:<族> | ef:<族>；缺失或非法时为默认 Bookerly */
 inline Choice ParseChoice(const std::string& stored) {
     Choice c{FontKind::kTtf, kDefaultFamily};
