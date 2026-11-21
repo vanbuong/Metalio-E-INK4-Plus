@@ -83,9 +83,10 @@ static void glyph_metrics(const lv_font_t *font, uint32_t cp, int16_t *adv, int1
 
 static const lv_font_t *math_font(uint16_t size)
 {
-    const lv_font_t *f = fontpack_lv_font_get(size, A2UI_MATH_BPP);
+    // 公式固定使用内置字体（18@2 与系统字体最小角色同规格）
+    const lv_font_t *f = fontpack_lv_font_builtin(size, A2UI_MATH_BPP);
     if (!f) {
-        f = fontpack_lv_font_get(A2UI_MATH_SIZE_TEXT, A2UI_MATH_BPP);
+        f = fontpack_lv_font_builtin(A2UI_MATH_SIZE_TEXT, A2UI_MATH_BPP);
     }
     if (!f) {
         f = fontpack_lv_font_ui();

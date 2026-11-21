@@ -158,6 +158,7 @@ idf_component_register(
         "display/font/ttf_convert.cc"
         "display/font/ttf_face.cc"
         "display/font/ttf_runtime.cc"
+        "display/font/system_font.cc"
         "display/font/font_misans_regular_160_2.c"
         "display/font/font_awesome_30_1.c"
         "display/lvgl_display/emoji_collection.cc"

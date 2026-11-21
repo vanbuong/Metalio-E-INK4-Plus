@@ -4,6 +4,7 @@
 #include "sd_access.h"
 #include "sd_paths.h"
 #include "font_bitmap_expand.h"
+#include "system_font.h"
 
 #include <cstring>
 #include <mutex>
@@ -351,6 +352,14 @@ bool fontpack_lv_ensure_ready(void) {
 }
 
 const lv_font_t* fontpack_lv_font_get(uint16_t size, uint16_t bpp) {
+    // 系统字体角色规格走固定地址的角色字体（其回退即本函数的内置字体）
+    const lv_font_t* builtin = fontpack_lv_font_builtin(size, bpp);
+    if (builtin == nullptr) return nullptr;
+    const lv_font_t* role = SystemFontRole(size, bpp);
+    return role != nullptr ? role : builtin;
+}
+
+const lv_font_t* fontpack_lv_font_builtin(uint16_t size, uint16_t bpp) {
     if (!fontpack_lv_ensure_ready()) {
         return nullptr;
     }
@@ -374,14 +383,17 @@ uint16_t fontpack_lv_font_bpp(const lv_font_t* font) {
     if (font == nullptr || font->dsc == nullptr) {
         return 0;
     }
-    std::lock_guard<std::mutex> lock(s_fonts_mutex);
-    // dsc 指向 FontpackLvFont（lv 为首成员）
-    for (int i = 0; i < kMaxFonts; ++i) {
-        if (s_fonts[i].inited && (&s_fonts[i].lv == font || &s_fonts[i].sd == font)) {
-            return s_fonts[i].bpp;
+    {
+        std::lock_guard<std::mutex> lock(s_fonts_mutex);
+        // dsc 指向 FontpackLvFont（lv 为首成员）
+        for (int i = 0; i < kMaxFonts; ++i) {
+            if (s_fonts[i].inited && (&s_fonts[i].lv == font || &s_fonts[i].sd == font)) {
+                return s_fonts[i].bpp;
+            }
         }
     }
-    return 0;
+    // 系统字体角色的回退即同规格内置字体
+    return font->fallback != nullptr && font->fallback != font ? fontpack_lv_font_bpp(font->fallback) : 0;
 }
 
 const lv_font_t* fontpack_lv_font_ui(void) {

@@ -97,7 +97,8 @@ const lv_font_t* Book_ItemFont() {
 const lv_font_t* BookFont() {
     if (s_ttf_font) return TtfRuntimeFont(s_ttf_font);
     const lv_font_t* f = epdfont_get_lv_font(s_epdfont);
-    return f != nullptr ? f : fontpack_lv_font_ui();
+    // 阅读正文兜底固定内置字体，不随系统字体变化
+    return f != nullptr ? f : fontpack_lv_font_builtin(30, 2);
 }
 
 const lv_font_t* BookLayoutFont() {

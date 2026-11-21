@@ -17,6 +17,11 @@ extern "C" {
 const lv_font_t* fontpack_lv_font_get(uint16_t size, uint16_t bpp);
 
 /**
+ * @brief 始终返回内置 MiSans（不受系统字体选择影响），供公式、阅读兜底等需固定字体处使用
+ */
+const lv_font_t* fontpack_lv_font_builtin(uint16_t size, uint16_t bpp);
+
+/**
  * @brief 获取指定规格的 SD 扩展字体，供阅读字体缺字回退
  * @note 不依赖 Flash 包包含同一规格；无文件或缺字时由字形回调返回不可用。
  */
