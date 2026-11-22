@@ -3835,26 +3835,14 @@ const char* BookSession::TocHomeTitle() const {
     if (document) {
         std::string language = document->Language();
         for (char& c : language) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
-        if (language == "zh" || language.compare(0, 3, "zh-") == 0 || language == "zho" || language == "chi") {
+        if (language == "vi" || language.compare(0, 3, "vi-") == 0 || language == "vie") {
             return Lang::BookHomeLabel(true);
         }
         if (language == "en" || language.compare(0, 3, "en-") == 0 || language == "eng") {
             return Lang::BookHomeLabel(false);
         }
     }
-    unsigned chinese = 0, latin = 0;
-    for (size_t entry = 0; entry < std::min<size_t>(toc_.size(), 16); ++entry) {
-        const auto& title = toc_[entry].title;
-        for (size_t i = 0; i < std::min<size_t>(title.size(), 240);) {
-            uint32_t cp = 0;
-            const size_t count = Utf8Next(reinterpret_cast<const uint8_t*>(title.data()) + i, title.size() - i, &cp);
-            if (!count) break;
-            i += count;
-            if ((cp >= 0x3400 && cp <= 0x9fff) || (cp >= 0x20000 && cp <= 0x323af)) ++chinese;
-            else if ((cp >= 'A' && cp <= 'Z') || (cp >= 'a' && cp <= 'z')) ++latin;
-        }
-    }
-    return Lang::BookHomeLabel(chinese > latin);
+    return Lang::Strings::BOOK_TOC_HOME; // 书籍语言未知：用界面语言
 }
 
 bool BookSession::TocStartsAfterFirstPage() const {

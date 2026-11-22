@@ -19,16 +19,16 @@ bool IsEnglish() {
 }
 
 struct Feature {
-    const char* title_zh;
-    const char* detail_zh;
+    const char* title_vi;
+    const char* detail_vi;
     const char* title_en;
     const char* detail_en;
 };
 constexpr Feature kFeatures[] = {
-    {"记录待办", "帮我把重要的事项整理成待办", "To-do list", "Organize important things into tasks"},
-    {"旅游助手", "攻略、美食、天气、交通，一键规划", "Travel assistant", "Plan food, weather and transport"},
-    {"探索世界", "解答各种疑问，探索未知", "Explore the world", "Ask questions and discover more"},
-    {"陪伴聊天", "放松交流、分享心情、打发时间", "Let's chat", "Relax, share feelings and pass the time"},
+    {"Ghi việc cần làm", "Sắp xếp việc quan trọng thành danh sách", "To-do list", "Organize important things into tasks"},
+    {"Trợ lý du lịch", "Lên kế hoạch ăn uống, thời tiết, đi lại", "Travel assistant", "Plan food, weather and transport"},
+    {"Khám phá thế giới", "Giải đáp thắc mắc, khám phá điều mới", "Explore the world", "Ask questions and discover more"},
+    {"Trò chuyện", "Thư giãn, chia sẻ cảm xúc, giết thời gian", "Let's chat", "Relax, share feelings and pass the time"},
 };
 
 void DrawIcon(lv_event_t* e) {
@@ -119,14 +119,13 @@ void Rule(lv_obj_t* parent, int x, int y, int width, int height) {
 }  // namespace
 
 const char* AssistantScreen::DisplayName(bool compact) {
-    const bool en = IsEnglish();
     switch (chat_cloud::ActiveProvider()) {
         case chat_cloud::Provider::Xiaozhi:
-            return en ? (compact ? "XZ AI" : "Xiaozhi AI") : "小智AI";
+            return compact ? "XZ AI" : "Xiaozhi AI";
         case chat_cloud::Provider::Yunxin:
-            return en ? (compact ? "NE AI" : "NetEase AI") : "网易AI";
+            return compact ? "NE AI" : "NetEase AI";
         default:
-            return en ? (compact ? "BW AI" : "Baiwen AI") : "百问AI";
+            return compact ? "BW AI" : "Baiwen AI";
     }
 }
 
@@ -159,12 +158,12 @@ void Assistant_BuildIdleHint(lv_obj_t* host) {
     lv_obj_set_style_bg_color(host, lv_color_white(), 0);
     lv_obj_set_style_bg_opa(host, LV_OPA_COVER, 0);
     Label(host, AssistantScreen::DisplayName(), x(25), y(85), x(370), bold);
-    Label(host, en ? "Hello,\nI'm your AI assistant" : "你好，\n我是你的智能助手",
+    Label(host, en ? "Hello,\nI'm your AI assistant" : "Xin chào,\ntôi là trợ lý AI của bạn",
           x(25), y(185), x(405), bold);
-    Label(host, en ? "How can I help you?" : "有什么可以帮你？",
+    Label(host, en ? "How can I help you?" : "Tôi có thể giúp gì cho bạn?",
           x(25), y(280), x(420), regular);
     // Content width preserves explicit line breaks without splitting English words.
-    lv_obj_t* talk = Label(host, en ? "Hold\nto talk" : "长\n按\n对\n话",
+    lv_obj_t* talk = Label(host, en ? "Hold\nto talk" : "Giữ\nđể nói",
                            0, y(135), LV_SIZE_CONTENT, regular);
     lv_obj_set_style_text_align(talk, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_update_layout(talk);
@@ -196,9 +195,9 @@ void Assistant_BuildIdleHint(lv_obj_t* host) {
         lv_obj_t* text = PlainObject(item, x(310), LV_SIZE_CONTENT);
         lv_obj_set_flex_flow(text, LV_FLEX_FLOW_COLUMN);
         lv_obj_set_style_pad_row(text, 4, 0);
-        Label(text, en ? kFeatures[i].title_en : kFeatures[i].title_zh,
+        Label(text, en ? kFeatures[i].title_en : kFeatures[i].title_vi,
               0, 0, x(310), bold);
-        Label(text, en ? kFeatures[i].detail_en : kFeatures[i].detail_zh,
+        Label(text, en ? kFeatures[i].detail_en : kFeatures[i].detail_vi,
               0, 0, x(310), regular);
         lv_obj_align(text, LV_ALIGN_LEFT_MID, x(115), 0);
         if (row + 1 < count) {

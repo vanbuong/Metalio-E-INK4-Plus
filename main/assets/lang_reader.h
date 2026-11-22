@@ -2,11 +2,12 @@
 
 namespace Lang {
 /** @brief 按书籍语言获取目录首页文案，不改变界面语言 */
-const char* BookHomeLabel(bool chinese);
+const char* BookHomeLabel(bool vietnamese);
 }
 
 // 阅读器补充文案；声明随源码维护，不依赖本地生成的语言头。
 namespace Lang::Strings {
+extern const char* BOOK_TOC_HOME;
 extern const char* BOOK_OPEN_FAILED_IO;
 extern const char* BOOK_OPEN_FAILED_DATA;
 extern const char* BOOK_OPEN_FAILED_MEMORY;

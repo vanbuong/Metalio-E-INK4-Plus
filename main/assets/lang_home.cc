@@ -22,1331 +22,1331 @@
 
 #define TAG "Lang"
 
-// X(name, zh, en)
+// X(name, vi, en)
 #define LANG_STRING_LIST(X)                                                                                    \
-    X(STORE_PREVIOUS_PAGE, "上一页", "Previous") \
-    X(STORE_NEXT_PAGE, "下一页", "Next") \
-    X(STORE_PAGE_RESULTS, "本页未安装应用", "Not installed on this page") \
-    X(STORE_READING_INSTALLED, "正在读取已安装应用…", "Reading installed apps…") \
-    X(STORE_FETCHING, "正在获取商店应用…", "Fetching store apps…") \
-    X(STORE_FETCHING_DETAIL, "正在获取应用详情…", "Fetching app details…") \
-    X(STORE_REFRESHED, "应用列表已更新", "App list updated") \
-    X(STORE_OFFLINE_INSTALLED, "无法连接应用商店，已安装应用仍可使用", "Cannot connect to App Store. Installed apps are still available.") \
-    X(STORE_NO_INSTALLED, "暂无已安装应用", "No installed apps") \
-    X(STORE_EMPTY, "暂无可用应用", "No apps available") \
-    X(STORE_QUEUED, "等待安装", "Queued") \
-    X(STORE_CANCELLING, "正在取消", "Cancelling") \
-    X(STORE_CANCELLED, "已取消安装", "Installation cancelled") \
-    X(STORE_VERIFYING, "正在校验…", "Verifying…") \
-    X(STORE_INSTALLING, "正在安装…", "Installing…") \
-    X(STORE_REMOVING, "正在删除应用…", "Uninstalling app…") \
-    X(STORE_INSTALLED_DONE, "应用已安装", "App installed") \
-    X(STORE_UPDATED, "应用已更新", "App updated") \
-    X(STORE_REMOVED, "应用已删除", "App uninstalled") \
-    X(STORE_FILTER, "筛选", "Filter") \
-    X(STORE_ALL, "全部", "All") \
-    X(STORE_ALL_APPS, "全部应用", "All apps") \
-    X(STORE_DOWNLOADING, "下载中", "Downloading") \
-    X(STORE_UNINSTALLED, "未安装", "Not installed") \
-    X(STORE_INSTALL_STATE, "安装状态", "Installation") \
-    X(STORE_DETAILS, "应用详情", "App details") \
-    X(STORE_VERSION, "当前版本", "Version") \
-    X(STORE_SIZE, "应用大小", "App size") \
-    X(STORE_CATEGORY, "类别", "Category") \
-    X(STORE_LANGUAGE, "语言", "Languages") \
-    X(STORE_LANGUAGE_ZH, "简体中文", "Simplified Chinese") \
-    X(STORE_LANGUAGE_EN, "英语", "English") \
-    X(STORE_DESCRIPTION, "应用描述", "Description") \
-    X(STORE_RELEASE_NOTES, "更新说明", "Release notes") \
-    X(STORE_PROVIDER, "提供者", "Provider") \
-    X(STORE_LAST_UPDATED, "最近更新", "Last updated") \
-    X(STORE_NOT_PROVIDED, "未提供", "Not provided") \
-    X(STORE_LOCATION, "存储位置", "Storage") \
-    X(STORE_CHECKING, "正在检查", "Checking") \
-    X(STORE_CANCEL, "取消", "Cancel") \
-    X(STORE_NO_MATCH, "暂无符合条件的应用", "No matching apps") \
-    X(STORE_TITLE, "应用商店", "App Store") \
-    X(STORE_INSTALLED, "已安装", "Installed") \
-    X(STORE_INSTALL, "安装", "Install") \
-    X(STORE_UPDATE, "更新", "Update") \
-    X(STORE_CHECK_UPDATE, "检查更新", "Check for updates") \
-    X(STORE_UPDATE_CONFIRM_FMT, "发现新版本 %s\n是否更新？", "New version available: %s\nUpdate this app?") \
-    X(STORE_CONFIRM, "确认", "Confirm") \
-    X(STORE_RUN, "打开", "Open") \
-    X(STORE_REMOVE, "删除应用", "Uninstall") \
-    X(STORE_LOADING, "正在读取应用…", "Loading apps…") \
-    X(STORE_BUSY, "正在处理，请稍候…", "Working. Please wait…") \
-    X(STORE_DOWNLOAD_BUSY, "正在下载中，请稍后再试", "Download in progress. Please try again later.") \
-    X(STORE_CURRENT, "已是最新版本", "Already up to date") \
-    X(STORE_REMOVE_CONFIRM, "确认删除此应用？本机安装文件将被移除，可从商店重新安装。", "Uninstall this app? Local installation files will be removed. You can install it again from the Store.") \
-    X(STORE_SD_ERROR, "SD 卡不可用或写入失败，请检查 SD 卡及 USB 模式", "SD card unavailable or write failed. Check the card and USB mode.") \
-    X(STORE_FORBIDDEN, "设备未绑定或归属异常，请检查设备绑定", "Device binding unavailable. Check device binding.") \
-    X(STORE_UNAVAILABLE, "应用版本不可用，请刷新列表", "App version unavailable. Refresh the list.") \
-    X(STORE_CATALOG_EXPIRED, "应用列表已过期，请刷新", "App list expired. Refresh the list.") \
-    X(STORE_WITHDRAWN, "此版本已下架，请刷新列表", "This version was withdrawn. Refresh the list.") \
-    X(STORE_PACKAGE_CHANGED, "下载信息已变化，请重新安装", "Download information changed. Install again.") \
-    X(STORE_RANGE_ERROR, "下载进度无效，请重新安装", "Download progress invalid. Install again.") \
-    X(STORE_UNSUPPORTED, "设备或固件不兼容，请检查固件版本", "Device or firmware incompatible. Check firmware.") \
-    X(STORE_SERVICE_BUSY, "服务繁忙，请稍后重试", "Service busy. Try again later.") \
-    X(STORE_NETWORK_ERROR, "无法连接应用商店，请检查网络", "Cannot connect to App Store. Check the network.") \
-    X(STORE_VERIFY_ERROR, "应用文件校验失败，请重新下载", "App file verification failed. Download it again.") \
-    X(STORE_MEMORY_ERROR, "可用内存不足，请关闭其他功能后重试", "Not enough memory. Close other features and try again.") \
-    X(STORE_INCOMPATIBLE, "应用与当前固件不兼容，启动失败。请升级固件后重试。", "App is incompatible with this firmware and cannot start. Update firmware and try again.") \
-    X(STORE_RUN_ERROR, "应用启动失败，请检查应用与固件的兼容性", "App failed to start. Check app and firmware compatibility.") \
-    X(STORE_INVALID, "应用目录无效或接口版本不兼容", "Invalid app catalog or incompatible API version.") \
-    X(STORE_LIMIT, "最多支持 32 个应用，请先删除不需要的应用", "Up to 32 apps are supported. Uninstall unused apps first.") \
-    X(STORE_SERVER_ERROR, "应用商店地址无效，请检查服务配置", "Invalid store address. Check service settings.") \
-    X(YUNXIN_BINDING_OPEN_AI, "请前往网易AI扫码绑定设备", "Open NetEase AI and scan the code to link your device.") \
-    X(YUNXIN_BINDING_CHECKING, "正在检查设备绑定，请稍候…", "Checking device link. Please wait...") \
-    X(YUNXIN_BINDING_SCAN, "请使用小程序扫码绑定设备\n完成绑定后即可使用此功能", "Scan with the mini program to link your device.\nThis feature is available once linking is complete.") \
-    X(YUNXIN_BINDING_RETRY, "暂时无法确认设备绑定，正在重试\n请保持网络连接", "Unable to confirm the device link. Retrying...\nKeep your device connected to Wi-Fi.") \
-    X(BOOK_FONT_DECREASE, "减小字号", "Smaller text") \
-    X(BOOK_FONT_INCREASE, "增加字号", "Larger text") \
-    X(BOOK_TURN_INTERVAL, "间隔", "Interval") \
-    X(BOOK_DEFAULT, "默认", "Default") \
-    X(BOOK_DECREASE, "减小", "Decrease") \
-    X(BOOK_INCREASE, "增加", "Increase") \
-    X(BOOK_LETTER_GAP, "字间距", "Letter spacing") \
-    X(BOOK_INDENT, "首行缩进", "First-line indent") \
-    X(BOOK_AA_STRENGTH, "强度", "Strength") \
-    X(BOOK_AA_LOW, "弱", "Low") \
-    X(BOOK_AA_MEDIUM, "中", "Medium") \
-    X(BOOK_AA_HIGH, "强", "High") \
-    X(BOOK_FOOTER_LAYOUT, "信息布局", "Information layout") \
-    X(BOOK_FOOTER_BOTTOM, "全部底部", "All at bottom") \
-    X(BOOK_UNDERLINE_POSITION, "上下位置", "Line position") \
-    X(BOOK_UNDERLINE_UP, "上移 2px", "Up 2px") \
-    X(BOOK_UNDERLINE_CENTER, "恢复居中", "Reset") \
-    X(BOOK_UNDERLINE_DOWN, "下移 2px", "Down 2px") \
-    X(BOOK_INDENT_ONE, "1字", "1 char") \
-    X(BOOK_INDENT_TWO, "2字", "2 chars") \
-    X(BOOK_INDENT_THREE, "3字", "3 chars") \
-    X(SETTINGS_TEST_FRONTLIGHT_START, "点击开启", "Tap to turn on") \
-    X(DEVICE_ACTIVATE_FIRST, "请先前往CloudZao app绑定设备", "Please link your device in the CloudZao app first") \
-    X(XIAOZHI_ACTIVATE_FIRST, "请先前往xiaozhi.me绑定设备", "Please link your device at xiaozhi.me first") \
-    X(STORAGE_IO_ERROR, "SD 卡读写异常", "SD card read/write error") \
-    X(AUDIO_SERVICE_NOT_READY, "音频服务尚未就绪，请稍后重试", "Audio service is not ready. Try again shortly.") \
-    X(AUDIO_CALLBACK_UNAVAILABLE, "录音回调不可用，请重新进入应用", "Recording is unavailable. Reopen the app.") \
-    X(AUDIO_RECORDING_BUSY, "上一轮录音尚未结束，请稍后重试", "The previous recording is still finishing. Try again shortly.") \
-    X(AUDIO_MIC_BUSY, "麦克风正被其他功能使用，请结束后重试", "The microphone is in use. Stop the other recording and retry.") \
-    X(AUDIO_RECORDING_MEMORY, "录音内存不足，请稍后重试", "Not enough memory to record. Try again shortly.") \
-    X(AUDIO_PROCESSOR_FAILED, "录音处理器初始化失败，请重新进入应用", "Recording initialization failed. Reopen the app.") \
-    X(TTF_SIZE_FAILED_FMT, "无法设置字号 %d", "Cannot set font size %d") \
-    X(TTF_SD_IO_FAILED, "存储卡读写失败，请检查存储卡", "SD card read/write failed. Check the card.") \
-    X(TTF_NO_GLYPHS_FMT, "字号 %d 无可用字形", "No glyphs available at size %d") \
-    X(TTF_WRITE_FAILED, "字体写入失败，请检查存储卡", "Cannot write font. Check the SD card.") \
-    X(TTF_VERIFY_FAILED, "字体校验失败，请重新转换", "Font verification failed. Convert again.") \
-    X(TTF_TEMPLATE_INVALID, "模板字体无效，请重新导入", "Invalid template font. Import it again.") \
-    X(TTF_ENGINE_INIT_FAILED, "字体引擎初始化失败", "Font engine initialization failed") \
-    X(TTF_SOURCE_OPEN_FAILED, "无法打开源字体，请检查字体文件", "Cannot open source font. Check the file.") \
-    X(TTF_JOB_INVALID, "转换任务无效，请重新转换", "Invalid conversion job. Convert again.") \
-    X(TTF_START_FAILED, "无法启动转换，请稍后重试", "Cannot start conversion. Try again shortly.") \
-    X(TTF_CANCELLED, "转换已取消", "Conversion cancelled") \
-    X(TTF_GLYPH_MEMORY, "字形缓存内存不足，请减小字号", "Not enough memory for glyphs. Reduce the font size.") \
-    X(TTF_CANCELLED_OR_NO_SD, "转换已取消或 SD 卡不可用", "Conversion cancelled or SD card unavailable") \
-    X(ASSISTANT_PHOTO_FAILED, "无法拍照，请检查摄像头后重试", "Cannot capture. Check the camera and retry.") \
-    X(ASSISTANT_PHOTO_BUSY, "拍照、录音或上传正在进行，请稍后重试", "Capture, recording or upload in progress. Retry shortly.") \
-    X(ASSISTANT_PHOTO_CLOSE, "请先关闭图片预览", "Close the image preview first.") \
-    X(ASSISTANT_PHOTO_UPLOADING, "正在上传图片…", "Uploading image…") \
-    X(ASSISTANT_PHOTO_ANALYSIS_FAILED, "图片分析失败，照片已保留，请重试", "Image analysis failed. Photo kept. Retry.") \
-    X(ASSISTANT_PHOTO_DISABLED, "识图服务未开启，照片已保留", "Image service is disabled. Photo kept.") \
-    X(ASSISTANT_PHOTO_SENT, "图片提问已发送", "Image question sent.") \
-    X(ASSISTANT_PHOTO_QUESTION_FAILED, "提问未发送，照片已保留，请重试", "Question not sent. Photo kept. Retry.") \
-    X(ASSISTANT_PHOTO_HISTORY_FAILED, "图片已上传，未能加入聊天记录，请重试", "Image uploaded but not added to chat. Retry.") \
-    X(ASSISTANT_PHOTO_UPLOAD_FAILED, "图片上传失败，照片已保留，请重试", "Upload failed. Photo kept. Retry.") \
-    X(ASSISTANT_RELEASE_SEND, "松开发送", "Release to send") \
-    X(ASSISTANT_SEND, "发送", "Send") \
-    X(ASSISTANT_USER_PREFIX, "用户：", "User: ") \
-    X(ASSISTANT_CONNECTING_HOLD, "正在连接语音服务，请继续按住", "Connecting to voice service. Keep holding.") \
-    X(BOOK_IMPORT_TTF, "导入 TTF", "Import TTF") \
-    X(BOOK_ORIENT_AUTO, "自动", "Auto") \
-    X(BOOK_ORIENT_TITLE, "阅读方向", "Orientation") \
-    X(BOOK_WRITING_HORIZONTAL, "横排", "Horizontal") \
-    X(BOOK_WRITING_VERTICAL, "竖排", "Vertical") \
-    X(BOOK_WRITING_TITLE, "文字排版", "Text layout") \
-    X(BOOK_TEXT_DIRECTION, "文字方向", "Text direction") \
-    X(BOOK_TEXT_LEFT_TO_RIGHT, "从左往右", "Left to right") \
-    X(BOOK_TEXT_RIGHT_TO_LEFT, "从右往左", "Right to left") \
-    X(BOOK_TURN_SLIDE, "左右滑动", "Slide") \
-    X(BOOK_TURN_PUSH, "推白翻页", "Wipe") \
-    X(BOOK_TURN_TITLE, "翻页设置", "Page turn settings") \
-    X(BOOK_SHAKE_TURN, "晃动翻页", "Shake to turn") \
-    X(BOOK_SHAKE_LEVEL, "灵敏度", "Sensitivity") \
-    X(BOOK_AUTO_TURN, "定时翻页", "Auto turn") \
-    X(BOOK_PRESET_SMALL, "小", "Small") \
-    X(BOOK_PRESET_LARGE, "大", "Large") \
-    X(BOOK_PRESET_XLARGE, "很大", "X-large") \
-    X(BOOK_MARGIN_TITLE, "边距设置", "Margins") \
-    X(BOOK_SPACING_TITLE, "行距设置", "Line spacing") \
-    X(BOOK_PARA_GAP_TITLE, "段距设置", "Paragraph gap") \
-    X(BOOK_BACKGROUND_GRID, "方格", "Grid") \
-    X(BOOK_BACKGROUND_DOTS, "点阵", "Dots") \
-    X(BOOK_BACKGROUND_TITLE, "阅读背景", "Background") \
-    X(BOOK_CUSTOM, "自定义", "Custom") \
-    X(BOOK_FONT_LOADING, "字体加载中…", "Loading fonts...") \
-    X(BOOK_FONT_REOPEN, "字体加载失败，请重新打开字体页签", "Font loading failed. Reopen the Fonts tab.") \
-    X(BOOK_FONT_IMPORT_EMPTY, "暂无字体，请导入 TTF", "No fonts. Import a TTF font.") \
-    X(BOOK_BOOKMARKS, "书签", "Bookmarks") \
-    X(BOOK_LAYOUT_WAIT, "正文正在编排，请稍后操作", "Laying out text. Try again shortly.") \
-    X(COMMON_MEMORY_RETRY, "内存不足，请稍后操作", "Not enough memory. Try again shortly.") \
-    X(BOOK_BOOKMARKS_EMPTY, "暂无书签", "No bookmarks") \
-    X(BOOK_DURATION_HM_FMT, "%u小时%u分钟", "%uh %um") \
-    X(BOOK_READING_PROGRESS, "阅读进度", "Reading progress") \
-    X(BOOK_CHAPTER_PREV, "上一章", "Prev chapter") \
-    X(BOOK_CHAPTER_NEXT, "下一章", "Next chapter") \
-    X(BOOK_PAGE_PREV, "上一页", "Previous page") \
-    X(BOOK_PAGE_NEXT, "下一页", "Next page") \
-    X(BOOK_PAGE_FMT, "第%d页", "Page %d") \
-    X(BOOK_COMIC_SETTING_SAVED, "设置已保存，漫画暂不支持应用此项设置", "Saved. This setting does not apply to comics.") \
-    X(BOOK_FONT_SELECT, "选择字体", "Choose font") \
-    X(BOOK_READING_SETTINGS, "阅读设置", "Reading settings") \
-    X(BOOK_SELECTED_ITEMS_FMT, "已选 %u 项", "Selected %u") \
-    X(BOOK_TAP_MENU_REQUIRED, "至少保留一个菜单唤醒区域", "Keep at least one tap zone assigned to Menu.") \
-    X(TTF_FINISHING, "转换任务正在收尾，请稍后重试", "Conversion is finishing. Try again shortly.") \
-    X(TTF_SOURCE, "源字体", "Source font") \
-    X(TTF_OUTPUT, "输出", "Output") \
-    X(TTF_SUCCESS, "字体转换成功，已加入字体列表", "Font converted and added to the font list.") \
-    X(TTF_CONVERTING, "转换中", "Converting") \
-    X(TTF_FAILED, "转换失败", "Conversion failed") \
-    X(TTF_EMPTY, "未找到 TTF/OTF 字体\n请放入 SD 卡 metalio/e-ink/fonts_ttf 目录", "No TTF/OTF fonts found\nPlace fonts in metalio/e-ink/fonts_ttf on the SD card") \
-    X(TTF_SIZE_RANGE, "字号（20–80px）", "Font size (20–80px)") \
-    X(TTF_OVERWRITE_HINT, "同名 .ef 文件将被覆盖。离开页面或待机将取消转换，请勿拔卡。\n直接应用会降低翻页速度。", "Existing .ef files with the same name will be replaced. Leaving this page or entering standby cancels conversion. Keep the SD card inserted.\nApplying directly slows page turns.") \
-    X(TTF_START, "开始转换", "Convert") \
-    X(TTF_APPLY, "直接应用", "Apply directly") \
-    X(TTF_APPLY_FAILED, "字体加载失败，请检查字体文件或减小字号", "Cannot load font. Check the file or reduce the size.") \
-    X(TTF_OUTPUT_NAME_TOO_LONG, "输出名称过长或无效，请缩短源字体文件名后重试", "Output name too long or invalid. Shorten the source filename and retry.") \
-    X(TTF_GENERATING, "正在生成字库", "Generating font") \
-    X(TTF_PROGRESS_HINT, "转换完成后，字库将加入字体列表。离开页面或待机将取消转换，请勿拔卡。", "The converted font will appear in the font list. Leaving this page or entering standby cancels conversion. Keep the SD card inserted.") \
-    X(TTF_FAILED_FMT, "转换失败：%.60s", "Conversion failed: %.60s") \
-    X(TTF_BACK_TO_LIST, "返回导入列表", "Back to imports") \
-    X(BOOK_VIEW_COVER, "封面", "Covers") \
-    X(BOOK_VIEW_LIST, "列表", "List") \
-    X(BOOK_WEEK_READING, "本周阅读", "This week") \
-    X(BOOK_MINUTES_FMT, "%.1f 分钟", "%.1f min") \
-    X(BOOK_WEEK_MON, "一", "M") \
-    X(BOOK_WEEK_TUE, "二", "T") \
-    X(BOOK_WEEK_WED, "三", "W") \
-    X(BOOK_WEEK_THU, "四", "T") \
-    X(BOOK_WEEK_FRI, "五", "F") \
-    X(BOOK_WEEK_SAT, "六", "S") \
-    X(BOOK_WEEK_SUN, "日", "S") \
-    X(BOOK_WEEK_DURATION, "本周阅读时长", "This week") \
-    X(BOOK_TOTAL_DURATION, "总阅读时长", "Total reading time") \
-    X(TRANSFER_SD_CAPACITY_FAILED, "SD 卡容量读取失败", "Cannot read SD card capacity") \
-    X(TRANSFER_RECOVERY_FAILED, "目录读取或上传恢复失败", "Cannot read directory or recover uploads") \
-    X(TRANSFER_DIRECTORY_MISSING, "目录不存在", "Directory not found") \
-    X(TRANSFER_DIRECTORY_FAILED, "目录读取失败，请检查 SD 卡后刷新", "Cannot read directory. Check the SD card and refresh.") \
-    X(TRANSFER_DOWNLOAD_BUSY, "上传期间暂不支持下载，请完成后重试", "Wait for the upload to finish before downloading.") \
-    X(TRANSFER_READ_FAILED, "无法读取", "Cannot read file") \
-    X(TRANSFER_SD_FULL, "SD 卡空间不足，原文件保留", "SD card is full. The original file is preserved.") \
-    X(TRANSFER_MEMORY, "设备内存不足，上传已停止，原文件保留；请稍后重试", "Not enough memory. Upload stopped; the original file is preserved. Try again shortly.") \
-    X(STORAGE_RESTART_REQUIRED, "内存卡状态异常，请重启设备后再试", "SD card error. Restart the device and try again.") \
-    X(TRANSFER_WRITE_FAILED, "SD 卡写入失败，原文件保留；请检查内存卡后重试", "SD card write failed. The original file is preserved. Check the card and retry.") \
-    X(TRANSFER_DISCONNECTED, "连接中断，未提交的文件已清理，原文件保留", "Disconnected. Uncommitted files were removed; the original file is preserved.") \
-    X(TRANSFER_UPLOAD_BUSY, "已有上传在进行，请稍后重试", "An upload is in progress. Try again shortly.") \
-    X(TRANSFER_INVALID_ID, "上传任务标识无效", "Invalid upload ID") \
-    X(TRANSFER_ALREADY_HANDLED, "此上传任务已处理，请刷新目录确认结果", "Upload already processed. Refresh the directory to check the result.") \
-    X(TRANSFER_ENCODING_UNSUPPORTED, "不支持此上传编码，请刷新页面重试", "Unsupported upload encoding. Refresh the page and retry.") \
-    X(TRANSFER_INVALID_FILE, "文件名、路径或文件大小无效", "Invalid file name, path or size") \
-    X(TRANSFER_INVALID_SIZE, "文件大小无效", "Invalid file size") \
-    X(TRANSFER_SD_CAPACITY_UNAVAILABLE, "无法读取 SD 卡容量", "Cannot read SD card capacity") \
-    X(TRANSFER_EXISTS_CHOOSE, "已存在同名项目，请重新选择处理方式", "An item with this name already exists. Choose how to proceed.") \
-    X(TRANSFER_TARGET_CHECK_FAILED, "无法检查目标文件", "Cannot check the destination file") \
-    X(TRANSFER_TEMP_FAILED, "无法创建临时文件，原文件保留", "Cannot create temporary file. The original file is preserved.") \
-    X(TRANSFER_INCOMPLETE, "上传不完整，原文件保留", "Incomplete upload. The original file is preserved.") \
-    X(TRANSFER_CANCELLED, "上传已取消，原文件保留", "Upload cancelled. The original file is preserved.") \
-    X(TRANSFER_TARGET_CHANGED, "同名项目已变化，请重新上传", "The destination item has changed. Upload again.") \
-    X(TRANSFER_TARGET_CHECK_PRESERVED, "无法检查目标文件，原文件保留", "Cannot check the destination file. The original file is preserved.") \
-    X(TRANSFER_BACKUP_FAILED, "无法保护原文件，已取消覆盖", "Cannot back up the original file. Replacement cancelled.") \
-    X(TRANSFER_COMMIT_FAILED, "提交失败，原文件保留", "Save failed. The original file is preserved.") \
-    X(TRANSFER_RESTORE_FAILED, "提交失败，原文件备份已保留，恢复 SD 卡后刷新目录重试", "Save failed. The original backup is preserved. Restore the SD card, refresh and retry.") \
-    X(TRANSFER_INVALID_STREAM, "压缩流或数据长度错误，原文件保留", "Invalid compressed data or length. The original file is preserved.") \
-    X(TRANSFER_UPLOAD_MISSING, "未找到此连接的上传任务", "No upload found for this connection") \
-    X(TRANSFER_INVALID_COMMAND, "上传命令无效", "Invalid upload command") \
-    X(TRANSFER_PATH_BUSY, "此路径正在上传，请完成后重试", "An upload is using this path. Wait for it to finish.") \
-    X(TRANSFER_CREATE_FAILED, "创建失败", "Creation failed") \
-    X(TRANSFER_DELETE_ROOT_INVALID, "路径无效或不允许删除根目录", "Invalid path or root directory deletion is not allowed") \
-    X(TRANSFER_DIRECTORY_BUSY, "此路径包含正在上传的文件，请完成后重试", "This directory contains an active upload. Wait for it to finish.") \
-    X(TRANSFER_DELETE_PARTIAL, "部分项目未删除，可能是文件使用中、路径过长或 SD 卡异常；已删除内容无法恢复，请刷新确认", "Some items could not be deleted. Files may be in use, paths too long, or the SD card faulty. Deleted items cannot be restored. Refresh to check.") \
-    X(TRANSFER_PATH_UNAVAILABLE, "路径过长或目录暂不可用", "Path is too long or directory is unavailable") \
-    X(TRANSFER_EXISTS, "已存在同名项目", "An item with this name already exists") \
-    X(TRANSFER_ITEM_CHECK_FAILED, "无法检查目标项目", "Cannot check the destination item") \
-    X(TRANSFER_RENAME_FAILED, "改名失败", "Rename failed") \
-    X(TRANSFER_MOVE_SELF, "不能移动到自身或子目录", "Cannot move into itself or a subdirectory") \
-    X(TRANSFER_DEST_UNAVAILABLE, "路径过长或目标目录暂不可用", "Path is too long or destination is unavailable") \
-    X(TRANSFER_DEST_EXISTS, "目标已存在同名项目", "An item with this name already exists at the destination") \
-    X(TRANSFER_MOVE_FAILED, "移动失败", "Move failed") \
-    X(TRANSFER_HOTSPOT_STOPPING, "热点正在关闭", "Hotspot is shutting down") \
-    X(TRANSFER_REQUEST_BUSY, "文件请求繁忙，请稍后重试", "File service is busy. Try again shortly.") \
-    X(CLOUD_WIFI_PREPARING, "正在准备WIFI传输…", "Preparing Wi-Fi transfer...") \
-    X(CLOUD_TAB_WIFI, "WIFI传输", "Wi-Fi") \
-    X(COMMON_RESTART, "重启", "Restart") \
-    X(NETWORK_SCANNING_SHORT, "正在扫描", "Scanning") \
-    X(NETWORK_SAVED_COUNT_FMT, "已保存（%d）", "Saved (%d)") \
-    X(NETWORK_UNSAVED_COUNT_FMT, "未保存（%d）", "Unsaved (%d)") \
-    X(NETWORK_NO_SAVED_NEARBY, "附近暂无已保存网络", "No saved networks nearby") \
-    X(NETWORK_NO_UNSAVED_NEARBY, "附近暂无未保存网络", "No unsaved networks nearby") \
-    X(NETWORK_TRANSFER_READY, "WIFI传输已就绪", "Wi-Fi transfer is ready") \
-    X(NETWORK_TRANSFER_OPEN_HINT, "手机或电脑连接同一WIFI\n扫码或用浏览器打开下方网址", "Connect your phone or computer to the same Wi-Fi network.\nScan the code or open the address below in a browser.") \
-    X(NETWORK_TRANSFER_STOP_HINT, "切换传输方式或退出传输页将停止传输", "Switching transfer mode or leaving this page stops the transfer.") \
-    X(NETWORK_BACK_TO_LIST, "返回列表", "Back to list") \
-    X(NETWORK_CURRENT_SSID_FMT, "当前网络：%s", "Network: %s") \
-    X(QUICK_ENABLED, "已开启", "On") \
-    X(QUICK_DISABLED, "已关闭", "Off") \
-    X(QUICK_SWITCHING, "切换中", "Switching") \
-    X(QUICK_FAILED, "请重试", "Retry") \
-    X(QUICK_CONNECTED, "已连接", "Connected") \
-    X(QUICK_CONNECTING, "连接中", "Connecting") \
-    X(QUICK_DISCONNECTED, "未连接", "Offline") \
-    X(SETTINGS_DISPLAY_GRAY_HINT, "清屏后显示 16 阶原生灰度；00 为黑，15 为白。", "After clearing, 16 native gray levels are displayed: 00 is black; 15 is white.") \
-    X(SETTINGS_DISPLAY_BUSY, "屏幕忙，请稍后重试。", "Display is busy. Try again shortly.") \
-    X(SETTINGS_TEST_DISPLAY, "显示测试", "Display test") \
-    X(SETTINGS_DISPLAY_START_HINT, "点击“16 阶灰阶”开始测试。\n下方应显示从黑到白的 16 条灰阶，编号 00–15。", "Tap 16 gray levels to start.\n16 bars from black to white should appear below, numbered 00–15.") \
-    X(SETTINGS_DISPLAY_GRAY, "16 阶灰阶", "16 gray levels") \
-    X(SETTINGS_DISPLAY_DITHER, "点阵灰阶对照", "Dither comparison") \
-    X(SETTINGS_DISPLAY_DITHER_HINT, "黑白点阵对照：用黑白像素模拟灰度。", "Dither comparison: black and white pixels simulate gray levels.") \
-    X(SETTINGS_DISPLAY_RETEST_HINT, "可重复点击测试；NEXT 重测，PREV 返回。", "Tap to repeat. NEXT retests; PREV goes back.") \
-    X(WB_STATUS_QUERYING, "（状态查询中）", "(Checking)") \
-    X(WB_STATUS_FAILED, "（查询失败）", "(Check failed)") \
-    X(WB_STATUS_ONLINE, "（在线）", "(Online)") \
-    X(WB_STATUS_OFFLINE, "（离线）", "(Offline)") \
-    X(WB_STATUS_UNKNOWN, "（未知）", "(Unknown)") \
-    X(WB_AUTH_CHECKING, "正在检查 WorkBuddy 授权…", "Checking WorkBuddy authorization...") \
-    X(WB_SYNC_MESSAGES, "同步消息", "Sync messages") \
-    X(WB_REFRESHING, "刷新中", "Refreshing") \
-    X(WB_AUTH_SAVED_CHECKING, "设备授权已保存，正在确认电脑连接…", "Authorization saved. Checking the computer connection...") \
-    X(WB_CONNECTED, "电脑已连接，可以开始使用。", "Computer connected. Ready to use.") \
-    X(WB_BOUND_OFFLINE, "设备已绑定，电脑暂未连接。\n请在电脑打开对应账号的 WorkBuddy，连接后从菜单“同步消息”重试。", "Device linked; computer is offline.\nOpen WorkBuddy on your computer with the linked account, then choose Sync messages from the menu.") \
-    X(WB_BOUND_CONNECT_FAILED, "设备已绑定，暂时无法连接电脑：\n", "Device linked. Cannot connect to the computer:\n") \
-    X(WB_RELINK_HINT, "\n\n处理提示中的问题后，再点击右上角菜单“重新绑定”。", "\n\nResolve the issue, then choose Relink from the top-right menu.") \
-    X(WB_SYNC_RETRY_HINT, "\n\n无需重复扫码，可从菜单“同步消息”重试。", "\n\nChoose Sync messages from the menu to retry. No need to scan again.") \
-    X(WB_QR_GENERATING, "正在生成新的授权二维码…", "Generating a new authorization code...") \
-    X(WB_SCAN_FRIEND, "请朋友扫码，用自己的账号完成授权", "Ask your friend to scan and authorize with their own account.") \
-    X(WB_SCAN_AUTHORIZE, "请用手机扫码登录并授权", "Scan with your phone to sign in and authorize.") \
-    X(WB_AUTH_INCOMPLETE, "授权未完成，请刷新二维码重试", "Authorization incomplete. Refresh the code and retry.") \
-    X(WB_QR_EXPIRED, "二维码已过期，请点击刷新", "Code expired. Tap Refresh.") \
-    X(WB_AUTH_RECONNECTING, "网络暂时中断，正在重新查询授权…", "Connection interrupted. Checking authorization again...") \
-    X(WB_AUTHORIZE_PHONE, "请在手机上完成腾讯 WorkBuddy 授权", "Complete Tencent WorkBuddy authorization on your phone.") \
-    X(WB_WAIT_CLOSE, "正在等待上一次连接关闭…", "Waiting for the previous connection to close...") \
-    X(WB_WAIT_MEMORY, "内存不足，正在等待资源释放…", "Not enough memory. Waiting for resources...") \
-    X(WB_RELINK_PREPARING, "正在准备重新绑定…", "Preparing to relink...") \
-    X(WB_LINK_CHECKING, "正在检查绑定，请稍候…", "Checking device link. Please wait...") \
-    X(WB_REPLY_INTERRUPTED, "助理指令已受理，但自动读取中断：\n", "Request accepted, but reply retrieval was interrupted:\n") \
-    X(WB_TASK_CONTINUES_HINT, "\n\n助理任务可能继续执行。可从菜单“同步消息”查看，请勿重复发送同一指令。", "\n\nThe task may still be running. Choose Sync messages to check. Avoid sending the same request again.") \
-    X(WB_REPLY_TIMEOUT, "助理指令已受理，三分钟内暂未读到回复。助理任务仍可能继续执行，稍后可从菜单“同步消息”查看，请勿重复发送同一指令。", "Request accepted, but no reply received within three minutes. The task may still be running. Choose Sync messages later to check. Avoid sending the same request again.") \
-    X(WB_RECORDING_CANCELLED, "录音已取消", "Recording cancelled") \
-    X(AUDIO_MODULE_INIT_FAILED, "音频模块初始化失败，请检查模块连接后重启设备", "Audio module initialization failed. Check the connection and restart the device.") \
-    X(AUDIO_MODULE_NOT_READY, "音频模块尚未就绪，请稍后重试", "Audio module is not ready. Try again shortly.") \
-    X(WB_RECORDING_TASK_BUSY, "录音任务暂忙，请稍后重试", "Recording is busy. Try again shortly.") \
-    X(WB_SEND_UNCONFIRMED_HINT, "\n\n发送结果尚未确认，请先查看助理消息，避免重复发送同一指令。", "\n\nDelivery is unconfirmed. Check assistant messages before sending the request again.") \
-    X(WB_RECOGNITION_INCOMPLETE_HINT, "\n\n本次识别未完成，指令未发送到电脑。", "\n\nRecognition did not finish. The request was not sent to the computer.") \
-    X(WB_PREVIOUS_CLOSING, "上一轮连接正在关闭，请稍后再试", "The previous connection is closing. Try again shortly.") \
-    X(WB_CONTEXT_MEMORY, "请求上下文内存不足，请稍后再试", "Not enough memory for the request. Try again shortly.") \
-    X(WB_TASK_MEMORY, "语音或消息任务内存不足，请稍后再试", "Not enough memory for voice or messages. Try again shortly.") \
-    X(WB_HOLD_TO_SPEAK_HINT, "请持续按住，看到倾听波形后再说话（至少半秒）", "Keep holding. Speak after the listening waveform appears (at least half a second).") \
-    X(WB_RECORDING_FINISH_BUSY, "录音收尾任务暂忙，请稍后重试", "Recording is finishing. Try again shortly.") \
-    X(WB_MINUTE_SUFFIX, " 分钟", " min") \
-    X(WB_SECOND_SUFFIX, " 秒", " sec") \
-    X(WB_CONFIRM_PHONE, "请在手机上确认绑定", "Confirm the device link on your phone.") \
-    X(WB_QR_VALIDITY_PREFIX, "手机扫码绑定助理\n二维码有效期 ", "Scan with your phone to link the assistant\nCode valid for ") \
-    X(WB_QR_FAILED, "二维码生成失败，请点击刷新重试。", "Cannot generate code. Tap Refresh to retry.") \
-    X(WB_QR_DISPLAY_FAILED, "二维码暂时无法显示", "Cannot display the code") \
-    X(WB_RELINK_WAIT, "正在准备重新绑定，请稍候…", "Preparing to relink. Please wait...") \
-    X(WB_RECOGNIZING, "正在识别…", "Recognizing...") \
-    X(WB_SYNCING, "正在同步消息…", "Syncing messages...") \
-    X(WB_SENDING, "正在发送…", "Sending...") \
-    X(WB_PROCESSING, "助理正在处理…", "Assistant is working...") \
-    X(WB_NO_MESSAGES, "暂无可同步的文本消息", "No text messages to sync") \
-    X(WB_SYNCED, "消息已同步", "Messages synced") \
-    X(WB_LAYOUT_FAILED, "消息排版失败，请稍后重试", "Cannot lay out messages. Try again shortly.") \
-    X(WB_RELINK, "重新绑定", "Relink") \
-    X(WB_RELINK_TITLE, "重新绑定助理账号？", "Relink the assistant account?") \
-    X(WB_RELINK_WARNING, "新账号授权成功前，保留原绑定。已提交的任务可能继续执行。", "The current link is kept until the new account is authorized. Submitted tasks may continue running.") \
-    X(WB_RELINK_CANCEL, "暂不更换", "Keep current") \
-    X(WB_RELINK_CONTINUE, "继续绑定", "Continue") \
-    X(WB_SCAN_LINK, "请使用手机扫码绑定", "Scan with your phone to link the device.") \
-    X(WB_STOPPED_HINT, "本次录音或等待已停止。已提交的任务可能继续执行，可同步消息查看。", "Recording or waiting stopped. Submitted tasks may continue running. Sync messages to check.") \
-    X(WB_STOPPED, "已停止录音或等待，可继续对话", "Recording or waiting stopped. You can continue chatting.") \
-    X(WB_WELCOME_READY, "已经准备好了，随时可以开始对话。", "Ready whenever you are. Start a conversation.") \
-    X(WB_WELCOME_TASK, "今天想处理些什么？我来帮你一起完成。", "What would you like to work on today?") \
-    X(WB_WELCOME_IDEAS, "有什么想法或安排，都可以说给我听。", "Tell me about your ideas or plans.") \
-    X(WB_HISTORY_MEMORY, "历史内存不足，请稍后重试", "Not enough memory for chat history. Try again shortly.") \
-    X(WB_ME_PREFIX, "我：", "Me: ") \
-    X(WB_ASSISTANT_PREFIX, "助理：", "Assistant: ") \
-    X(AUDIO_SERVICE_START_FAILED, "音频服务启动失败，请稍后重试", "Audio service failed to start. Try again shortly.") \
-    X(WB_STORAGE_TASK_BUSY, "设备存储任务暂忙，请稍后重试", "Device storage task is busy. Try again shortly.") \
-    X(WB_STORAGE_BUSY, "设备存储暂忙，请稍后重试", "Device storage is busy. Try again shortly.") \
-    X(WB_ENDPOINT_MISSING, "尚未配置 WorkBuddy 服务地址", "WorkBuddy service address is not configured.") \
-    X(WB_NETWORK_SETTINGS_HINT, "网络未连接，请先在设置中连接网络", "No network. Connect in Settings first.") \
-    X(WB_CONNECTION_CREATE_FAILED, "无法创建网络连接，请稍后再试", "Cannot create a network connection. Try again shortly.") \
-    X(WB_SERVICE_TIMEOUT, "服务连接失败或请求超时，请稍后重试", "Service connection failed or request timed out. Try again shortly.") \
-    X(WB_RESPONSE_TIMEOUT, "等待服务响应超时，请稍后重试", "Service response timed out. Try again shortly.") \
-    X(WB_RESPONSE_READ_FAILED, "服务响应读取失败，请稍后重试", "Cannot read service response. Try again shortly.") \
-    X(WB_RESPONSE_TOO_LONG, "服务响应过长，请稍后重试", "Service response is too long. Try again shortly.") \
-    X(WB_HTTP_ERROR_PREFIX, "服务暂时不可用（HTTP ", "Service unavailable (HTTP ") \
-    X(WB_RESPONSE_INVALID, "服务返回异常，请稍后重试", "Invalid service response. Try again shortly.") \
-    X(WB_NO_REPLY, "服务没有返回回复，请稍后重试", "No reply from the service. Try again shortly.") \
-    X(WB_VOICE_ENDPOINT_MISSING, "尚未配置实时语音服务地址", "Live voice service address is not configured.") \
-    X(WB_TOKEN_MISSING_SCAN, "设备授权凭证缺失，请重新扫码授权", "Authorization credentials are missing. Scan again to authorize.") \
-    X(WB_VOICE_ENDPOINT_INVALID, "实时语音服务地址格式无效", "Invalid live voice service address") \
-    X(WB_RECORDING_BUFFER_MEMORY, "录音缓存内存不足，请稍后再试", "Not enough recording buffer memory. Try again shortly.") \
-    X(WB_TOKEN_NOT_SAVED, "设备尚未保存授权凭证", "No authorization credentials saved on the device") \
-    X(WB_ONLINE_STATUS_INVALID, "服务没有返回有效的电脑在线状态", "Service returned no valid computer connection status.") \
-    X(WB_AUTH_STATUS_MISSING, "服务未返回设备授权状态", "Service returned no device authorization status.") \
-    X(WB_SCAN_CANCELLED, "扫码请求已取消", "Scan request cancelled") \
-    X(WB_RELINK_UNSUPPORTED, "服务暂不支持重新绑定，请联系管理员更新服务", "Relinking is unavailable. Ask the administrator to update the service.") \
-    X(WB_QR_RESPONSE_INVALID, "服务返回的扫码信息无效", "Service returned invalid scan information.") \
-    X(WB_AUTH_SAVE_FAILED, "无法保存设备授权，请释放存储空间后重试", "Cannot save device authorization. Free storage space and retry.") \
-    X(WB_SCAN_SESSION_INVALID, "扫码会话无效，请刷新二维码", "Invalid scan session. Refresh the code.") \
-    X(WB_AUTH_STATUS_INVALID, "服务返回的授权状态无效，请刷新二维码", "Invalid authorization status. Refresh the code.") \
-    X(WB_TOKEN_SAVE_FAILED, "授权成功但设备凭证保存失败，请重新进入应用重试", "Authorized, but credentials could not be saved. Reopen the app and retry.") \
-    X(WB_ENTER_QUESTION, "请先输入问题", "Enter a question first.") \
-    X(WB_QUESTION_INVALID, "问题过长或包含无效字符，请缩短后重试", "Question is too long or contains invalid characters. Shorten it and retry.") \
-    X(WB_AUTHORIZE_FIRST, "请先扫码登录并授权 WorkBuddy", "Scan to sign in and authorize WorkBuddy first.") \
-    X(WB_TEXT_MEMORY, "内存不足，暂时无法发送文字", "Not enough memory to send text.") \
-    X(WB_MESSAGE_INVALID, "消息格式不正确，请更新服务后重试", "Invalid message format. Update the service and retry.") \
-    X(WB_REQUEST_ID_INVALID, "电脑受理编号无效，无法自动读取回复", "Invalid computer request ID. Cannot retrieve replies automatically.") \
-    X(WB_TOKEN_MISSING, "设备授权凭证缺失，请重新授权", "Authorization credentials are missing. Authorize again.") \
-    X(WB_AUTO_REPLY_UNAVAILABLE, "自动回复接口尚不可用，请先更新Java服务；可点电脑消息手动查看", "Automatic replies are unavailable. Update the Java service, or sync messages manually.") \
-    X(WB_AUTO_REPLY_MISMATCH, "自动回复数据与本次受理编号不匹配，请稍后手动查看电脑消息", "Reply does not match this request. Sync messages manually later.") \
-    X(WB_VOICE_RESPONSE_FORMAT, "实时语音响应格式异常", "Invalid live voice response format") \
-    X(WB_VOICE_RESPONSE_INVALID, "实时语音响应无效", "Invalid live voice response") \
-    X(WB_VOICE_SESSION_MISMATCH, "实时语音会话编号不匹配", "Live voice session ID mismatch") \
-    X(WB_VOICE_RECOGNITION_FAILED, "实时语音识别失败，请重新说话", "Live voice recognition failed. Speak again.") \
-    X(WB_VOICE_TEXT_INVALID, "实时识别文字为空、过长或顺序错误", "Recognized text is empty, too long or out of order.") \
-    X(WB_VOICE_VERSION, "实时语音协议版本不兼容，请更新Java服务", "Incompatible live voice protocol. Update the Java service.") \
-    X(WB_VOICE_BUFFER_FAILED, "实时录音缓冲申请失败", "Cannot allocate live recording buffer") \
-    X(WB_VOICE_NETWORK_HINT, "网络未连接，请重新连接后说话", "No network. Reconnect before speaking.") \
-    X(WB_VOICE_CONNECTION_CREATE, "无法创建实时语音连接", "Cannot create live voice connection") \
-    X(WB_VOICE_TRANSFER_FAILED, "实时语音传输异常，请重新说话", "Live voice transfer failed. Speak again.") \
-    X(WB_VOICE_CONNECTION_FAILED, "实时语音连接失败，请检查Java版本、WebSocket代理和设备授权", "Live voice connection failed. Check the Java service version, WebSocket proxy and device authorization.") \
-    X(WB_VOICE_EARLY_END, "识别提前结束，指令未发送", "Recognition ended early. Request not sent.") \
-    X(WB_VOICE_DISCONNECTED, "语音连接中断，指令未发送，请重新说话", "Voice disconnected. Request not sent. Speak again.") \
-    X(WB_VOICE_READY_TIMEOUT, "等待语音服务就绪超时，请稍后重试", "Voice service did not become ready in time. Try again shortly.") \
-    X(WB_VOICE_FINAL_TIMEOUT, "等待最终识别结果超时，请重新说话", "Final recognition result timed out. Speak again.") \
-    X(WB_VOICE_OVERFLOW, "实时音频待发送缓冲已满，请检查网络后重试", "Pending audio buffer is full. Check the network and retry.") \
-    X(WB_VOICE_BUFFER_UNAVAILABLE, "实时录音缓冲不可用，请重新进入应用", "Live recording buffer is unavailable. Reopen the app.") \
-    X(WB_VOICE_PACKET_INVALID, "录音数据无效，请重新进入应用", "Recording data is invalid. Reopen the app.") \
-    X(WB_VOICE_SEND_FAILED, "实时音频发送失败，请重新说话", "Live audio send failed. Speak again.") \
-    X(WB_AUDIO_CAPTURE_FAILED, "语音采集或编码失败，请重新说话", "Audio capture or encoding failed. Speak again.") \
-    X(WB_VOICE_TOO_SHORT, "录音不足半秒，请按住并说话更久", "Recording is shorter than half a second. Hold and speak longer.") \
-    X(WB_VOICE_INCOMPLETE, "录音发送字节数不匹配，请重新说话", "Sent audio byte count does not match the recording. Speak again.") \
-    X(WB_VOICE_FINISH_FAILED, "语音结束确认发送失败", "Cannot send end-of-voice confirmation") \
-    X(WB_VOICE_CANCELLED, "本次语音已取消，指令未发送", "Voice cancelled. Request not sent.") \
-    X(BOOK_BOOKMARK_LAYOUT_BUSY, "正文正在编排，请稍后添加书签", "Laying out text. Add the bookmark shortly.") \
-    X(BOOK_BOOKMARK_ADD_MEMORY, "内存不足，无法添加书签", "Not enough memory to add a bookmark") \
-    X(BOOK_BOOKMARK_LOCATE_FAILED, "无法定位书签，请检查书籍是否发生变化", "Cannot locate bookmark. Check whether the book has changed.") \
-    X(ASSISTANT_AI_PREFIX, "AI：", "AI: ") \
-    X(BOOK_BOOKMARK_IMAGE_SUFFIX, "（图片或章节页）", " (Image or chapter page)") \
-    X(BOOK_BOOKMARK_IMAGE, "图片或章节页", "Image or chapter page") \
-    X(WIFI_DISABLED_RETRY, "Wi-Fi 已关闭，请打开 Wi-Fi 后重试", "Wi-Fi is off. Turn it on and try again.") \
-    X(AUDIO_INIT_FAILED, "音频初始化失败", "Audio initialization failed") \
-    X(SETTINGS_TEST_CAMERA_DETECTED, "已检测到", "Detected") \
-    X(SETTINGS_TEST_CAMERA_NOT_DETECTED, "未检测到", "Not detected") \
-    X(SETTINGS_TEST_CAMERA_SHOT, "拍照", "Capture") \
-    X(SETTINGS_TEST_CAMERA_RESULT, "拍照结果", "Camera result") \
-    X(SETTINGS_TEST_CAPTURING, "拍照中…", "Capturing…") \
-    X(SETTINGS_TEST_DETECTING, "检测中…", "Detecting…") \
-    X(SETTINGS_TEST_TASK_CREATE_FAIL, "任务创建失败", "Task creation failed") \
-    X(SETTINGS_TEST_CELL_EXT, "4G·外置", "4G·External") \
-    X(SETTINGS_TEST_CELL_INT, "4G·内置", "4G·Internal") \
-    X(SETTINGS_TEST_SCANNING, "扫描中…", "Scanning…") \
-    X(SETTINGS_TEST_WIFI_CLOSE, "关闭", "Close") \
-    X(SETTINGS_TEST_WIFI_COUNT_FMT, "共 %d 个网络", "%d network(s)") \
-    X(SETTINGS_TEST_WIFI_FOUND_FMT, "发现 %d 个", "Found %d") \
-    X(SETTINGS_TEST_WIFI_NEARBY, "附近 WiFi", "Nearby Wi-Fi") \
-    X(SETTINGS_TEST_WIFI_NEXT, "下页", "Next") \
-    X(SETTINGS_TEST_WIFI_NONE, "未发现网络", "No networks") \
-    X(SETTINGS_TEST_WIFI_PREV, "上页", "Prev") \
-    X(SETTINGS_TEST_WIFI_RESCAN, "重扫", "Rescan") \
-    X(SETTINGS_TEST_WIFI_SCANNING, "正在扫描…", "Scanning…") \
-    X(SETTINGS_TEST_WIFI_SCAN_FAIL, "扫描失败", "Scan failed") \
-    X(REGISTERING_NETWORK, "等待网络...", "Waiting for network...") \
-    X(SETTINGS_NET_BOARD_NO_AP, "当前板型不支持配网模式", "This board has no Wi-Fi config mode") \
-    X(SETTINGS_NET_CFUN0, "正在关闭射频…\nAT+CFUN=0", "RF off…\nAT+CFUN=0") \
-    X(SETTINGS_NET_CFUN0_FAIL, "AT+CFUN=0 执行失败", "AT+CFUN=0 failed") \
-    X(SETTINGS_NET_CFUN1, "正在重新搜网…\nAT+CFUN=1", "Searching network…\nAT+CFUN=1") \
-    X(SETTINGS_NET_CFUN1_FAIL, "恢复4G通信失败，请重试或重启设备", "Could not restore 4G. Retry or restart the device.") \
-    X(SETTINGS_NET_CURRENT_FMT, "当前：%s", "Current: %s") \
-    X(SETTINGS_NET_CUR_DASH, "当前：--", "Current: --") \
-    X(SETTINGS_NET_ECSIMCFG_FAIL, "AT+ECSIMCFG 执行失败", "AT+ECSIMCFG failed") \
-    X(SETTINGS_NET_MODE_4G, "4G 上网", "Cellular") \
-    X(SETTINGS_NET_MODE_FMT, "上网方式：%s", "Network mode: %s") \
-    X(SETTINGS_NET_WIFI_STATUS_TITLE, "WiFi 状态：", "Wi-Fi status:") \
-    X(SETTINGS_NET_WIFI_ENABLED, "启用中", "Enabled") \
-    X(SETTINGS_NET_MODE_WIFI, "WiFi 上网", "Wi-Fi") \
-    X(SETTINGS_NET_NOT_4G, "当前不在 4G 模式，无法切换", "Not in 4G mode, cannot switch") \
-    X(SETTINGS_NET_NO_4G, "未检测到 4G 模块", "No 4G module") \
-    X(SETTINGS_NET_REBOOT_HINT, "切换后设备将自动重启", "Device reboots after switching") \
-    X(SETTINGS_NET_SIM_EXT, "外置卡", "External SIM") \
-    X(SETTINGS_NET_SIM_INT, "内置卡", "Internal SIM") \
-    X(SETTINGS_NET_SIM_TASK_FAIL, "无法启动 SIM 切换任务", "Cannot start SIM switch task") \
-    X(SETTINGS_NET_SIM_TITLE, "SIM 卡", "SIM") \
-    X(SETTINGS_NET_SWITCHED_FMT, "已切换到%s", "Switched to %s") \
-    X(SETTINGS_NET_SWITCH_4G, "正在切换到 4G…", "Switching to 4G…") \
-    X(SETTINGS_NET_SWITCH_SIM_CFUN0_FMT, "正在切换到%s…\nAT+CFUN=0", "Switching to %s…\nAT+CFUN=0") \
-    X(SETTINGS_NET_SWITCH_SIM_FMT, "正在切换到%s…\n%s", "Switching to %s…\n%s") \
-    X(SETTINGS_NET_SWITCH_WIFI, "正在切换到 WiFi…", "Switching to Wi-Fi…") \
-    X(SETTINGS_TEST_CELL_CANCELLED, "测试已取消", "Test cancelled") \
-    X(SETTINGS_TEST_CELL_CFUN0_FAIL, "CFUN=0失败", "CFUN=0 failed") \
-    X(SETTINGS_TEST_CELL_CFUN1_FAIL, "CFUN=1失败", "CFUN=1 failed") \
-    X(SETTINGS_TEST_CELL_LOSS_FMT, "丢包 %d/%d", "Loss %d/%d") \
-    X(SETTINGS_TEST_CELL_MODEM_NOT_READY, "模组未就绪", "Modem not ready") \
-    X(SETTINGS_TEST_CELL_MODEM_NO_RESP, "模组无响应", "Modem no response") \
-    X(SETTINGS_TEST_CELL_NEED_4G, "需切到4G模式", "Switch to 4G mode") \
-    X(SETTINGS_TEST_CELL_NO_RESOURCE, "资源不足", "Out of resources") \
-    X(SETTINGS_TEST_CELL_NO_SIM, "未检测到SIM卡", "No SIM detected") \
-    X(SETTINGS_TEST_CELL_PING_CMD_FAIL, "PING命令失败", "PING command failed") \
-    X(SETTINGS_TEST_CELL_PING_FAIL, "PING失败", "PING failed") \
-    X(SETTINGS_TEST_CELL_PING_OK, "PING成功", "PING OK") \
-    X(SETTINGS_TEST_CELL_PING_WAIT_TIMEOUT, "PING等待超时", "PING wait timeout") \
-    X(SETTINGS_TEST_CELL_REG_REJECT, "网络注册被拒绝", "Registration rejected") \
-    X(SETTINGS_TEST_CELL_SEARCH_TIMEOUT, "搜网超时", "Network search timeout") \
-    X(SETTINGS_TEST_CELL_SIM_SWITCH_FAIL, "切换SIM失败", "SIM switch failed") \
-    X(SETTINGS_TEST_CELL_SLOT_FAIL, "SIM槽位未生效", "SIM slot not applied") \
-    X(SETTINGS_TEST_CELL_TESTING, "测试中…", "Testing…") \
-    X(SETTINGS_TEST_CELL_TEST_FAIL, "测试失败", "Test failed") \
-    X(SETTINGS_TEST_CELL_WAIT_RESOURCE, "等待资源…", "Waiting for resources…") \
-    X(SETTINGS_TEST_SIGNAL_BOARD_UNSUP, "板型不支持", "Board unsupported") \
+    X(STORE_PREVIOUS_PAGE, "Trước", "Previous") \
+    X(STORE_NEXT_PAGE, "Sau", "Next") \
+    X(STORE_PAGE_RESULTS, "Trang này không có ứng dụng đã cài", "Not installed on this page") \
+    X(STORE_READING_INSTALLED, "Đang đọc ứng dụng đã cài…", "Reading installed apps…") \
+    X(STORE_FETCHING, "Đang tải danh sách ứng dụng…", "Fetching store apps…") \
+    X(STORE_FETCHING_DETAIL, "Đang tải chi tiết ứng dụng…", "Fetching app details…") \
+    X(STORE_REFRESHED, "Đã cập nhật danh sách ứng dụng", "App list updated") \
+    X(STORE_OFFLINE_INSTALLED, "Không kết nối được Kho ứng dụng. Ứng dụng đã cài vẫn dùng được.", "Cannot connect to App Store. Installed apps are still available.") \
+    X(STORE_NO_INSTALLED, "Chưa cài ứng dụng nào", "No installed apps") \
+    X(STORE_EMPTY, "Không có ứng dụng", "No apps available") \
+    X(STORE_QUEUED, "Đang chờ", "Queued") \
+    X(STORE_CANCELLING, "Đang hủy", "Cancelling") \
+    X(STORE_CANCELLED, "Đã hủy cài đặt", "Installation cancelled") \
+    X(STORE_VERIFYING, "Đang kiểm tra…", "Verifying…") \
+    X(STORE_INSTALLING, "Đang cài đặt…", "Installing…") \
+    X(STORE_REMOVING, "Đang gỡ ứng dụng…", "Uninstalling app…") \
+    X(STORE_INSTALLED_DONE, "Đã cài ứng dụng", "App installed") \
+    X(STORE_UPDATED, "Đã cập nhật ứng dụng", "App updated") \
+    X(STORE_REMOVED, "Đã gỡ ứng dụng", "App uninstalled") \
+    X(STORE_FILTER, "Lọc", "Filter") \
+    X(STORE_ALL, "Tất cả", "All") \
+    X(STORE_ALL_APPS, "Tất cả ứng dụng", "All apps") \
+    X(STORE_DOWNLOADING, "Đang tải", "Downloading") \
+    X(STORE_UNINSTALLED, "Chưa cài", "Not installed") \
+    X(STORE_INSTALL_STATE, "Cài đặt", "Installation") \
+    X(STORE_DETAILS, "Chi tiết ứng dụng", "App details") \
+    X(STORE_VERSION, "Phiên bản", "Version") \
+    X(STORE_SIZE, "Dung lượng", "App size") \
+    X(STORE_CATEGORY, "Thể loại", "Category") \
+    X(STORE_LANGUAGE, "Ngôn ngữ", "Languages") \
+    X(STORE_LANGUAGE_ZH, "Tiếng Trung giản thể", "Simplified Chinese") \
+    X(STORE_LANGUAGE_EN, "Tiếng Anh", "English") \
+    X(STORE_DESCRIPTION, "Mô tả", "Description") \
+    X(STORE_RELEASE_NOTES, "Ghi chú phát hành", "Release notes") \
+    X(STORE_PROVIDER, "Nhà cung cấp", "Provider") \
+    X(STORE_LAST_UPDATED, "Cập nhật lần cuối", "Last updated") \
+    X(STORE_NOT_PROVIDED, "Không có", "Not provided") \
+    X(STORE_LOCATION, "Lưu trữ", "Storage") \
+    X(STORE_CHECKING, "Đang kiểm tra", "Checking") \
+    X(STORE_CANCEL, "Hủy", "Cancel") \
+    X(STORE_NO_MATCH, "Không có ứng dụng phù hợp", "No matching apps") \
+    X(STORE_TITLE, "Kho ứng dụng", "App Store") \
+    X(STORE_INSTALLED, "Đã cài", "Installed") \
+    X(STORE_INSTALL, "Cài đặt", "Install") \
+    X(STORE_UPDATE, "Cập nhật", "Update") \
+    X(STORE_CHECK_UPDATE, "Kiểm tra cập nhật", "Check for updates") \
+    X(STORE_UPDATE_CONFIRM_FMT, "Có phiên bản mới: %s\nCập nhật ứng dụng này?", "New version available: %s\nUpdate this app?") \
+    X(STORE_CONFIRM, "Xác nhận", "Confirm") \
+    X(STORE_RUN, "Mở", "Open") \
+    X(STORE_REMOVE, "Gỡ cài đặt", "Uninstall") \
+    X(STORE_LOADING, "Đang tải ứng dụng…", "Loading apps…") \
+    X(STORE_BUSY, "Đang xử lý. Vui lòng chờ…", "Working. Please wait…") \
+    X(STORE_DOWNLOAD_BUSY, "Đang tải xuống. Vui lòng thử lại sau.", "Download in progress. Please try again later.") \
+    X(STORE_CURRENT, "Đã là bản mới nhất", "Already up to date") \
+    X(STORE_REMOVE_CONFIRM, "Gỡ ứng dụng này? Tệp cài đặt trên máy sẽ bị xóa. Bạn có thể cài lại từ Kho.", "Uninstall this app? Local installation files will be removed. You can install it again from the Store.") \
+    X(STORE_SD_ERROR, "Thẻ SD không dùng được hoặc ghi lỗi. Kiểm tra thẻ và chế độ USB.", "SD card unavailable or write failed. Check the card and USB mode.") \
+    X(STORE_FORBIDDEN, "Không dùng được liên kết thiết bị. Kiểm tra liên kết thiết bị.", "Device binding unavailable. Check device binding.") \
+    X(STORE_UNAVAILABLE, "Phiên bản ứng dụng không có sẵn. Hãy làm mới danh sách.", "App version unavailable. Refresh the list.") \
+    X(STORE_CATALOG_EXPIRED, "Danh sách ứng dụng đã hết hạn. Hãy làm mới danh sách.", "App list expired. Refresh the list.") \
+    X(STORE_WITHDRAWN, "Phiên bản này đã bị thu hồi. Hãy làm mới danh sách.", "This version was withdrawn. Refresh the list.") \
+    X(STORE_PACKAGE_CHANGED, "Thông tin tải xuống đã thay đổi. Hãy cài lại.", "Download information changed. Install again.") \
+    X(STORE_RANGE_ERROR, "Tiến trình tải không hợp lệ. Hãy cài lại.", "Download progress invalid. Install again.") \
+    X(STORE_UNSUPPORTED, "Thiết bị hoặc firmware không tương thích. Kiểm tra firmware.", "Device or firmware incompatible. Check firmware.") \
+    X(STORE_SERVICE_BUSY, "Dịch vụ đang bận. Thử lại sau.", "Service busy. Try again later.") \
+    X(STORE_NETWORK_ERROR, "Không kết nối được Kho ứng dụng. Kiểm tra mạng.", "Cannot connect to App Store. Check the network.") \
+    X(STORE_VERIFY_ERROR, "Kiểm tra tệp ứng dụng thất bại. Hãy tải lại.", "App file verification failed. Download it again.") \
+    X(STORE_MEMORY_ERROR, "Không đủ bộ nhớ. Đóng tính năng khác rồi thử lại.", "Not enough memory. Close other features and try again.") \
+    X(STORE_INCOMPATIBLE, "Ứng dụng không tương thích với firmware này nên không chạy được. Cập nhật firmware rồi thử lại.", "App is incompatible with this firmware and cannot start. Update firmware and try again.") \
+    X(STORE_RUN_ERROR, "Ứng dụng không khởi động được. Kiểm tra tương thích ứng dụng và firmware.", "App failed to start. Check app and firmware compatibility.") \
+    X(STORE_INVALID, "Danh mục ứng dụng không hợp lệ hoặc phiên bản API không tương thích.", "Invalid app catalog or incompatible API version.") \
+    X(STORE_LIMIT, "Hỗ trợ tối đa 32 ứng dụng. Hãy gỡ bớt ứng dụng không dùng.", "Up to 32 apps are supported. Uninstall unused apps first.") \
+    X(STORE_SERVER_ERROR, "Địa chỉ kho không hợp lệ. Kiểm tra cài đặt dịch vụ.", "Invalid store address. Check service settings.") \
+    X(YUNXIN_BINDING_OPEN_AI, "Mở NetEase AI và quét mã để liên kết thiết bị.", "Open NetEase AI and scan the code to link your device.") \
+    X(YUNXIN_BINDING_CHECKING, "Đang kiểm tra liên kết thiết bị. Vui lòng chờ...", "Checking device link. Please wait...") \
+    X(YUNXIN_BINDING_SCAN, "Quét bằng mini program để liên kết thiết bị.\nTính năng này dùng được sau khi liên kết xong.", "Scan with the mini program to link your device.\nThis feature is available once linking is complete.") \
+    X(YUNXIN_BINDING_RETRY, "Chưa xác nhận được liên kết thiết bị. Đang thử lại...\nGiữ thiết bị kết nối Wi-Fi.", "Unable to confirm the device link. Retrying...\nKeep your device connected to Wi-Fi.") \
+    X(BOOK_FONT_DECREASE, "Chữ nhỏ hơn", "Smaller text") \
+    X(BOOK_FONT_INCREASE, "Chữ lớn hơn", "Larger text") \
+    X(BOOK_TURN_INTERVAL, "Khoảng thời gian", "Interval") \
+    X(BOOK_DEFAULT, "Mặc định", "Default") \
+    X(BOOK_DECREASE, "Giảm", "Decrease") \
+    X(BOOK_INCREASE, "Tăng", "Increase") \
+    X(BOOK_LETTER_GAP, "Giãn chữ", "Letter spacing") \
+    X(BOOK_INDENT, "Thụt đầu dòng", "First-line indent") \
+    X(BOOK_AA_STRENGTH, "Cường độ", "Strength") \
+    X(BOOK_AA_LOW, "Thấp", "Low") \
+    X(BOOK_AA_MEDIUM, "Vừa", "Medium") \
+    X(BOOK_AA_HIGH, "Cao", "High") \
+    X(BOOK_FOOTER_LAYOUT, "Bố cục thông tin", "Information layout") \
+    X(BOOK_FOOTER_BOTTOM, "Tất cả ở dưới", "All at bottom") \
+    X(BOOK_UNDERLINE_POSITION, "Vị trí đường kẻ", "Line position") \
+    X(BOOK_UNDERLINE_UP, "Lên 2px", "Up 2px") \
+    X(BOOK_UNDERLINE_CENTER, "Đặt lại", "Reset") \
+    X(BOOK_UNDERLINE_DOWN, "Xuống 2px", "Down 2px") \
+    X(BOOK_INDENT_ONE, "1 ký tự", "1 char") \
+    X(BOOK_INDENT_TWO, "2 ký tự", "2 chars") \
+    X(BOOK_INDENT_THREE, "3 ký tự", "3 chars") \
+    X(SETTINGS_TEST_FRONTLIGHT_START, "Chạm để bật", "Tap to turn on") \
+    X(DEVICE_ACTIVATE_FIRST, "Hãy liên kết thiết bị trong ứng dụng CloudZao trước", "Please link your device in the CloudZao app first") \
+    X(XIAOZHI_ACTIVATE_FIRST, "Hãy liên kết thiết bị tại xiaozhi.me trước", "Please link your device at xiaozhi.me first") \
+    X(STORAGE_IO_ERROR, "Lỗi đọc/ghi thẻ SD", "SD card read/write error") \
+    X(AUDIO_SERVICE_NOT_READY, "Dịch vụ âm thanh chưa sẵn sàng. Thử lại sau giây lát.", "Audio service is not ready. Try again shortly.") \
+    X(AUDIO_CALLBACK_UNAVAILABLE, "Không ghi âm được. Hãy mở lại ứng dụng.", "Recording is unavailable. Reopen the app.") \
+    X(AUDIO_RECORDING_BUSY, "Bản ghi trước chưa xong. Thử lại sau giây lát.", "The previous recording is still finishing. Try again shortly.") \
+    X(AUDIO_MIC_BUSY, "Micro đang được dùng. Dừng bản ghi kia rồi thử lại.", "The microphone is in use. Stop the other recording and retry.") \
+    X(AUDIO_RECORDING_MEMORY, "Không đủ bộ nhớ để ghi âm. Thử lại sau giây lát.", "Not enough memory to record. Try again shortly.") \
+    X(AUDIO_PROCESSOR_FAILED, "Khởi tạo ghi âm thất bại. Hãy mở lại ứng dụng.", "Recording initialization failed. Reopen the app.") \
+    X(TTF_SIZE_FAILED_FMT, "Không đặt được cỡ chữ %d", "Cannot set font size %d") \
+    X(TTF_SD_IO_FAILED, "Đọc/ghi thẻ SD thất bại. Kiểm tra thẻ.", "SD card read/write failed. Check the card.") \
+    X(TTF_NO_GLYPHS_FMT, "Không có ký tự nào ở cỡ %d", "No glyphs available at size %d") \
+    X(TTF_WRITE_FAILED, "Không ghi được phông. Kiểm tra thẻ SD.", "Cannot write font. Check the SD card.") \
+    X(TTF_VERIFY_FAILED, "Kiểm tra phông thất bại. Hãy chuyển đổi lại.", "Font verification failed. Convert again.") \
+    X(TTF_TEMPLATE_INVALID, "Phông mẫu không hợp lệ. Hãy nhập lại.", "Invalid template font. Import it again.") \
+    X(TTF_ENGINE_INIT_FAILED, "Khởi tạo bộ dựng phông thất bại", "Font engine initialization failed") \
+    X(TTF_SOURCE_OPEN_FAILED, "Không mở được phông nguồn. Kiểm tra tệp.", "Cannot open source font. Check the file.") \
+    X(TTF_JOB_INVALID, "Tác vụ chuyển đổi không hợp lệ. Hãy chuyển đổi lại.", "Invalid conversion job. Convert again.") \
+    X(TTF_START_FAILED, "Không bắt đầu chuyển đổi được. Thử lại sau giây lát.", "Cannot start conversion. Try again shortly.") \
+    X(TTF_CANCELLED, "Đã hủy chuyển đổi", "Conversion cancelled") \
+    X(TTF_GLYPH_MEMORY, "Không đủ bộ nhớ cho ký tự. Hãy giảm cỡ chữ.", "Not enough memory for glyphs. Reduce the font size.") \
+    X(TTF_CANCELLED_OR_NO_SD, "Đã hủy chuyển đổi hoặc không có thẻ SD", "Conversion cancelled or SD card unavailable") \
+    X(ASSISTANT_PHOTO_FAILED, "Không chụp được. Kiểm tra camera rồi thử lại.", "Cannot capture. Check the camera and retry.") \
+    X(ASSISTANT_PHOTO_BUSY, "Đang chụp, ghi âm hoặc tải lên. Thử lại sau giây lát.", "Capture, recording or upload in progress. Retry shortly.") \
+    X(ASSISTANT_PHOTO_CLOSE, "Hãy đóng ảnh xem trước trước.", "Close the image preview first.") \
+    X(ASSISTANT_PHOTO_UPLOADING, "Đang tải ảnh lên…", "Uploading image…") \
+    X(ASSISTANT_PHOTO_ANALYSIS_FAILED, "Phân tích ảnh thất bại. Đã giữ ảnh. Hãy thử lại.", "Image analysis failed. Photo kept. Retry.") \
+    X(ASSISTANT_PHOTO_DISABLED, "Dịch vụ ảnh đang tắt. Đã giữ ảnh.", "Image service is disabled. Photo kept.") \
+    X(ASSISTANT_PHOTO_SENT, "Đã gửi câu hỏi kèm ảnh.", "Image question sent.") \
+    X(ASSISTANT_PHOTO_QUESTION_FAILED, "Chưa gửi được câu hỏi. Đã giữ ảnh. Hãy thử lại.", "Question not sent. Photo kept. Retry.") \
+    X(ASSISTANT_PHOTO_HISTORY_FAILED, "Đã tải ảnh lên nhưng chưa thêm vào trò chuyện. Hãy thử lại.", "Image uploaded but not added to chat. Retry.") \
+    X(ASSISTANT_PHOTO_UPLOAD_FAILED, "Tải lên thất bại. Đã giữ ảnh. Hãy thử lại.", "Upload failed. Photo kept. Retry.") \
+    X(ASSISTANT_RELEASE_SEND, "Thả tay để gửi", "Release to send") \
+    X(ASSISTANT_SEND, "Gửi", "Send") \
+    X(ASSISTANT_USER_PREFIX, "Bạn: ", "User: ") \
+    X(ASSISTANT_CONNECTING_HOLD, "Đang kết nối dịch vụ giọng nói. Tiếp tục giữ.", "Connecting to voice service. Keep holding.") \
+    X(BOOK_IMPORT_TTF, "Nhập TTF", "Import TTF") \
+    X(BOOK_ORIENT_AUTO, "Tự động", "Auto") \
+    X(BOOK_ORIENT_TITLE, "Hướng màn hình", "Orientation") \
+    X(BOOK_WRITING_HORIZONTAL, "Ngang", "Horizontal") \
+    X(BOOK_WRITING_VERTICAL, "Dọc", "Vertical") \
+    X(BOOK_WRITING_TITLE, "Bố cục chữ", "Text layout") \
+    X(BOOK_TEXT_DIRECTION, "Hướng chữ", "Text direction") \
+    X(BOOK_TEXT_LEFT_TO_RIGHT, "Trái sang phải", "Left to right") \
+    X(BOOK_TEXT_RIGHT_TO_LEFT, "Phải sang trái", "Right to left") \
+    X(BOOK_TURN_SLIDE, "Trượt", "Slide") \
+    X(BOOK_TURN_PUSH, "Quét", "Wipe") \
+    X(BOOK_TURN_TITLE, "Cài đặt lật trang", "Page turn settings") \
+    X(BOOK_SHAKE_TURN, "Lắc để lật", "Shake to turn") \
+    X(BOOK_SHAKE_LEVEL, "Độ nhạy", "Sensitivity") \
+    X(BOOK_AUTO_TURN, "Tự lật trang", "Auto turn") \
+    X(BOOK_PRESET_SMALL, "Nhỏ", "Small") \
+    X(BOOK_PRESET_LARGE, "Lớn", "Large") \
+    X(BOOK_PRESET_XLARGE, "Rất lớn", "X-large") \
+    X(BOOK_MARGIN_TITLE, "Lề", "Margins") \
+    X(BOOK_SPACING_TITLE, "Giãn dòng", "Line spacing") \
+    X(BOOK_PARA_GAP_TITLE, "Cách đoạn", "Paragraph gap") \
+    X(BOOK_BACKGROUND_GRID, "Lưới", "Grid") \
+    X(BOOK_BACKGROUND_DOTS, "Chấm", "Dots") \
+    X(BOOK_BACKGROUND_TITLE, "Nền", "Background") \
+    X(BOOK_CUSTOM, "Tùy chỉnh", "Custom") \
+    X(BOOK_FONT_LOADING, "Đang tải phông...", "Loading fonts...") \
+    X(BOOK_FONT_REOPEN, "Tải phông thất bại. Hãy mở lại thẻ Phông.", "Font loading failed. Reopen the Fonts tab.") \
+    X(BOOK_FONT_IMPORT_EMPTY, "Chưa có phông. Hãy nhập phông TTF.", "No fonts. Import a TTF font.") \
+    X(BOOK_BOOKMARKS, "Dấu trang", "Bookmarks") \
+    X(BOOK_LAYOUT_WAIT, "Đang dàn trang. Thử lại sau giây lát.", "Laying out text. Try again shortly.") \
+    X(COMMON_MEMORY_RETRY, "Không đủ bộ nhớ. Thử lại sau giây lát.", "Not enough memory. Try again shortly.") \
+    X(BOOK_BOOKMARKS_EMPTY, "Chưa có dấu trang", "No bookmarks") \
+    X(BOOK_DURATION_HM_FMT, "%u giờ %u phút", "%uh %um") \
+    X(BOOK_READING_PROGRESS, "Tiến độ đọc", "Reading progress") \
+    X(BOOK_CHAPTER_PREV, "Chương trước", "Prev chapter") \
+    X(BOOK_CHAPTER_NEXT, "Chương sau", "Next chapter") \
+    X(BOOK_PAGE_PREV, "Trang trước", "Previous page") \
+    X(BOOK_PAGE_NEXT, "Trang sau", "Next page") \
+    X(BOOK_PAGE_FMT, "Trang %d", "Page %d") \
+    X(BOOK_COMIC_SETTING_SAVED, "Đã lưu. Cài đặt này không áp dụng cho truyện tranh.", "Saved. This setting does not apply to comics.") \
+    X(BOOK_FONT_SELECT, "Chọn phông", "Choose font") \
+    X(BOOK_READING_SETTINGS, "Cài đặt đọc", "Reading settings") \
+    X(BOOK_SELECTED_ITEMS_FMT, "Đã chọn %u", "Selected %u") \
+    X(BOOK_TAP_MENU_REQUIRED, "Cần giữ ít nhất một vùng chạm cho Menu.", "Keep at least one tap zone assigned to Menu.") \
+    X(TTF_FINISHING, "Chuyển đổi sắp xong. Thử lại sau giây lát.", "Conversion is finishing. Try again shortly.") \
+    X(TTF_SOURCE, "Phông nguồn", "Source font") \
+    X(TTF_OUTPUT, "Đầu ra", "Output") \
+    X(TTF_SUCCESS, "Đã chuyển đổi phông và thêm vào danh sách phông.", "Font converted and added to the font list.") \
+    X(TTF_CONVERTING, "Đang chuyển đổi", "Converting") \
+    X(TTF_FAILED, "Chuyển đổi thất bại", "Conversion failed") \
+    X(TTF_EMPTY, "Không tìm thấy phông TTF/OTF\nĐặt phông vào metalio/e-ink/fonts_ttf trên thẻ SD", "No TTF/OTF fonts found\nPlace fonts in metalio/e-ink/fonts_ttf on the SD card") \
+    X(TTF_SIZE_RANGE, "Cỡ chữ (20–80px)", "Font size (20–80px)") \
+    X(TTF_OVERWRITE_HINT, "Tệp .ef cùng tên sẽ bị thay thế. Rời trang này hoặc vào chế độ chờ sẽ hủy chuyển đổi. Giữ thẻ SD trong máy.\nDùng trực tiếp sẽ làm lật trang chậm hơn.", "Existing .ef files with the same name will be replaced. Leaving this page or entering standby cancels conversion. Keep the SD card inserted.\nApplying directly slows page turns.") \
+    X(TTF_START, "Chuyển đổi", "Convert") \
+    X(TTF_APPLY, "Dùng trực tiếp", "Apply directly") \
+    X(TTF_APPLY_FAILED, "Không tải được phông. Kiểm tra tệp hoặc giảm cỡ chữ.", "Cannot load font. Check the file or reduce the size.") \
+    X(TTF_OUTPUT_NAME_TOO_LONG, "Tên đầu ra quá dài hoặc không hợp lệ. Hãy rút ngắn tên tệp nguồn rồi thử lại.", "Output name too long or invalid. Shorten the source filename and retry.") \
+    X(TTF_GENERATING, "Đang tạo phông", "Generating font") \
+    X(TTF_PROGRESS_HINT, "Phông đã chuyển đổi sẽ xuất hiện trong danh sách phông. Rời trang này hoặc vào chế độ chờ sẽ hủy chuyển đổi. Giữ thẻ SD trong máy.", "The converted font will appear in the font list. Leaving this page or entering standby cancels conversion. Keep the SD card inserted.") \
+    X(TTF_FAILED_FMT, "Chuyển đổi thất bại: %.60s", "Conversion failed: %.60s") \
+    X(TTF_BACK_TO_LIST, "Về danh sách nhập", "Back to imports") \
+    X(BOOK_VIEW_COVER, "Bìa sách", "Covers") \
+    X(BOOK_VIEW_LIST, "Danh sách", "List") \
+    X(BOOK_WEEK_READING, "Tuần này", "This week") \
+    X(BOOK_MINUTES_FMT, "%.1f phút", "%.1f min") \
+    X(BOOK_WEEK_MON, "T2", "M") \
+    X(BOOK_WEEK_TUE, "T3", "T") \
+    X(BOOK_WEEK_WED, "T4", "W") \
+    X(BOOK_WEEK_THU, "T5", "T") \
+    X(BOOK_WEEK_FRI, "T6", "F") \
+    X(BOOK_WEEK_SAT, "T7", "S") \
+    X(BOOK_WEEK_SUN, "CN", "S") \
+    X(BOOK_WEEK_DURATION, "Tuần này", "This week") \
+    X(BOOK_TOTAL_DURATION, "Tổng thời gian đọc", "Total reading time") \
+    X(TRANSFER_SD_CAPACITY_FAILED, "Không đọc được dung lượng thẻ SD", "Cannot read SD card capacity") \
+    X(TRANSFER_RECOVERY_FAILED, "Không đọc được thư mục hoặc khôi phục tệp tải lên", "Cannot read directory or recover uploads") \
+    X(TRANSFER_DIRECTORY_MISSING, "Không tìm thấy thư mục", "Directory not found") \
+    X(TRANSFER_DIRECTORY_FAILED, "Không đọc được thư mục. Kiểm tra thẻ SD rồi làm mới.", "Cannot read directory. Check the SD card and refresh.") \
+    X(TRANSFER_DOWNLOAD_BUSY, "Chờ tải lên xong rồi mới tải xuống.", "Wait for the upload to finish before downloading.") \
+    X(TRANSFER_READ_FAILED, "Không đọc được tệp", "Cannot read file") \
+    X(TRANSFER_SD_FULL, "Thẻ SD đã đầy. Tệp gốc được giữ nguyên.", "SD card is full. The original file is preserved.") \
+    X(TRANSFER_MEMORY, "Không đủ bộ nhớ. Đã dừng tải lên; tệp gốc được giữ nguyên. Thử lại sau giây lát.", "Not enough memory. Upload stopped; the original file is preserved. Try again shortly.") \
+    X(STORAGE_RESTART_REQUIRED, "Lỗi thẻ SD. Khởi động lại thiết bị rồi thử lại.", "SD card error. Restart the device and try again.") \
+    X(TRANSFER_WRITE_FAILED, "Ghi thẻ SD thất bại. Tệp gốc được giữ nguyên. Kiểm tra thẻ rồi thử lại.", "SD card write failed. The original file is preserved. Check the card and retry.") \
+    X(TRANSFER_DISCONNECTED, "Mất kết nối. Đã xóa tệp chưa hoàn tất; tệp gốc được giữ nguyên.", "Disconnected. Uncommitted files were removed; the original file is preserved.") \
+    X(TRANSFER_UPLOAD_BUSY, "Đang có lượt tải lên. Thử lại sau giây lát.", "An upload is in progress. Try again shortly.") \
+    X(TRANSFER_INVALID_ID, "Mã tải lên không hợp lệ", "Invalid upload ID") \
+    X(TRANSFER_ALREADY_HANDLED, "Lượt tải lên đã được xử lý. Làm mới thư mục để xem kết quả.", "Upload already processed. Refresh the directory to check the result.") \
+    X(TRANSFER_ENCODING_UNSUPPORTED, "Kiểu mã hóa tải lên không được hỗ trợ. Làm mới trang rồi thử lại.", "Unsupported upload encoding. Refresh the page and retry.") \
+    X(TRANSFER_INVALID_FILE, "Tên, đường dẫn hoặc kích thước tệp không hợp lệ", "Invalid file name, path or size") \
+    X(TRANSFER_INVALID_SIZE, "Kích thước tệp không hợp lệ", "Invalid file size") \
+    X(TRANSFER_SD_CAPACITY_UNAVAILABLE, "Không đọc được dung lượng thẻ SD", "Cannot read SD card capacity") \
+    X(TRANSFER_EXISTS_CHOOSE, "Đã có mục cùng tên. Hãy chọn cách xử lý.", "An item with this name already exists. Choose how to proceed.") \
+    X(TRANSFER_TARGET_CHECK_FAILED, "Không kiểm tra được tệp đích", "Cannot check the destination file") \
+    X(TRANSFER_TEMP_FAILED, "Không tạo được tệp tạm. Tệp gốc được giữ nguyên.", "Cannot create temporary file. The original file is preserved.") \
+    X(TRANSFER_INCOMPLETE, "Tải lên chưa hoàn tất. Tệp gốc được giữ nguyên.", "Incomplete upload. The original file is preserved.") \
+    X(TRANSFER_CANCELLED, "Đã hủy tải lên. Tệp gốc được giữ nguyên.", "Upload cancelled. The original file is preserved.") \
+    X(TRANSFER_TARGET_CHANGED, "Mục đích đã thay đổi. Hãy tải lên lại.", "The destination item has changed. Upload again.") \
+    X(TRANSFER_TARGET_CHECK_PRESERVED, "Không kiểm tra được tệp đích. Tệp gốc được giữ nguyên.", "Cannot check the destination file. The original file is preserved.") \
+    X(TRANSFER_BACKUP_FAILED, "Không sao lưu được tệp gốc. Đã hủy thay thế.", "Cannot back up the original file. Replacement cancelled.") \
+    X(TRANSFER_COMMIT_FAILED, "Lưu thất bại. Tệp gốc được giữ nguyên.", "Save failed. The original file is preserved.") \
+    X(TRANSFER_RESTORE_FAILED, "Lưu thất bại. Bản sao lưu gốc được giữ nguyên. Khôi phục thẻ SD, làm mới rồi thử lại.", "Save failed. The original backup is preserved. Restore the SD card, refresh and retry.") \
+    X(TRANSFER_INVALID_STREAM, "Dữ liệu nén hoặc độ dài không hợp lệ. Tệp gốc được giữ nguyên.", "Invalid compressed data or length. The original file is preserved.") \
+    X(TRANSFER_UPLOAD_MISSING, "Không có lượt tải lên cho kết nối này", "No upload found for this connection") \
+    X(TRANSFER_INVALID_COMMAND, "Lệnh tải lên không hợp lệ", "Invalid upload command") \
+    X(TRANSFER_PATH_BUSY, "Một lượt tải lên đang dùng đường dẫn này. Chờ nó hoàn tất.", "An upload is using this path. Wait for it to finish.") \
+    X(TRANSFER_CREATE_FAILED, "Tạo thất bại", "Creation failed") \
+    X(TRANSFER_DELETE_ROOT_INVALID, "Đường dẫn không hợp lệ hoặc không được xóa thư mục gốc", "Invalid path or root directory deletion is not allowed") \
+    X(TRANSFER_DIRECTORY_BUSY, "Thư mục này đang có lượt tải lên. Chờ nó hoàn tất.", "This directory contains an active upload. Wait for it to finish.") \
+    X(TRANSFER_DELETE_PARTIAL, "Một số mục không xóa được. Tệp có thể đang được dùng, đường dẫn quá dài hoặc thẻ SD lỗi. Mục đã xóa không khôi phục được. Làm mới để kiểm tra.", "Some items could not be deleted. Files may be in use, paths too long, or the SD card faulty. Deleted items cannot be restored. Refresh to check.") \
+    X(TRANSFER_PATH_UNAVAILABLE, "Đường dẫn quá dài hoặc thư mục không dùng được", "Path is too long or directory is unavailable") \
+    X(TRANSFER_EXISTS, "Đã có mục cùng tên", "An item with this name already exists") \
+    X(TRANSFER_ITEM_CHECK_FAILED, "Không kiểm tra được mục đích", "Cannot check the destination item") \
+    X(TRANSFER_RENAME_FAILED, "Đổi tên thất bại", "Rename failed") \
+    X(TRANSFER_MOVE_SELF, "Không thể di chuyển vào chính nó hoặc thư mục con", "Cannot move into itself or a subdirectory") \
+    X(TRANSFER_DEST_UNAVAILABLE, "Đường dẫn quá dài hoặc đích không dùng được", "Path is too long or destination is unavailable") \
+    X(TRANSFER_DEST_EXISTS, "Ở đích đã có mục cùng tên", "An item with this name already exists at the destination") \
+    X(TRANSFER_MOVE_FAILED, "Di chuyển thất bại", "Move failed") \
+    X(TRANSFER_HOTSPOT_STOPPING, "Điểm phát đang tắt", "Hotspot is shutting down") \
+    X(TRANSFER_REQUEST_BUSY, "Dịch vụ tệp đang bận. Thử lại sau giây lát.", "File service is busy. Try again shortly.") \
+    X(CLOUD_WIFI_PREPARING, "Đang chuẩn bị truyền qua Wi-Fi...", "Preparing Wi-Fi transfer...") \
+    X(CLOUD_TAB_WIFI, "Wi-Fi", "Wi-Fi") \
+    X(COMMON_RESTART, "Khởi động lại", "Restart") \
+    X(NETWORK_SCANNING_SHORT, "Đang quét", "Scanning") \
+    X(NETWORK_SAVED_COUNT_FMT, "Đã lưu (%d)", "Saved (%d)") \
+    X(NETWORK_UNSAVED_COUNT_FMT, "Chưa lưu (%d)", "Unsaved (%d)") \
+    X(NETWORK_NO_SAVED_NEARBY, "Không có mạng đã lưu ở gần", "No saved networks nearby") \
+    X(NETWORK_NO_UNSAVED_NEARBY, "Không có mạng chưa lưu ở gần", "No unsaved networks nearby") \
+    X(NETWORK_TRANSFER_READY, "Truyền qua Wi-Fi đã sẵn sàng", "Wi-Fi transfer is ready") \
+    X(NETWORK_TRANSFER_OPEN_HINT, "Kết nối điện thoại hoặc máy tính vào cùng mạng Wi-Fi.\nQuét mã hoặc mở địa chỉ bên dưới trong trình duyệt.", "Connect your phone or computer to the same Wi-Fi network.\nScan the code or open the address below in a browser.") \
+    X(NETWORK_TRANSFER_STOP_HINT, "Đổi chế độ truyền hoặc rời trang này sẽ dừng truyền.", "Switching transfer mode or leaving this page stops the transfer.") \
+    X(NETWORK_BACK_TO_LIST, "Về danh sách", "Back to list") \
+    X(NETWORK_CURRENT_SSID_FMT, "Mạng: %s", "Network: %s") \
+    X(QUICK_ENABLED, "Bật", "On") \
+    X(QUICK_DISABLED, "Tắt", "Off") \
+    X(QUICK_SWITCHING, "Đang chuyển", "Switching") \
+    X(QUICK_FAILED, "Thử lại", "Retry") \
+    X(QUICK_CONNECTED, "Đã kết nối", "Connected") \
+    X(QUICK_CONNECTING, "Đang kết nối", "Connecting") \
+    X(QUICK_DISCONNECTED, "Ngoại tuyến", "Offline") \
+    X(SETTINGS_DISPLAY_GRAY_HINT, "Sau khi xóa màn hình sẽ hiện 16 mức xám gốc: 00 là đen; 15 là trắng.", "After clearing, 16 native gray levels are displayed: 00 is black; 15 is white.") \
+    X(SETTINGS_DISPLAY_BUSY, "Màn hình đang bận. Thử lại sau giây lát.", "Display is busy. Try again shortly.") \
+    X(SETTINGS_TEST_DISPLAY, "Kiểm tra màn hình", "Display test") \
+    X(SETTINGS_DISPLAY_START_HINT, "Chạm 16 mức xám để bắt đầu.\nBên dưới sẽ hiện 16 dải từ đen đến trắng, đánh số 00–15.", "Tap 16 gray levels to start.\n16 bars from black to white should appear below, numbered 00–15.") \
+    X(SETTINGS_DISPLAY_GRAY, "16 mức xám", "16 gray levels") \
+    X(SETTINGS_DISPLAY_DITHER, "So sánh dither", "Dither comparison") \
+    X(SETTINGS_DISPLAY_DITHER_HINT, "So sánh dither: điểm đen và trắng mô phỏng mức xám.", "Dither comparison: black and white pixels simulate gray levels.") \
+    X(SETTINGS_DISPLAY_RETEST_HINT, "Chạm để lặp lại. NEXT để thử lại; PREV để quay lại.", "Tap to repeat. NEXT retests; PREV goes back.") \
+    X(WB_STATUS_QUERYING, "(Đang kiểm tra)", "(Checking)") \
+    X(WB_STATUS_FAILED, "(Kiểm tra thất bại)", "(Check failed)") \
+    X(WB_STATUS_ONLINE, "(Trực tuyến)", "(Online)") \
+    X(WB_STATUS_OFFLINE, "(Ngoại tuyến)", "(Offline)") \
+    X(WB_STATUS_UNKNOWN, "(Không rõ)", "(Unknown)") \
+    X(WB_AUTH_CHECKING, "Đang kiểm tra ủy quyền WorkBuddy...", "Checking WorkBuddy authorization...") \
+    X(WB_SYNC_MESSAGES, "Đồng bộ tin nhắn", "Sync messages") \
+    X(WB_REFRESHING, "Đang làm mới", "Refreshing") \
+    X(WB_AUTH_SAVED_CHECKING, "Đã lưu ủy quyền. Đang kiểm tra kết nối máy tính...", "Authorization saved. Checking the computer connection...") \
+    X(WB_CONNECTED, "Đã kết nối máy tính. Sẵn sàng sử dụng.", "Computer connected. Ready to use.") \
+    X(WB_BOUND_OFFLINE, "Thiết bị đã liên kết; máy tính đang ngoại tuyến.\nMở WorkBuddy trên máy tính bằng tài khoản đã liên kết, rồi chọn Đồng bộ tin nhắn trong menu.", "Device linked; computer is offline.\nOpen WorkBuddy on your computer with the linked account, then choose Sync messages from the menu.") \
+    X(WB_BOUND_CONNECT_FAILED, "Thiết bị đã liên kết. Không kết nối được máy tính:\n", "Device linked. Cannot connect to the computer:\n") \
+    X(WB_RELINK_HINT, "\n\nXử lý sự cố rồi chọn Liên kết lại trong menu góc trên bên phải.", "\n\nResolve the issue, then choose Relink from the top-right menu.") \
+    X(WB_SYNC_RETRY_HINT, "\n\nChọn Đồng bộ tin nhắn trong menu để thử lại. Không cần quét lại.", "\n\nChoose Sync messages from the menu to retry. No need to scan again.") \
+    X(WB_QR_GENERATING, "Đang tạo mã ủy quyền mới...", "Generating a new authorization code...") \
+    X(WB_SCAN_FRIEND, "Nhờ bạn của bạn quét và ủy quyền bằng tài khoản của họ.", "Ask your friend to scan and authorize with their own account.") \
+    X(WB_SCAN_AUTHORIZE, "Quét bằng điện thoại để đăng nhập và ủy quyền.", "Scan with your phone to sign in and authorize.") \
+    X(WB_AUTH_INCOMPLETE, "Ủy quyền chưa xong. Làm mới mã rồi thử lại.", "Authorization incomplete. Refresh the code and retry.") \
+    X(WB_QR_EXPIRED, "Mã đã hết hạn. Chạm Làm mới.", "Code expired. Tap Refresh.") \
+    X(WB_AUTH_RECONNECTING, "Kết nối bị gián đoạn. Đang kiểm tra lại ủy quyền...", "Connection interrupted. Checking authorization again...") \
+    X(WB_AUTHORIZE_PHONE, "Hoàn tất ủy quyền Tencent WorkBuddy trên điện thoại.", "Complete Tencent WorkBuddy authorization on your phone.") \
+    X(WB_WAIT_CLOSE, "Đang chờ kết nối trước đóng lại...", "Waiting for the previous connection to close...") \
+    X(WB_WAIT_MEMORY, "Không đủ bộ nhớ. Đang chờ tài nguyên...", "Not enough memory. Waiting for resources...") \
+    X(WB_RELINK_PREPARING, "Đang chuẩn bị liên kết lại...", "Preparing to relink...") \
+    X(WB_LINK_CHECKING, "Đang kiểm tra liên kết thiết bị. Vui lòng chờ...", "Checking device link. Please wait...") \
+    X(WB_REPLY_INTERRUPTED, "Đã nhận yêu cầu nhưng việc lấy câu trả lời bị gián đoạn:\n", "Request accepted, but reply retrieval was interrupted:\n") \
+    X(WB_TASK_CONTINUES_HINT, "\n\nTác vụ có thể vẫn đang chạy. Chọn Đồng bộ tin nhắn để kiểm tra. Tránh gửi lại cùng yêu cầu.", "\n\nThe task may still be running. Choose Sync messages to check. Avoid sending the same request again.") \
+    X(WB_REPLY_TIMEOUT, "Đã nhận yêu cầu nhưng chưa có câu trả lời sau ba phút. Tác vụ có thể vẫn đang chạy. Hãy chọn Đồng bộ tin nhắn sau để kiểm tra. Tránh gửi lại cùng yêu cầu.", "Request accepted, but no reply received within three minutes. The task may still be running. Choose Sync messages later to check. Avoid sending the same request again.") \
+    X(WB_RECORDING_CANCELLED, "Đã hủy ghi âm", "Recording cancelled") \
+    X(AUDIO_MODULE_INIT_FAILED, "Khởi tạo mô-đun âm thanh thất bại. Kiểm tra kết nối rồi khởi động lại thiết bị.", "Audio module initialization failed. Check the connection and restart the device.") \
+    X(AUDIO_MODULE_NOT_READY, "Mô-đun âm thanh chưa sẵn sàng. Thử lại sau giây lát.", "Audio module is not ready. Try again shortly.") \
+    X(WB_RECORDING_TASK_BUSY, "Ghi âm đang bận. Thử lại sau giây lát.", "Recording is busy. Try again shortly.") \
+    X(WB_SEND_UNCONFIRMED_HINT, "\n\nChưa xác nhận đã gửi. Hãy xem tin nhắn trợ lý trước khi gửi lại yêu cầu.", "\n\nDelivery is unconfirmed. Check assistant messages before sending the request again.") \
+    X(WB_RECOGNITION_INCOMPLETE_HINT, "\n\nNhận dạng chưa xong. Yêu cầu chưa được gửi tới máy tính.", "\n\nRecognition did not finish. The request was not sent to the computer.") \
+    X(WB_PREVIOUS_CLOSING, "Kết nối trước đang đóng. Thử lại sau giây lát.", "The previous connection is closing. Try again shortly.") \
+    X(WB_CONTEXT_MEMORY, "Không đủ bộ nhớ cho yêu cầu. Thử lại sau giây lát.", "Not enough memory for the request. Try again shortly.") \
+    X(WB_TASK_MEMORY, "Không đủ bộ nhớ cho giọng nói hoặc tin nhắn. Thử lại sau giây lát.", "Not enough memory for voice or messages. Try again shortly.") \
+    X(WB_HOLD_TO_SPEAK_HINT, "Tiếp tục giữ. Nói sau khi sóng âm hiện ra (ít nhất nửa giây).", "Keep holding. Speak after the listening waveform appears (at least half a second).") \
+    X(WB_RECORDING_FINISH_BUSY, "Ghi âm sắp xong. Thử lại sau giây lát.", "Recording is finishing. Try again shortly.") \
+    X(WB_MINUTE_SUFFIX, " phút", " min") \
+    X(WB_SECOND_SUFFIX, " giây", " sec") \
+    X(WB_CONFIRM_PHONE, "Xác nhận liên kết thiết bị trên điện thoại.", "Confirm the device link on your phone.") \
+    X(WB_QR_VALIDITY_PREFIX, "Quét bằng điện thoại để liên kết trợ lý\nMã có hiệu lực trong ", "Scan with your phone to link the assistant\nCode valid for ") \
+    X(WB_QR_FAILED, "Không tạo được mã. Chạm Làm mới để thử lại.", "Cannot generate code. Tap Refresh to retry.") \
+    X(WB_QR_DISPLAY_FAILED, "Không hiển thị được mã", "Cannot display the code") \
+    X(WB_RELINK_WAIT, "Đang chuẩn bị liên kết lại. Vui lòng chờ...", "Preparing to relink. Please wait...") \
+    X(WB_RECOGNIZING, "Đang nhận dạng...", "Recognizing...") \
+    X(WB_SYNCING, "Đang đồng bộ tin nhắn...", "Syncing messages...") \
+    X(WB_SENDING, "Đang gửi...", "Sending...") \
+    X(WB_PROCESSING, "Trợ lý đang xử lý...", "Assistant is working...") \
+    X(WB_NO_MESSAGES, "Không có tin nhắn văn bản để đồng bộ", "No text messages to sync") \
+    X(WB_SYNCED, "Đã đồng bộ tin nhắn", "Messages synced") \
+    X(WB_LAYOUT_FAILED, "Không dàn được tin nhắn. Thử lại sau giây lát.", "Cannot lay out messages. Try again shortly.") \
+    X(WB_RELINK, "Liên kết lại", "Relink") \
+    X(WB_RELINK_TITLE, "Liên kết lại tài khoản trợ lý?", "Relink the assistant account?") \
+    X(WB_RELINK_WARNING, "Liên kết hiện tại được giữ đến khi tài khoản mới được ủy quyền. Tác vụ đã gửi có thể vẫn chạy.", "The current link is kept until the new account is authorized. Submitted tasks may continue running.") \
+    X(WB_RELINK_CANCEL, "Giữ hiện tại", "Keep current") \
+    X(WB_RELINK_CONTINUE, "Tiếp tục", "Continue") \
+    X(WB_SCAN_LINK, "Quét bằng điện thoại để liên kết thiết bị.", "Scan with your phone to link the device.") \
+    X(WB_STOPPED_HINT, "Đã dừng ghi âm hoặc chờ. Tác vụ đã gửi có thể vẫn chạy. Hãy đồng bộ tin nhắn để kiểm tra.", "Recording or waiting stopped. Submitted tasks may continue running. Sync messages to check.") \
+    X(WB_STOPPED, "Đã dừng ghi âm hoặc chờ. Bạn có thể tiếp tục trò chuyện.", "Recording or waiting stopped. You can continue chatting.") \
+    X(WB_WELCOME_READY, "Sẵn sàng khi bạn cần. Hãy bắt đầu trò chuyện.", "Ready whenever you are. Start a conversation.") \
+    X(WB_WELCOME_TASK, "Hôm nay bạn muốn làm gì?", "What would you like to work on today?") \
+    X(WB_WELCOME_IDEAS, "Hãy kể cho tôi ý tưởng hoặc kế hoạch của bạn.", "Tell me about your ideas or plans.") \
+    X(WB_HISTORY_MEMORY, "Không đủ bộ nhớ cho lịch sử trò chuyện. Thử lại sau giây lát.", "Not enough memory for chat history. Try again shortly.") \
+    X(WB_ME_PREFIX, "Tôi: ", "Me: ") \
+    X(WB_ASSISTANT_PREFIX, "Trợ lý: ", "Assistant: ") \
+    X(AUDIO_SERVICE_START_FAILED, "Dịch vụ âm thanh không khởi động được. Thử lại sau giây lát.", "Audio service failed to start. Try again shortly.") \
+    X(WB_STORAGE_TASK_BUSY, "Tác vụ lưu trữ của thiết bị đang bận. Thử lại sau giây lát.", "Device storage task is busy. Try again shortly.") \
+    X(WB_STORAGE_BUSY, "Bộ nhớ thiết bị đang bận. Thử lại sau giây lát.", "Device storage is busy. Try again shortly.") \
+    X(WB_ENDPOINT_MISSING, "Chưa cấu hình địa chỉ dịch vụ WorkBuddy.", "WorkBuddy service address is not configured.") \
+    X(WB_NETWORK_SETTINGS_HINT, "Không có mạng. Hãy kết nối trong Cài đặt trước.", "No network. Connect in Settings first.") \
+    X(WB_CONNECTION_CREATE_FAILED, "Không tạo được kết nối mạng. Thử lại sau giây lát.", "Cannot create a network connection. Try again shortly.") \
+    X(WB_SERVICE_TIMEOUT, "Kết nối dịch vụ thất bại hoặc hết thời gian chờ. Thử lại sau giây lát.", "Service connection failed or request timed out. Try again shortly.") \
+    X(WB_RESPONSE_TIMEOUT, "Dịch vụ phản hồi quá lâu. Thử lại sau giây lát.", "Service response timed out. Try again shortly.") \
+    X(WB_RESPONSE_READ_FAILED, "Không đọc được phản hồi dịch vụ. Thử lại sau giây lát.", "Cannot read service response. Try again shortly.") \
+    X(WB_RESPONSE_TOO_LONG, "Phản hồi dịch vụ quá dài. Thử lại sau giây lát.", "Service response is too long. Try again shortly.") \
+    X(WB_HTTP_ERROR_PREFIX, "Dịch vụ không khả dụng (HTTP ", "Service unavailable (HTTP ") \
+    X(WB_RESPONSE_INVALID, "Phản hồi dịch vụ không hợp lệ. Thử lại sau giây lát.", "Invalid service response. Try again shortly.") \
+    X(WB_NO_REPLY, "Dịch vụ không trả lời. Thử lại sau giây lát.", "No reply from the service. Try again shortly.") \
+    X(WB_VOICE_ENDPOINT_MISSING, "Chưa cấu hình địa chỉ dịch vụ giọng nói trực tiếp.", "Live voice service address is not configured.") \
+    X(WB_TOKEN_MISSING_SCAN, "Thiếu thông tin ủy quyền. Hãy quét lại để ủy quyền.", "Authorization credentials are missing. Scan again to authorize.") \
+    X(WB_VOICE_ENDPOINT_INVALID, "Địa chỉ dịch vụ giọng nói trực tiếp không hợp lệ", "Invalid live voice service address") \
+    X(WB_RECORDING_BUFFER_MEMORY, "Không đủ bộ nhớ đệm ghi âm. Thử lại sau giây lát.", "Not enough recording buffer memory. Try again shortly.") \
+    X(WB_TOKEN_NOT_SAVED, "Thiết bị chưa lưu thông tin ủy quyền", "No authorization credentials saved on the device") \
+    X(WB_ONLINE_STATUS_INVALID, "Dịch vụ không trả về trạng thái kết nối máy tính hợp lệ.", "Service returned no valid computer connection status.") \
+    X(WB_AUTH_STATUS_MISSING, "Dịch vụ không trả về trạng thái ủy quyền thiết bị.", "Service returned no device authorization status.") \
+    X(WB_SCAN_CANCELLED, "Đã hủy yêu cầu quét", "Scan request cancelled") \
+    X(WB_RELINK_UNSUPPORTED, "Không thể liên kết lại. Hãy nhờ quản trị viên cập nhật dịch vụ.", "Relinking is unavailable. Ask the administrator to update the service.") \
+    X(WB_QR_RESPONSE_INVALID, "Dịch vụ trả về thông tin quét không hợp lệ.", "Service returned invalid scan information.") \
+    X(WB_AUTH_SAVE_FAILED, "Không lưu được ủy quyền thiết bị. Giải phóng bộ nhớ rồi thử lại.", "Cannot save device authorization. Free storage space and retry.") \
+    X(WB_SCAN_SESSION_INVALID, "Phiên quét không hợp lệ. Hãy làm mới mã.", "Invalid scan session. Refresh the code.") \
+    X(WB_AUTH_STATUS_INVALID, "Trạng thái ủy quyền không hợp lệ. Hãy làm mới mã.", "Invalid authorization status. Refresh the code.") \
+    X(WB_TOKEN_SAVE_FAILED, "Đã ủy quyền nhưng không lưu được thông tin. Mở lại ứng dụng rồi thử lại.", "Authorized, but credentials could not be saved. Reopen the app and retry.") \
+    X(WB_ENTER_QUESTION, "Hãy nhập câu hỏi trước.", "Enter a question first.") \
+    X(WB_QUESTION_INVALID, "Câu hỏi quá dài hoặc có ký tự không hợp lệ. Hãy rút ngắn rồi thử lại.", "Question is too long or contains invalid characters. Shorten it and retry.") \
+    X(WB_AUTHORIZE_FIRST, "Hãy quét để đăng nhập và ủy quyền WorkBuddy trước.", "Scan to sign in and authorize WorkBuddy first.") \
+    X(WB_TEXT_MEMORY, "Không đủ bộ nhớ để gửi văn bản.", "Not enough memory to send text.") \
+    X(WB_MESSAGE_INVALID, "Định dạng tin nhắn không hợp lệ. Cập nhật dịch vụ rồi thử lại.", "Invalid message format. Update the service and retry.") \
+    X(WB_REQUEST_ID_INVALID, "Mã yêu cầu máy tính không hợp lệ. Không thể tự động lấy câu trả lời.", "Invalid computer request ID. Cannot retrieve replies automatically.") \
+    X(WB_TOKEN_MISSING, "Thiếu thông tin ủy quyền. Hãy ủy quyền lại.", "Authorization credentials are missing. Authorize again.") \
+    X(WB_AUTO_REPLY_UNAVAILABLE, "Không có trả lời tự động. Cập nhật dịch vụ Java hoặc đồng bộ tin nhắn thủ công.", "Automatic replies are unavailable. Update the Java service, or sync messages manually.") \
+    X(WB_AUTO_REPLY_MISMATCH, "Câu trả lời không khớp với yêu cầu này. Hãy đồng bộ tin nhắn thủ công sau.", "Reply does not match this request. Sync messages manually later.") \
+    X(WB_VOICE_RESPONSE_FORMAT, "Định dạng phản hồi giọng nói trực tiếp không hợp lệ", "Invalid live voice response format") \
+    X(WB_VOICE_RESPONSE_INVALID, "Phản hồi giọng nói trực tiếp không hợp lệ", "Invalid live voice response") \
+    X(WB_VOICE_SESSION_MISMATCH, "Mã phiên giọng nói trực tiếp không khớp", "Live voice session ID mismatch") \
+    X(WB_VOICE_RECOGNITION_FAILED, "Nhận dạng giọng nói thất bại. Hãy nói lại.", "Live voice recognition failed. Speak again.") \
+    X(WB_VOICE_TEXT_INVALID, "Văn bản nhận dạng trống, quá dài hoặc sai thứ tự.", "Recognized text is empty, too long or out of order.") \
+    X(WB_VOICE_VERSION, "Giao thức giọng nói trực tiếp không tương thích. Cập nhật dịch vụ Java.", "Incompatible live voice protocol. Update the Java service.") \
+    X(WB_VOICE_BUFFER_FAILED, "Không cấp được bộ đệm ghi âm trực tiếp", "Cannot allocate live recording buffer") \
+    X(WB_VOICE_NETWORK_HINT, "Không có mạng. Kết nối lại trước khi nói.", "No network. Reconnect before speaking.") \
+    X(WB_VOICE_CONNECTION_CREATE, "Không tạo được kết nối giọng nói trực tiếp", "Cannot create live voice connection") \
+    X(WB_VOICE_TRANSFER_FAILED, "Truyền giọng nói thất bại. Hãy nói lại.", "Live voice transfer failed. Speak again.") \
+    X(WB_VOICE_CONNECTION_FAILED, "Kết nối giọng nói thất bại. Kiểm tra phiên bản dịch vụ Java, proxy WebSocket và ủy quyền thiết bị.", "Live voice connection failed. Check the Java service version, WebSocket proxy and device authorization.") \
+    X(WB_VOICE_EARLY_END, "Nhận dạng kết thúc sớm. Chưa gửi yêu cầu.", "Recognition ended early. Request not sent.") \
+    X(WB_VOICE_DISCONNECTED, "Mất kết nối giọng nói. Chưa gửi yêu cầu. Hãy nói lại.", "Voice disconnected. Request not sent. Speak again.") \
+    X(WB_VOICE_READY_TIMEOUT, "Dịch vụ giọng nói chưa sẵn sàng kịp. Thử lại sau giây lát.", "Voice service did not become ready in time. Try again shortly.") \
+    X(WB_VOICE_FINAL_TIMEOUT, "Hết thời gian chờ kết quả nhận dạng. Hãy nói lại.", "Final recognition result timed out. Speak again.") \
+    X(WB_VOICE_OVERFLOW, "Bộ đệm âm thanh chờ gửi đã đầy. Kiểm tra mạng rồi thử lại.", "Pending audio buffer is full. Check the network and retry.") \
+    X(WB_VOICE_BUFFER_UNAVAILABLE, "Bộ đệm ghi âm trực tiếp không dùng được. Hãy mở lại ứng dụng.", "Live recording buffer is unavailable. Reopen the app.") \
+    X(WB_VOICE_PACKET_INVALID, "Dữ liệu ghi âm không hợp lệ. Hãy mở lại ứng dụng.", "Recording data is invalid. Reopen the app.") \
+    X(WB_VOICE_SEND_FAILED, "Gửi âm thanh thất bại. Hãy nói lại.", "Live audio send failed. Speak again.") \
+    X(WB_AUDIO_CAPTURE_FAILED, "Thu hoặc mã hóa âm thanh thất bại. Hãy nói lại.", "Audio capture or encoding failed. Speak again.") \
+    X(WB_VOICE_TOO_SHORT, "Bản ghi ngắn hơn nửa giây. Hãy giữ và nói lâu hơn.", "Recording is shorter than half a second. Hold and speak longer.") \
+    X(WB_VOICE_INCOMPLETE, "Số byte âm thanh đã gửi không khớp bản ghi. Hãy nói lại.", "Sent audio byte count does not match the recording. Speak again.") \
+    X(WB_VOICE_FINISH_FAILED, "Không gửi được xác nhận kết thúc giọng nói", "Cannot send end-of-voice confirmation") \
+    X(WB_VOICE_CANCELLED, "Đã hủy giọng nói. Chưa gửi yêu cầu.", "Voice cancelled. Request not sent.") \
+    X(BOOK_BOOKMARK_LAYOUT_BUSY, "Đang dàn trang. Hãy thêm dấu trang sau giây lát.", "Laying out text. Add the bookmark shortly.") \
+    X(BOOK_BOOKMARK_ADD_MEMORY, "Không đủ bộ nhớ để thêm dấu trang", "Not enough memory to add a bookmark") \
+    X(BOOK_BOOKMARK_LOCATE_FAILED, "Không tìm được dấu trang. Kiểm tra xem sách có thay đổi không.", "Cannot locate bookmark. Check whether the book has changed.") \
+    X(ASSISTANT_AI_PREFIX, "AI: ", "AI: ") \
+    X(BOOK_BOOKMARK_IMAGE_SUFFIX, " (Trang ảnh hoặc trang chương)", " (Image or chapter page)") \
+    X(BOOK_BOOKMARK_IMAGE, "Trang ảnh hoặc trang chương", "Image or chapter page") \
+    X(WIFI_DISABLED_RETRY, "Wi-Fi đang tắt. Hãy bật rồi thử lại.", "Wi-Fi is off. Turn it on and try again.") \
+    X(AUDIO_INIT_FAILED, "Khởi tạo âm thanh thất bại", "Audio initialization failed") \
+    X(SETTINGS_TEST_CAMERA_DETECTED, "Đã phát hiện", "Detected") \
+    X(SETTINGS_TEST_CAMERA_NOT_DETECTED, "Không phát hiện", "Not detected") \
+    X(SETTINGS_TEST_CAMERA_SHOT, "Chụp", "Capture") \
+    X(SETTINGS_TEST_CAMERA_RESULT, "Kết quả camera", "Camera result") \
+    X(SETTINGS_TEST_CAPTURING, "Đang chụp…", "Capturing…") \
+    X(SETTINGS_TEST_DETECTING, "Đang dò…", "Detecting…") \
+    X(SETTINGS_TEST_TASK_CREATE_FAIL, "Tạo tác vụ thất bại", "Task creation failed") \
+    X(SETTINGS_TEST_CELL_EXT, "4G·Ngoài", "4G·External") \
+    X(SETTINGS_TEST_CELL_INT, "4G·Trong", "4G·Internal") \
+    X(SETTINGS_TEST_SCANNING, "Đang quét…", "Scanning…") \
+    X(SETTINGS_TEST_WIFI_CLOSE, "Đóng", "Close") \
+    X(SETTINGS_TEST_WIFI_COUNT_FMT, "%d mạng", "%d network(s)") \
+    X(SETTINGS_TEST_WIFI_FOUND_FMT, "Tìm thấy %d", "Found %d") \
+    X(SETTINGS_TEST_WIFI_NEARBY, "Wi-Fi gần đây", "Nearby Wi-Fi") \
+    X(SETTINGS_TEST_WIFI_NEXT, "Sau", "Next") \
+    X(SETTINGS_TEST_WIFI_NONE, "Không có mạng", "No networks") \
+    X(SETTINGS_TEST_WIFI_PREV, "Trước", "Prev") \
+    X(SETTINGS_TEST_WIFI_RESCAN, "Quét lại", "Rescan") \
+    X(SETTINGS_TEST_WIFI_SCANNING, "Đang quét…", "Scanning…") \
+    X(SETTINGS_TEST_WIFI_SCAN_FAIL, "Quét thất bại", "Scan failed") \
+    X(REGISTERING_NETWORK, "Đang chờ mạng...", "Waiting for network...") \
+    X(SETTINGS_NET_BOARD_NO_AP, "Bo mạch này không có chế độ cấu hình Wi-Fi", "This board has no Wi-Fi config mode") \
+    X(SETTINGS_NET_CFUN0, "Đang tắt sóng…\nAT+CFUN=0", "RF off…\nAT+CFUN=0") \
+    X(SETTINGS_NET_CFUN0_FAIL, "AT+CFUN=0 thất bại", "AT+CFUN=0 failed") \
+    X(SETTINGS_NET_CFUN1, "Đang tìm mạng…\nAT+CFUN=1", "Searching network…\nAT+CFUN=1") \
+    X(SETTINGS_NET_CFUN1_FAIL, "Không khôi phục được 4G. Thử lại hoặc khởi động lại thiết bị.", "Could not restore 4G. Retry or restart the device.") \
+    X(SETTINGS_NET_CURRENT_FMT, "Hiện tại: %s", "Current: %s") \
+    X(SETTINGS_NET_CUR_DASH, "Hiện tại: --", "Current: --") \
+    X(SETTINGS_NET_ECSIMCFG_FAIL, "AT+ECSIMCFG thất bại", "AT+ECSIMCFG failed") \
+    X(SETTINGS_NET_MODE_4G, "Di động", "Cellular") \
+    X(SETTINGS_NET_MODE_FMT, "Chế độ mạng: %s", "Network mode: %s") \
+    X(SETTINGS_NET_WIFI_STATUS_TITLE, "Trạng thái Wi-Fi:", "Wi-Fi status:") \
+    X(SETTINGS_NET_WIFI_ENABLED, "Đã bật", "Enabled") \
+    X(SETTINGS_NET_MODE_WIFI, "Wi-Fi", "Wi-Fi") \
+    X(SETTINGS_NET_NOT_4G, "Không ở chế độ 4G, không thể chuyển", "Not in 4G mode, cannot switch") \
+    X(SETTINGS_NET_NO_4G, "Không có mô-đun 4G", "No 4G module") \
+    X(SETTINGS_NET_REBOOT_HINT, "Thiết bị khởi động lại sau khi chuyển", "Device reboots after switching") \
+    X(SETTINGS_NET_SIM_EXT, "SIM ngoài", "External SIM") \
+    X(SETTINGS_NET_SIM_INT, "SIM trong", "Internal SIM") \
+    X(SETTINGS_NET_SIM_TASK_FAIL, "Không bắt đầu được tác vụ chuyển SIM", "Cannot start SIM switch task") \
+    X(SETTINGS_NET_SIM_TITLE, "SIM", "SIM") \
+    X(SETTINGS_NET_SWITCHED_FMT, "Đã chuyển sang %s", "Switched to %s") \
+    X(SETTINGS_NET_SWITCH_4G, "Đang chuyển sang 4G…", "Switching to 4G…") \
+    X(SETTINGS_NET_SWITCH_SIM_CFUN0_FMT, "Đang chuyển sang %s…\nAT+CFUN=0", "Switching to %s…\nAT+CFUN=0") \
+    X(SETTINGS_NET_SWITCH_SIM_FMT, "Đang chuyển sang %s…\n%s", "Switching to %s…\n%s") \
+    X(SETTINGS_NET_SWITCH_WIFI, "Đang chuyển sang Wi-Fi…", "Switching to Wi-Fi…") \
+    X(SETTINGS_TEST_CELL_CANCELLED, "Đã hủy kiểm tra", "Test cancelled") \
+    X(SETTINGS_TEST_CELL_CFUN0_FAIL, "CFUN=0 thất bại", "CFUN=0 failed") \
+    X(SETTINGS_TEST_CELL_CFUN1_FAIL, "CFUN=1 thất bại", "CFUN=1 failed") \
+    X(SETTINGS_TEST_CELL_LOSS_FMT, "Mất %d/%d", "Loss %d/%d") \
+    X(SETTINGS_TEST_CELL_MODEM_NOT_READY, "Modem chưa sẵn sàng", "Modem not ready") \
+    X(SETTINGS_TEST_CELL_MODEM_NO_RESP, "Modem không phản hồi", "Modem no response") \
+    X(SETTINGS_TEST_CELL_NEED_4G, "Hãy chuyển sang chế độ 4G", "Switch to 4G mode") \
+    X(SETTINGS_TEST_CELL_NO_RESOURCE, "Hết tài nguyên", "Out of resources") \
+    X(SETTINGS_TEST_CELL_NO_SIM, "Không phát hiện SIM", "No SIM detected") \
+    X(SETTINGS_TEST_CELL_PING_CMD_FAIL, "Lệnh PING thất bại", "PING command failed") \
+    X(SETTINGS_TEST_CELL_PING_FAIL, "PING thất bại", "PING failed") \
+    X(SETTINGS_TEST_CELL_PING_OK, "PING OK", "PING OK") \
+    X(SETTINGS_TEST_CELL_PING_WAIT_TIMEOUT, "Hết thời gian chờ PING", "PING wait timeout") \
+    X(SETTINGS_TEST_CELL_REG_REJECT, "Đăng ký mạng bị từ chối", "Registration rejected") \
+    X(SETTINGS_TEST_CELL_SEARCH_TIMEOUT, "Hết thời gian tìm mạng", "Network search timeout") \
+    X(SETTINGS_TEST_CELL_SIM_SWITCH_FAIL, "Chuyển SIM thất bại", "SIM switch failed") \
+    X(SETTINGS_TEST_CELL_SLOT_FAIL, "Chưa áp dụng khe SIM", "SIM slot not applied") \
+    X(SETTINGS_TEST_CELL_TESTING, "Đang kiểm tra…", "Testing…") \
+    X(SETTINGS_TEST_CELL_TEST_FAIL, "Kiểm tra thất bại", "Test failed") \
+    X(SETTINGS_TEST_CELL_WAIT_RESOURCE, "Đang chờ tài nguyên…", "Waiting for resources…") \
+    X(SETTINGS_TEST_SIGNAL_BOARD_UNSUP, "Bo mạch không hỗ trợ", "Board unsupported") \
     X(SETTINGS_TEST_SIGNAL_CELL_CSQ_FMT, "4G CSQ %2d", "4G CSQ %2d") \
-    X(SETTINGS_TEST_SIGNAL_CELL_CSQ_UNKNOWN, "4G CSQ 未知", "4G CSQ unknown") \
-    X(SETTINGS_TEST_SIGNAL_CELL_UNAVAIL, "4G 不可用", "4G unavailable") \
-    X(SETTINGS_TEST_SIGNAL_ICCID_TITLE, "ICCID：", "ICCID:") \
+    X(SETTINGS_TEST_SIGNAL_CELL_CSQ_UNKNOWN, "4G CSQ không rõ", "4G CSQ unknown") \
+    X(SETTINGS_TEST_SIGNAL_CELL_UNAVAIL, "4G không khả dụng", "4G unavailable") \
+    X(SETTINGS_TEST_SIGNAL_ICCID_TITLE, "ICCID:", "ICCID:") \
     X(SETTINGS_TEST_SIGNAL_ICCID_UNKNOWN, "--", "--") \
-    X(SETTINGS_TEST_SIGNAL_READING, "读取中…", "Reading…") \
-    X(SETTINGS_TEST_SIGNAL_TITLE, "网络信号", "Signal") \
-    X(SETTINGS_TEST_SIGNAL_WIFI_DISCONNECTED, "WiFi 未连接", "Wi-Fi disconnected") \
-    X(SETTINGS_TEST_SIGNAL_WIFI_READ_FAIL, "WiFi 读取失败", "Wi-Fi read failed") \
-    X(SETTINGS_TEST_SIGNAL_WIFI_RSSI_FMT, "WiFi %d dBm", "Wi-Fi %d dBm") \
-    X(SWITCH_TO_4G_NETWORK, "切换到 4G...", "Switching to 4G...") \
-    X(SWITCH_TO_WIFI_NETWORK, "切换到 Wi-Fi...", "Switching to Wi-Fi...") \
-    X(SETTINGS_TAB_LOG, "日志", "Logs") \
-    X(SETTINGS_LOG_TITLE, "设备日志", "Device logs") \
-    X(SETTINGS_LOG_ON, "开启", "On") \
-    X(SETTINGS_LOG_OFF, "关闭", "Off") \
-    X(SETTINGS_LOG_CURRENT_ON, "当前：开启", "Current: On") \
-    X(SETTINGS_LOG_CURRENT_OFF, "当前：关闭", "Current: Off") \
-    X(SETTINGS_LOG_HINT, "开启后将运行日志写入SD卡：metalio/e-ink/logs/metalio_logs.txt", "When on, runtime logs are saved to SD: metalio/e-ink/logs/metalio_logs.txt") \
-    X(SETTINGS_LOG_HINT_OFF, "关闭后停止采集；虚拟U盘启用期间暂停写盘", "Off stops capture. SD writing pauses while USB disk is enabled") \
-    X(SETTINGS_LOG_CLEAR, "清除日志", "Clear logs") \
-    X(SETTINGS_LOG_CLEARING, "正在清理…", "Clearing…") \
-    X(SETTINGS_LOG_CLEAR_OK, "日志已清除", "Logs cleared") \
-    X(SETTINGS_LOG_CLEAR_FAIL, "清理失败，请检查SD卡或稍后重试", "Clear failed. Check SD card or try again.") \
-    X(SETTINGS_LOG_UPLOAD, "上传日志", "Upload logs") \
-    X(SETTINGS_LOG_CONNECTING_NET, "正在连接网络", "Connecting to network") \
-    X(SETTINGS_LOG_UPLOAD_COUNT_FMT, "已完成 %u，待上传 %u", "Completed %u, remaining %u") \
-    X(SETTINGS_LOG_UPLOADING, "正在上传日志", "Uploading logs") \
-    X(SETTINGS_LOG_UPLOAD_OK, "日志上传成功", "Logs uploaded") \
-    X(SETTINGS_LOG_UPLOAD_FAIL, "日志上传失败，请重试", "Upload failed. Please retry") \
-    X(SETTINGS_LOG_UPLOAD_NO_FILE, "没有可上传的日志", "No logs to upload") \
-    X(SETTINGS_LOG_CANCELLING, "正在取消，请稍候", "Cancelling, please wait") \
-    X(SETTINGS_LOG_PREPARING, "正在准备日志", "Preparing logs") \
-    X(SETTINGS_LOG_SD_UNAVAILABLE, "SD卡不可用，请关闭虚拟U盘后重试", "SD unavailable. Disable USB disk and retry") \
-    X(SETTINGS_LOG_NO_MEMORY, "内存不足，请稍后重试", "Not enough memory. Please retry later") \
-    X(HOME_APP_TASK, "每日清单", "Tasks")                                                                      \
-    X(HOME_APP_ASSISTANT, "百问AI", "Ask AI")                                                                  \
-    X(HOME_APP_BOOK, "阅读", "Books")                                                                          \
-    X(HOME_APP_WALLPAPER, "壁纸", "Walls")                                                                     \
-    X(HOME_APP_CLOUD, "传输", "Transfer")                                                                      \
-    X(HOME_APP_SETTINGS, "设置", "Settings")                                                                   \
-    X(HOME_DATE_PLACEHOLDER, "--月--日", "--/--")                                                              \
-    X(HOME_DATE_FMT, "%02d月%02d日", "%02d/%02d")                                                              \
+    X(SETTINGS_TEST_SIGNAL_READING, "Đang đọc…", "Reading…") \
+    X(SETTINGS_TEST_SIGNAL_TITLE, "Tín hiệu", "Signal") \
+    X(SETTINGS_TEST_SIGNAL_WIFI_DISCONNECTED, "Wi-Fi mất kết nối", "Wi-Fi disconnected") \
+    X(SETTINGS_TEST_SIGNAL_WIFI_READ_FAIL, "Đọc Wi-Fi thất bại", "Wi-Fi read failed") \
+    X(SETTINGS_TEST_SIGNAL_WIFI_RSSI_FMT, "Wi-Fi %d dBm", "Wi-Fi %d dBm") \
+    X(SWITCH_TO_4G_NETWORK, "Đang chuyển sang 4G...", "Switching to 4G...") \
+    X(SWITCH_TO_WIFI_NETWORK, "Đang chuyển sang Wi-Fi...", "Switching to Wi-Fi...") \
+    X(SETTINGS_TAB_LOG, "Nhật ký", "Logs") \
+    X(SETTINGS_LOG_TITLE, "Nhật ký thiết bị", "Device logs") \
+    X(SETTINGS_LOG_ON, "Bật", "On") \
+    X(SETTINGS_LOG_OFF, "Tắt", "Off") \
+    X(SETTINGS_LOG_CURRENT_ON, "Hiện tại: Bật", "Current: On") \
+    X(SETTINGS_LOG_CURRENT_OFF, "Hiện tại: Tắt", "Current: Off") \
+    X(SETTINGS_LOG_HINT, "Khi bật, nhật ký được lưu vào SD: metalio/e-ink/logs/metalio_logs.txt", "When on, runtime logs are saved to SD: metalio/e-ink/logs/metalio_logs.txt") \
+    X(SETTINGS_LOG_HINT_OFF, "Tắt sẽ dừng ghi. Ghi SD tạm dừng khi bật ổ đĩa USB", "Off stops capture. SD writing pauses while USB disk is enabled") \
+    X(SETTINGS_LOG_CLEAR, "Xóa nhật ký", "Clear logs") \
+    X(SETTINGS_LOG_CLEARING, "Đang xóa…", "Clearing…") \
+    X(SETTINGS_LOG_CLEAR_OK, "Đã xóa nhật ký", "Logs cleared") \
+    X(SETTINGS_LOG_CLEAR_FAIL, "Xóa thất bại. Kiểm tra thẻ SD hoặc thử lại.", "Clear failed. Check SD card or try again.") \
+    X(SETTINGS_LOG_UPLOAD, "Tải nhật ký lên", "Upload logs") \
+    X(SETTINGS_LOG_CONNECTING_NET, "Đang kết nối mạng", "Connecting to network") \
+    X(SETTINGS_LOG_UPLOAD_COUNT_FMT, "Xong %u, còn %u", "Completed %u, remaining %u") \
+    X(SETTINGS_LOG_UPLOADING, "Đang tải nhật ký lên", "Uploading logs") \
+    X(SETTINGS_LOG_UPLOAD_OK, "Đã tải nhật ký lên", "Logs uploaded") \
+    X(SETTINGS_LOG_UPLOAD_FAIL, "Tải lên thất bại. Vui lòng thử lại", "Upload failed. Please retry") \
+    X(SETTINGS_LOG_UPLOAD_NO_FILE, "Không có nhật ký để tải lên", "No logs to upload") \
+    X(SETTINGS_LOG_CANCELLING, "Đang hủy, vui lòng chờ", "Cancelling, please wait") \
+    X(SETTINGS_LOG_PREPARING, "Đang chuẩn bị nhật ký", "Preparing logs") \
+    X(SETTINGS_LOG_SD_UNAVAILABLE, "Không dùng được SD. Tắt ổ đĩa USB rồi thử lại", "SD unavailable. Disable USB disk and retry") \
+    X(SETTINGS_LOG_NO_MEMORY, "Không đủ bộ nhớ. Vui lòng thử lại sau", "Not enough memory. Please retry later") \
+    X(HOME_APP_TASK, "Công việc", "Tasks")                                                                      \
+    X(HOME_APP_ASSISTANT, "Hỏi AI", "Ask AI")                                                                  \
+    X(HOME_APP_BOOK, "Sách", "Books")                                                                          \
+    X(HOME_APP_WALLPAPER, "Hình nền", "Walls")                                                                     \
+    X(HOME_APP_CLOUD, "Truyền tệp", "Transfer")                                                                      \
+    X(HOME_APP_SETTINGS, "Cài đặt", "Settings")                                                                   \
+    X(HOME_DATE_PLACEHOLDER, "--/--", "--/--")                                                              \
+    X(HOME_DATE_FMT, "%02d/%02d", "%02d/%02d")                                                              \
     X(HOME_DATE_SLASH_PLACEHOLDER, "----.-.--", "----.-.--")                                                   \
     X(HOME_DATE_SLASH_FMT, "%d.%d.%d", "%d.%d.%d")                                                             \
-    X(HOME_WDAY_SUN, "周日", "Sun")                                                                            \
-    X(HOME_WDAY_MON, "周一", "Mon")                                                                            \
-    X(HOME_WDAY_TUE, "周二", "Tue")                                                                            \
-    X(HOME_WDAY_WED, "周三", "Wed")                                                                            \
-    X(HOME_WDAY_THU, "周四", "Thu")                                                                            \
-    X(HOME_WDAY_FRI, "周五", "Fri")                                                                            \
-    X(HOME_WDAY_SAT, "周六", "Sat")                                                                            \
-    X(BATTERY_NEED_CHARGE, "电量不足，请充电", "Low battery, please charge")                                   \
-    X(BATTERY_SHUTTING_DOWN, "当前电量过低，即将关机", "Battery critically low. Shutting down.")              \
-    X(BATTERY_LOW_VOLTAGE_SHUTTING_DOWN, "当前电池电压过低，即将关机", "Battery voltage critically low. Shutting down.") \
-    X(COMMON_UNKNOWN, "未知", "Unknown")                                                                       \
-    X(POWERED_OFF, "已关机", "Powered off")                                                                    \
-    X(SETTINGS_TAB_NETWORK, "网络", "Network")                                                                 \
-    X(SETTINGS_TAB_THEME, "主题", "Theme")                                                                     \
-    X(SETTINGS_TAB_LANGUAGE, "语言", "Language")                                                               \
-    X(SETTINGS_TAB_HAPTIC, "震动", "Haptic")                                                                   \
-    X(SETTINGS_TAB_CHARGING, "充电", "Charging") \
-    X(SETTINGS_CHARGING_CURRENT, "充电电流", "Charge current") \
-    X(SETTINGS_CHARGING_HINT, "默认 1A，选择后自动保存", "Default: 1A. Selection is saved automatically.") \
-    X(SETTINGS_CHARGING_FAILED, "设置失败，请重试", "Could not apply setting. Try again.") \
-    X(SETTINGS_TAB_POWER, "功耗", "Power")                                                                     \
-    X(SETTINGS_SCREEN_BLACK_DEPTH_TITLE, "黑色深度", "Black depth") \
-    X(SETTINGS_TEST_VCOM_QUERY, "查询", "Query") \
-    X(SETTINGS_TEST_BT_VERSION, "蓝牙版本", "BT version") \
-    X(SETTINGS_TEST_SD_CAP_FMT, "剩余 %.1fGB / 总计 %.1fGB", "Free %.1fGB / Total %.1fGB") \
-    X(SETTINGS_TEST_POWER_OFF, "关机", "Power off") \
-    X(SETTINGS_SCREEN_BLACK_DEPTH_DEFAULT, "默认", "Default") \
-    X(SETTINGS_SCREEN_BLACK_DEPTH_MEDIUM, "中", "Medium") \
-    X(SETTINGS_SCREEN_BLACK_DEPTH_STRONG, "强", "Strong") \
-    X(SETTINGS_SCREEN_BLACK_DEPTH_HINT, "提高黑色深度可能影响屏幕寿命，并增加底色变化风险，建议优先使用默认档。", "Increasing black depth may affect display lifespan and cause background discoloration. Default is recommended.") \
-    X(SETTINGS_VCOM_UNKNOWN, "未知", "Unknown") \
-    X(SETTINGS_VCOM_WRITE_OK, "VCOM 写入成功", "VCOM saved") \
-    X(SETTINGS_VCOM_READ_OK, "VCOM 读取成功", "VCOM read successfully") \
-    X(SETTINGS_VCOM_WRITE_FAILED, "VCOM 写入失败，请检查蓝牙芯片", "VCOM write failed; check the Bluetooth chip") \
-    X(SETTINGS_VCOM_READ_FAILED, "VCOM 读取失败，请检查蓝牙芯片", "VCOM read failed; check the Bluetooth chip") \
-    X(SETTINGS_VCOM_INVALID, "值异常：VCOM 绝对值须为 1.0～3.0V，步进 10mv", "Abnormal value: VCOM magnitude must be 1.0–3.0V, in 10mv steps") \
-    X(SETTINGS_TEST_MARGIN, "UI调节", "UI adjustment") \
-    X(SETTINGS_SCREEN_MARGIN_TITLE, "UI 偏移（-20~20px）：即时生效并保存。", "UI offset (-20~20px): Applied and saved immediately.") \
-    X(SETTINGS_SCREEN_MARGIN_SET_OK, "设置成功", "Settings saved") \
-    X(SETTINGS_SCREEN_MARGIN_RESET_OK, "恢复成功", "Defaults restored") \
-    X(SETTINGS_SCREEN_MARGIN_SAVE_FAILED, "保存失败，请重试", "Could not save. Try again.") \
-    X(SETTINGS_SCREEN_MARGIN_SET_DEFAULT, "设为默认", "Set as default") \
-    X(SETTINGS_SCREEN_MARGIN_RESET, "恢复默认", "Restore defaults") \
-    X(SETTINGS_SCREEN_MARGIN_VALUE_FMT, "当前值：%d", "Current value: %d") \
-    X(SETTINGS_SCREEN_MARGIN_TOP, "上移", "Up") \
-    X(SETTINGS_SCREEN_MARGIN_BOTTOM, "下移", "Down") \
-    X(SETTINGS_SCREEN_MARGIN_LEFT, "左移", "Left") \
-    X(SETTINGS_SCREEN_MARGIN_RIGHT, "右移", "Right") \
-    X(SETTINGS_SCREEN_REFRESH_TITLE, "刷新模式", "Refresh mode") \
-    X(SETTINGS_SCREEN_REFRESH_CLEAR, "清晰", "Clear") \
-    X(SETTINGS_SCREEN_REFRESH_CLEAR_HINT, "细节更清晰，残影更少。", "Sharper detail, less ghosting.") \
-    X(SETTINGS_SCREEN_REFRESH_BALANCED_HINT, "兼顾画质与速度，可能加重残影。", "Balanced quality and speed; may increase ghosting.") \
-    X(SETTINGS_SCREEN_REFRESH_BALANCED, "均衡", "Balanced") \
-    X(SETTINGS_SCREEN_REFRESH_FAST, "快速", "Fast") \
-    X(SETTINGS_SCREEN_REFRESH_FAST_HINT, "保留灰阶，响应更快；可能加重残影。", "Faster response with grayscale retained; may increase ghosting.") \
-    X(SETTINGS_TAB_FRONTLIGHT, "屏幕", "Screen")                                                                \
-    X(SETTINGS_TAB_CONVERSATION, "对话", "Talk")                                                               \
-    X(SETTINGS_TAB_STORAGE, "存储", "Storage")                                                                 \
-    X(SETTINGS_TAB_BLUETOOTH, "蓝牙", "Bluetooth")                                                             \
-    X(SETTINGS_PAGER, "翻页器", "Page turner") \
-    X(PAGER_SCANNING_SHORT, "正在扫描附近设备…", "Scanning nearby devices…") \
-    X(PAGER_SAVING, "正在保存…", "Saving…") \
-    X(PAGER_AUTO, "自动连接翻页器", "Auto-connect page turner") \
-    X(PAGER_ENABLED, "启用中", "Enabled") \
-    X(PAGER_AUTO_HINT, "开机及退出待机后自动寻找附近翻页器；无可用连接将自动关闭。", "Find nearby page turners at startup and after standby. Turns off if no connection is available.") \
-    X(PAGER_AUTO_TIMEOUT, "无可用连接，自动连接已关闭。", "No available connection. Auto-connect is off.") \
-    X(PAGER_CURRENT, "当前连接", "Current connection") \
-    X(PAGER_NO_CURRENT, "尚未连接翻页器", "No page turner connected") \
-    X(PAGER_NEARBY, "附近可用", "Nearby") \
-    X(PAGER_AWAY, "不在附近", "Not nearby") \
-    X(PAGER_CONNECTED_TAG, "已连接", "Connected") \
-    X(PAGER_CONNECTING_TAG, "连接中", "Connecting") \
-    X(PAGER_FAILED_TAG, "连接失败", "Failed") \
-    X(PAGER_NOT_NEARBY, "设备未在附近，请刷新后再试", "Device not nearby. Refresh and try again.") \
-    X(PAGER_SAVED_FMT, "已保存设备（%d）", "Saved devices (%d)") \
-    X(PAGER_UNSAVED_FMT, "附近未保存（%d）", "Nearby, not saved (%d)") \
-    X(PAGER_NO_UNSAVED, "附近没有未保存的翻页器", "No new page turners nearby") \
-    X(PAGER_RESCAN, "刷新", "Refresh") \
-    X(PAGER_LEARNING_FMT, "正在设置：%s", "Setting up: %s") \
-    X(SETTINGS_PAGER_MANAGE, "设备管理", "Devices") \
-    X(SETTINGS_PAGER_CUSTOMIZE, "按键自定义", "Button mapping") \
-    X(SETTINGS_PAGER_NO_SAVED, "尚无已保存设备，点击附近翻页器连接后将自动保存。", "No saved devices. Connect a nearby page turner to save it.") \
-    X(SETTINGS_PAGER_CONNECT, "连接", "Connect") \
-    X(SETTINGS_PAGER_FORGET, "忘记设备", "Forget device") \
-    X(SETTINGS_PAGER_FORGET_HINT, "忘记后将清除该设备的配对信息和按键设置。", "Forgetting this device removes its pairing information and button mappings.") \
-    X(SETTINGS_PAGER_PREVIOUS, "上一页", "Previous page") \
-    X(SETTINGS_PAGER_NEXT, "下一页", "Next page") \
-    X(SETTINGS_PAGER_NEED_CONNECTION, "请先在设备管理中连接翻页器", "Connect a page turner in Devices first.") \
-    X(SETTINGS_PAGER_BINDING, "%s%s按键 %c", "%s%sButton %c") \
-    X(SETTINGS_PAGER_UNSET, "未设置", "Not set") \
-    X(SETTINGS_PAGER_PAGE_HINT, "默认 A 上一页、B 下一页\n无需学习即可使用。", "Defaults: A previous, B next.\nLearning is optional.") \
-    X(SETTINGS_PAGER_PRESS, "请短按一次目标按键", "Tap the button you want to use.") \
-    X(SETTINGS_PAGER_RELEARN, "重新学习", "Learn again") \
-    X(SETTINGS_PAGER_CLEAR, "清除绑定", "Clear mapping") \
-    X(SETTINGS_PAGER_SAVE, "保存", "Save") \
-    X(SETTINGS_PAGER_SAVE_ERROR, "操作失败，请重试", "Operation failed. Try again.") \
-    X(SETTINGS_PAGER_LEARNED, "已识别：按键 %c\n用于：%s%s", "Detected: button %c\nAction: %s%s") \
-    X(SETTINGS_PAGER_REPLACE_HINT, "\n此按键原有的翻页绑定将被替换。", "\nThis replaces the other page-turn mapping for this button.") \
-    X(SETTINGS_PAGER_TIMEOUT, "未识别到按键，请重新学习", "No button detected. Try learning again.") \
-    X(SETTINGS_PAGER_DISCONNECT, "断开连接", "Disconnect") \
-    X(SETTINGS_PAGER_STARTING, "正在启用蓝牙…", "Starting Bluetooth…") \
-    X(SETTINGS_PAGER_EMPTY, "未找到翻页器，请开启后重新扫描", "No page turner found. Turn it on and scan again.") \
-    X(SETTINGS_TAB_TEST, "测试", "Test")                                                                       \
-    X(SETTINGS_TAB_ABOUT, "关于", "About")                                                                     \
-    X(SETTINGS_THEME_TITLE, "首页主题", "Home theme")                                                          \
-    X(SETTINGS_THEME_HINT, "返回首页后立即生效", "Applies when you return home")                               \
-    X(SETTINGS_SYSTEM_FONT_TITLE, "系统字体", "System font") \
-    X(SETTINGS_SYSTEM_FONT_BUILTIN, "内置 Literata", "Built-in (Literata)") \
-    X(SETTINGS_SYSTEM_FONT_LOADING, "正在加载字体…", "Loading font…") \
-    X(SETTINGS_SYSTEM_FONT_MISSING, "未找到字体文件，正在使用 Literata", "Font not found, using Literata") \
-    X(SYSTEM_FONT_LOAD_FAILED, "字体加载失败", "Could not load the font") \
-    X(SETTINGS_THEME_PIXEL, "像素视界", "Pixel Vision") \
-    X(SETTINGS_THEME_CURRENT_PIXEL, "当前：像素视界", "Current: Pixel Vision") \
-    X(HOME_PIXEL_TODAY, "今日事项", "Today") \
-    X(HOME_PIXEL_PENDING, "未完成", "Pending") \
-    X(HOME_PIXEL_DAY_NOTE, "诸事皆宜", "A good day") \
-    X(HOME_PIXEL_READ, "阅读", "Read") \
-    X(HOME_PIXEL_NOTES, "便签", "Notes") \
-    X(SETTINGS_THEME_WHITE, "白底", "White")                                                                   \
-    X(SETTINGS_THEME_GRAY, "网点灰底", "Dotted gray")                                                          \
-    X(SETTINGS_THEME_BORDER, "黑色描边", "Black border")                                                       \
-    X(SETTINGS_THEME_SLASH, "斜切棋盘", "Slash grid")                                                          \
-    X(SETTINGS_THEME_CURRENT_WHITE, "当前：白底", "Current: White")                                            \
-    X(SETTINGS_THEME_CURRENT_GRAY, "当前：网点灰底", "Current: Dotted gray")                                   \
-    X(SETTINGS_THEME_CURRENT_BORDER, "当前：黑色描边", "Current: Black border")                                \
-    X(SETTINGS_THEME_CURRENT_SLASH, "当前：斜切棋盘", "Current: Slash grid")                                   \
-    X(SETTINGS_LANG_TITLE, "界面语言", "Language")                                                             \
-    X(SETTINGS_LANG_HINT, "切换后立即生效", "Takes effect immediately")                                        \
-    X(SETTINGS_LANG_ZH_CN, "简体中文", "简体中文")                                                             \
+    X(HOME_WDAY_SUN, "Chủ nhật", "Sun")                                                                            \
+    X(HOME_WDAY_MON, "Thứ hai", "Mon")                                                                            \
+    X(HOME_WDAY_TUE, "Thứ ba", "Tue")                                                                            \
+    X(HOME_WDAY_WED, "Thứ tư", "Wed")                                                                            \
+    X(HOME_WDAY_THU, "Thứ năm", "Thu")                                                                            \
+    X(HOME_WDAY_FRI, "Thứ sáu", "Fri")                                                                            \
+    X(HOME_WDAY_SAT, "Thứ bảy", "Sat")                                                                            \
+    X(BATTERY_NEED_CHARGE, "Pin yếu, vui lòng sạc", "Low battery, please charge")                                   \
+    X(BATTERY_SHUTTING_DOWN, "Pin quá yếu. Đang tắt máy.", "Battery critically low. Shutting down.")              \
+    X(BATTERY_LOW_VOLTAGE_SHUTTING_DOWN, "Điện áp pin quá thấp. Đang tắt máy.", "Battery voltage critically low. Shutting down.") \
+    X(COMMON_UNKNOWN, "Không rõ", "Unknown")                                                                       \
+    X(POWERED_OFF, "Đã tắt máy", "Powered off")                                                                    \
+    X(SETTINGS_TAB_NETWORK, "Mạng", "Network")                                                                 \
+    X(SETTINGS_TAB_THEME, "Giao diện", "Theme")                                                                     \
+    X(SETTINGS_TAB_LANGUAGE, "Ngôn ngữ", "Language")                                                               \
+    X(SETTINGS_TAB_HAPTIC, "Rung", "Haptic")                                                                   \
+    X(SETTINGS_TAB_CHARGING, "Sạc", "Charging") \
+    X(SETTINGS_CHARGING_CURRENT, "Dòng sạc", "Charge current") \
+    X(SETTINGS_CHARGING_HINT, "Mặc định: 1A. Lựa chọn được lưu tự động.", "Default: 1A. Selection is saved automatically.") \
+    X(SETTINGS_CHARGING_FAILED, "Không áp dụng được cài đặt. Hãy thử lại.", "Could not apply setting. Try again.") \
+    X(SETTINGS_TAB_POWER, "Nguồn", "Power")                                                                     \
+    X(SETTINGS_SCREEN_BLACK_DEPTH_TITLE, "Độ đậm màu đen", "Black depth") \
+    X(SETTINGS_TEST_VCOM_QUERY, "Truy vấn", "Query") \
+    X(SETTINGS_TEST_BT_VERSION, "Phiên bản BT", "BT version") \
+    X(SETTINGS_TEST_SD_CAP_FMT, "Trống %.1fGB / Tổng %.1fGB", "Free %.1fGB / Total %.1fGB") \
+    X(SETTINGS_TEST_POWER_OFF, "Tắt máy", "Power off") \
+    X(SETTINGS_SCREEN_BLACK_DEPTH_DEFAULT, "Mặc định", "Default") \
+    X(SETTINGS_SCREEN_BLACK_DEPTH_MEDIUM, "Vừa", "Medium") \
+    X(SETTINGS_SCREEN_BLACK_DEPTH_STRONG, "Đậm", "Strong") \
+    X(SETTINGS_SCREEN_BLACK_DEPTH_HINT, "Tăng độ đậm màu đen có thể ảnh hưởng tuổi thọ màn hình và làm nền đổi màu. Nên dùng Mặc định.", "Increasing black depth may affect display lifespan and cause background discoloration. Default is recommended.") \
+    X(SETTINGS_VCOM_UNKNOWN, "Không rõ", "Unknown") \
+    X(SETTINGS_VCOM_WRITE_OK, "Đã lưu VCOM", "VCOM saved") \
+    X(SETTINGS_VCOM_READ_OK, "Đọc VCOM thành công", "VCOM read successfully") \
+    X(SETTINGS_VCOM_WRITE_FAILED, "Ghi VCOM thất bại; kiểm tra chip Bluetooth", "VCOM write failed; check the Bluetooth chip") \
+    X(SETTINGS_VCOM_READ_FAILED, "Đọc VCOM thất bại; kiểm tra chip Bluetooth", "VCOM read failed; check the Bluetooth chip") \
+    X(SETTINGS_VCOM_INVALID, "Giá trị bất thường: độ lớn VCOM phải từ 1.0–3.0V, bước 10mv", "Abnormal value: VCOM magnitude must be 1.0–3.0V, in 10mv steps") \
+    X(SETTINGS_TEST_MARGIN, "Căn chỉnh giao diện", "UI adjustment") \
+    X(SETTINGS_SCREEN_MARGIN_TITLE, "Dịch giao diện (-20~20px): Áp dụng và lưu ngay.", "UI offset (-20~20px): Applied and saved immediately.") \
+    X(SETTINGS_SCREEN_MARGIN_SET_OK, "Đã lưu cài đặt", "Settings saved") \
+    X(SETTINGS_SCREEN_MARGIN_RESET_OK, "Đã khôi phục mặc định", "Defaults restored") \
+    X(SETTINGS_SCREEN_MARGIN_SAVE_FAILED, "Không lưu được. Hãy thử lại.", "Could not save. Try again.") \
+    X(SETTINGS_SCREEN_MARGIN_SET_DEFAULT, "Đặt làm mặc định", "Set as default") \
+    X(SETTINGS_SCREEN_MARGIN_RESET, "Khôi phục mặc định", "Restore defaults") \
+    X(SETTINGS_SCREEN_MARGIN_VALUE_FMT, "Giá trị hiện tại: %d", "Current value: %d") \
+    X(SETTINGS_SCREEN_MARGIN_TOP, "Lên", "Up") \
+    X(SETTINGS_SCREEN_MARGIN_BOTTOM, "Xuống", "Down") \
+    X(SETTINGS_SCREEN_MARGIN_LEFT, "Trái", "Left") \
+    X(SETTINGS_SCREEN_MARGIN_RIGHT, "Phải", "Right") \
+    X(SETTINGS_SCREEN_REFRESH_TITLE, "Chế độ làm mới", "Refresh mode") \
+    X(SETTINGS_SCREEN_REFRESH_CLEAR, "Rõ nét", "Clear") \
+    X(SETTINGS_SCREEN_REFRESH_CLEAR_HINT, "Chi tiết sắc nét hơn, ít bóng mờ hơn.", "Sharper detail, less ghosting.") \
+    X(SETTINGS_SCREEN_REFRESH_BALANCED_HINT, "Cân bằng chất lượng và tốc độ; có thể tăng bóng mờ.", "Balanced quality and speed; may increase ghosting.") \
+    X(SETTINGS_SCREEN_REFRESH_BALANCED, "Cân bằng", "Balanced") \
+    X(SETTINGS_SCREEN_REFRESH_FAST, "Nhanh", "Fast") \
+    X(SETTINGS_SCREEN_REFRESH_FAST_HINT, "Phản hồi nhanh hơn, giữ mức xám; có thể tăng bóng mờ.", "Faster response with grayscale retained; may increase ghosting.") \
+    X(SETTINGS_TAB_FRONTLIGHT, "Màn hình", "Screen")                                                                \
+    X(SETTINGS_TAB_CONVERSATION, "Trò chuyện", "Talk")                                                               \
+    X(SETTINGS_TAB_STORAGE, "Lưu trữ", "Storage")                                                                 \
+    X(SETTINGS_TAB_BLUETOOTH, "Bluetooth", "Bluetooth")                                                             \
+    X(SETTINGS_PAGER, "Bút lật trang", "Page turner") \
+    X(PAGER_SCANNING_SHORT, "Đang quét thiết bị gần đây…", "Scanning nearby devices…") \
+    X(PAGER_SAVING, "Đang lưu…", "Saving…") \
+    X(PAGER_AUTO, "Tự kết nối bút lật trang", "Auto-connect page turner") \
+    X(PAGER_ENABLED, "Đã bật", "Enabled") \
+    X(PAGER_AUTO_HINT, "Tìm bút lật trang gần đây khi khởi động và sau chế độ chờ. Sẽ tắt nếu không có kết nối.", "Find nearby page turners at startup and after standby. Turns off if no connection is available.") \
+    X(PAGER_AUTO_TIMEOUT, "Không có kết nối. Đã tắt tự kết nối.", "No available connection. Auto-connect is off.") \
+    X(PAGER_CURRENT, "Kết nối hiện tại", "Current connection") \
+    X(PAGER_NO_CURRENT, "Chưa kết nối bút lật trang", "No page turner connected") \
+    X(PAGER_NEARBY, "Gần đây", "Nearby") \
+    X(PAGER_AWAY, "Không ở gần", "Not nearby") \
+    X(PAGER_CONNECTED_TAG, "Đã kết nối", "Connected") \
+    X(PAGER_CONNECTING_TAG, "Đang kết nối", "Connecting") \
+    X(PAGER_FAILED_TAG, "Thất bại", "Failed") \
+    X(PAGER_NOT_NEARBY, "Thiết bị không ở gần. Làm mới rồi thử lại.", "Device not nearby. Refresh and try again.") \
+    X(PAGER_SAVED_FMT, "Thiết bị đã lưu (%d)", "Saved devices (%d)") \
+    X(PAGER_UNSAVED_FMT, "Gần đây, chưa lưu (%d)", "Nearby, not saved (%d)") \
+    X(PAGER_NO_UNSAVED, "Không có bút lật trang mới ở gần", "No new page turners nearby") \
+    X(PAGER_RESCAN, "Làm mới", "Refresh") \
+    X(PAGER_LEARNING_FMT, "Đang thiết lập: %s", "Setting up: %s") \
+    X(SETTINGS_PAGER_MANAGE, "Thiết bị", "Devices") \
+    X(SETTINGS_PAGER_CUSTOMIZE, "Gán nút", "Button mapping") \
+    X(SETTINGS_PAGER_NO_SAVED, "Chưa có thiết bị đã lưu. Kết nối một bút lật trang gần đây để lưu.", "No saved devices. Connect a nearby page turner to save it.") \
+    X(SETTINGS_PAGER_CONNECT, "Kết nối", "Connect") \
+    X(SETTINGS_PAGER_FORGET, "Quên thiết bị", "Forget device") \
+    X(SETTINGS_PAGER_FORGET_HINT, "Quên thiết bị này sẽ xóa thông tin ghép đôi và cách gán nút.", "Forgetting this device removes its pairing information and button mappings.") \
+    X(SETTINGS_PAGER_PREVIOUS, "Trang trước", "Previous page") \
+    X(SETTINGS_PAGER_NEXT, "Trang sau", "Next page") \
+    X(SETTINGS_PAGER_NEED_CONNECTION, "Hãy kết nối bút lật trang trong mục Thiết bị trước.", "Connect a page turner in Devices first.") \
+    X(SETTINGS_PAGER_BINDING, "%s%sNút %c", "%s%sButton %c") \
+    X(SETTINGS_PAGER_UNSET, "Chưa đặt", "Not set") \
+    X(SETTINGS_PAGER_PAGE_HINT, "Mặc định: A trang trước, B trang sau.\nKhông bắt buộc phải học nút.", "Defaults: A previous, B next.\nLearning is optional.") \
+    X(SETTINGS_PAGER_PRESS, "Bấm nút bạn muốn dùng.", "Tap the button you want to use.") \
+    X(SETTINGS_PAGER_RELEARN, "Học lại", "Learn again") \
+    X(SETTINGS_PAGER_CLEAR, "Xóa gán nút", "Clear mapping") \
+    X(SETTINGS_PAGER_SAVE, "Lưu", "Save") \
+    X(SETTINGS_PAGER_SAVE_ERROR, "Thao tác thất bại. Hãy thử lại.", "Operation failed. Try again.") \
+    X(SETTINGS_PAGER_LEARNED, "Đã nhận: nút %c\nThao tác: %s%s", "Detected: button %c\nAction: %s%s") \
+    X(SETTINGS_PAGER_REPLACE_HINT, "\nThao tác này thay cách gán lật trang khác của nút này.", "\nThis replaces the other page-turn mapping for this button.") \
+    X(SETTINGS_PAGER_TIMEOUT, "Không nhận được nút nào. Hãy thử học lại.", "No button detected. Try learning again.") \
+    X(SETTINGS_PAGER_DISCONNECT, "Ngắt kết nối", "Disconnect") \
+    X(SETTINGS_PAGER_STARTING, "Đang bật Bluetooth…", "Starting Bluetooth…") \
+    X(SETTINGS_PAGER_EMPTY, "Không tìm thấy bút lật trang. Bật nó lên rồi quét lại.", "No page turner found. Turn it on and scan again.") \
+    X(SETTINGS_TAB_TEST, "Kiểm tra", "Test")                                                                       \
+    X(SETTINGS_TAB_ABOUT, "Giới thiệu", "About")                                                                     \
+    X(SETTINGS_THEME_TITLE, "Giao diện màn hình chính", "Home theme")                                                          \
+    X(SETTINGS_THEME_HINT, "Áp dụng khi bạn về màn hình chính", "Applies when you return home")                               \
+    X(SETTINGS_SYSTEM_FONT_TITLE, "Phông hệ thống", "System font") \
+    X(SETTINGS_SYSTEM_FONT_BUILTIN, "Có sẵn (Literata)", "Built-in (Literata)") \
+    X(SETTINGS_SYSTEM_FONT_LOADING, "Đang tải phông…", "Loading font…") \
+    X(SETTINGS_SYSTEM_FONT_MISSING, "Không tìm thấy phông, đang dùng Literata", "Font not found, using Literata") \
+    X(SYSTEM_FONT_LOAD_FAILED, "Không tải được phông", "Could not load the font") \
+    X(SETTINGS_THEME_PIXEL, "Pixel Vision", "Pixel Vision") \
+    X(SETTINGS_THEME_CURRENT_PIXEL, "Hiện tại: Pixel Vision", "Current: Pixel Vision") \
+    X(HOME_PIXEL_TODAY, "Hôm nay", "Today") \
+    X(HOME_PIXEL_PENDING, "Đang chờ", "Pending") \
+    X(HOME_PIXEL_DAY_NOTE, "Một ngày tốt lành", "A good day") \
+    X(HOME_PIXEL_READ, "Đọc", "Read") \
+    X(HOME_PIXEL_NOTES, "Ghi chú", "Notes") \
+    X(SETTINGS_THEME_WHITE, "Trắng", "White")                                                                   \
+    X(SETTINGS_THEME_GRAY, "Xám chấm", "Dotted gray")                                                          \
+    X(SETTINGS_THEME_BORDER, "Viền đen", "Black border")                                                       \
+    X(SETTINGS_THEME_SLASH, "Lưới chéo", "Slash grid")                                                          \
+    X(SETTINGS_THEME_CURRENT_WHITE, "Hiện tại: Trắng", "Current: White")                                            \
+    X(SETTINGS_THEME_CURRENT_GRAY, "Hiện tại: Xám chấm", "Current: Dotted gray")                                   \
+    X(SETTINGS_THEME_CURRENT_BORDER, "Hiện tại: Viền đen", "Current: Black border")                                \
+    X(SETTINGS_THEME_CURRENT_SLASH, "Hiện tại: Lưới chéo", "Current: Slash grid")                                   \
+    X(SETTINGS_LANG_TITLE, "Ngôn ngữ", "Language")                                                             \
+    X(SETTINGS_LANG_HINT, "Có hiệu lực ngay", "Takes effect immediately")                                        \
+    X(SETTINGS_LANG_VI_VN, "Tiếng Việt", "Tiếng Việt")                                                         \
     X(SETTINGS_LANG_EN_US, "English", "English")                                                               \
-    X(SETTINGS_LANG_CURRENT_ZH, "当前：简体中文", "Current: 简体中文")                                         \
-    X(SETTINGS_LANG_CURRENT_EN, "当前：English", "Current: English")                                           \
-    X(SETTINGS_HAPTIC_TITLE, "按键震动", "Button haptic")                                                      \
-    X(SETTINGS_HAPTIC_HINT, "界面按钮短震反馈", "UI buttons and cover keys")                                   \
-    X(SETTINGS_HAPTIC_ON, "开启", "On")                                                                        \
-    X(SETTINGS_HAPTIC_OFF, "关闭", "Off")                                                                      \
-    X(SETTINGS_HAPTIC_CURRENT_ON, "当前：开启", "Current: On")                                                 \
-    X(SETTINGS_HAPTIC_CURRENT_OFF, "当前：关闭", "Current: Off")                                               \
-    X(SETTINGS_HAPTIC_INTENSITY_TITLE, "震动强度", "Haptic strength") \
-    X(SETTINGS_HAPTIC_WEAK, "弱", "Weak") \
-    X(SETTINGS_HAPTIC_MEDIUM, "中", "Medium") \
-    X(SETTINGS_HAPTIC_STRONG, "强", "Strong") \
-    X(SETTINGS_HAPTIC_CURRENT_WEAK, "当前：弱", "Current: Weak") \
-    X(SETTINGS_HAPTIC_CURRENT_MEDIUM, "当前：中", "Current: Medium") \
-    X(SETTINGS_HAPTIC_CURRENT_STRONG, "当前：强", "Current: Strong") \
-    X(SETTINGS_POWER_30_SEC, "30 秒", "30 s")                                                                  \
-    X(SETTINGS_POWER_60_SEC, "60 秒", "60 s")                                                                  \
-    X(SETTINGS_POWER_120_SEC, "120 秒", "120 s")                                                               \
-    X(SETTINGS_POWER_OFF_NEVER, "永不", "Never")                                                               \
-    X(SETTINGS_POWER_IDLE_MHZ_TITLE, "空闲降频（默认320Mhz）", "Idle CPU (def 320 MHz)")                       \
-    X(SETTINGS_POWER_IDLE_MHZ_HINT, "无操作空闲时的 CPU 频率", "CPU clock when idle")                            \
-    X(SETTINGS_POWER_NET_GRACE_TITLE, "保网时长（默认 30 秒）", "Keep-alive (def 30 s)")                        \
-    X(SETTINGS_POWER_NET_GRACE_HINT, "无保网需求后仍联网的时长；待机仍断网", "Time online after last need; standby disconnects") \
-    X(SETTINGS_POWER_STANDBY_TITLE, "浅睡待机（默认 5 分钟）", "Light sleep (def 5 min)")                       \
-    X(SETTINGS_POWER_STANDBY_HINT, "无操作 5 分钟后进入浅睡待机", "Enters light sleep after 5 minutes of inactivity")                     \
-    X(SETTINGS_POWER_OFF_TITLE, "自动关机（默认 30 分钟）", "Auto power-off (def 30 min)")                      \
-    X(SETTINGS_POWER_OFF_HINT, "待机累计 30 分钟后自动关机", "Powers off after 30 minutes in standby")                      \
-    X(SETTINGS_POWER_SCREEN_WALLPAPER, "壁纸", "Wallpaper") \
-    X(SETTINGS_POWER_SCREEN_COVER, "书籍封面", "Book cover") \
-    X(SETTINGS_CONV_TITLE, "语音播报", "Voice playback")                                                       \
-    X(SETTINGS_CONV_HINT, "控制百问AI是否播报语音\n关闭后仅显示文字", "Whether Ask AI speaks aloud\nOff = text only") \
-    X(SETTINGS_CONV_TTS_ON, "开启 TTS", "TTS on")                                                              \
-    X(SETTINGS_CONV_TTS_OFF, "关闭 TTS", "TTS off")                                                            \
-    X(SETTINGS_CONV_CUR_ON, "当前：开启 TTS", "Current: TTS on")                                               \
-    X(SETTINGS_CONV_CUR_OFF, "当前：关闭 TTS", "Current: TTS off")                                             \
-    X(SETTINGS_CONV_CUR_DASH, "当前：—", "Current: —")                                                         \
-    X(SETTINGS_CONV_PARSE_FAIL, "响应解析失败", "Response parse failed")                                       \
-    X(SETTINGS_CONV_REQUEST_FAIL, "请求失败", "Request failed")                                                \
-    X(SETTINGS_CONV_MISSING_ENABLED, "缺少 enabled", "Missing enabled")                                        \
-    X(SETTINGS_CONV_NO_NETWORK, "无网络", "No network")                                                         \
-    X(SETTINGS_CONV_CONN_FAIL, "创建连接失败", "Connection failed")                                           \
-    X(SETTINGS_CONV_NET_NOT_READY, "网络未就绪", "Network not ready")                                          \
-    X(SETTINGS_CONV_ENABLING, "正在开启…", "Enabling…")                                                        \
-    X(SETTINGS_CONV_DISABLING, "正在关闭…", "Disabling…")                                                      \
-    X(SETTINGS_CONV_BUSY, "忙，请稍候", "Busy, please wait")                                                   \
-    X(SETTINGS_CONV_CONNECTING, "连接网络…", "Connecting…")                                                    \
-    X(SETTINGS_STORAGE_TITLE, "内存卡", "Storage")                                                              \
-    X(SETTINGS_STORAGE_PC_BUSY, "内存卡：电脑占用中", "SD: in use by PC")                                        \
-    X(SETTINGS_STORAGE_INSERTED, "内存卡：已插入", "SD: inserted")                                               \
-    X(SETTINGS_STORAGE_MISSING, "内存卡：未检测到", "SD: not detected")                                          \
-    X(SETTINGS_STORAGE_CAP_DASH, "容量：—", "Capacity: —")                                                       \
-    X(SETTINGS_STORAGE_CAP_EXPORT, "容量：导出中，停用后可查看", "Capacity: exporting; disable to view")         \
-    X(SETTINGS_STORAGE_CAP_FMT, "容量：%.1fGB/%.1fGB", "Capacity: %.1fGB/%.1fGB")                                 \
-    X(SETTINGS_STORAGE_CAP_FAIL, "容量：读取失败", "Capacity: read failed")                                      \
-    X(SETTINGS_STORAGE_USB_OFF, "停用模拟 U 盘", "Disable USB disk")                                             \
-    X(SETTINGS_STORAGE_USB_ON, "启用模拟 U 盘", "Enable USB disk")                                               \
-    X(SETTINGS_STORAGE_USB_DISABLED, "当前固件未启用模拟 U 盘", "USB disk not enabled in this firmware")         \
-    X(SETTINGS_STORAGE_USB_HINT_IDLE, "启用后电脑可以将本机识别为U盘", "After enabling, a PC can see this device as a USB drive") \
-    X(SETTINGS_STORAGE_USB_HINT_SWITCHING, "正在切换，请稍候…", "Switching, please wait…")                       \
-    X(SETTINGS_STORAGE_USB_HINT_ENABLING, "正在启用模拟 U 盘…", "Enabling USB disk…")                            \
-    X(SETTINGS_STORAGE_USB_HINT_DISABLING, "正在停用模拟 U 盘…", "Disabling USB disk…")                          \
-    X(SETTINGS_STORAGE_USB_HINT_HOST, "已启用，请在电脑访问，\n停用前请先弹出", "Enabled, open it on the PC\nEject before turning it off") \
-    X(SETTINGS_STORAGE_USB_HINT_LOCAL, "已启用，主机未占用；点停用恢复 USB 调试", "Enabled — host idle; disable to restore USB debug") \
-    X(SETTINGS_STORAGE_USB_HINT_ENABLE_FAIL, "启用失败，请检查 USB 线并重试", "Enable failed — check USB cable and retry") \
-    X(SETTINGS_STORAGE_USB_HINT_DISABLE_FAIL, "停用失败，请先在电脑上弹出 U 盘", "Disable failed — eject the disk on PC first") \
-    X(SETTINGS_STORAGE_USB_HINT_NO_SD, "未检测到内存卡", "No SD card detected")                                  \
-    X(SETTINGS_STORAGE_USB_HINT_FORMAT, "内存卡需要格式化 (FAT32)", "SD card needs formatting (FAT32)")           \
-    X(SETTINGS_STORAGE_USB_HINT_HOST_BUSY, "操作失败，请先在电脑上弹出 U 盘", "Failed — eject the disk on PC first") \
-    X(BT_TITLE, "蓝牙", "Bluetooth")                                                                           \
-    X(BT_RESET_HINT, "点击以复位蓝牙", "Tap to reset Bluetooth")                                              \
-    X(BT_VERSION_FMT, "蓝牙版本号：%s", "Bluetooth version: %s")                                              \
-    X(BT_CHECK_VERSION, "点击刷新", "Tap to refresh") \
-    X(BT_CHECKING_VERSION, "检测中", "Checking") \
-    X(BT_MODE_TITLE, "模式切换", "Mode selection")                                                           \
-    X(BT_NAME_TITLE, "蓝牙名称", "Bluetooth name") \
-    X(BT_EDIT_NAME, "点击修改名称", "Tap to edit name") \
-    X(BT_FW_TITLE, "蓝牙固件版本", "Bluetooth firmware") \
-    X(BT_RESET_TITLE, "蓝牙复位", "Bluetooth reset") \
-    X(BT_RESET_DETAIL, "复位后恢复当前模式", "Restore current mode after reset") \
-    X(BT_RESET_ACTION, "点击复位蓝牙芯片", "Tap to reset Bluetooth chip") \
-    X(BT_CURRENT_MODE, "当前模式", "Current mode") \
-    X(BT_CURRENT_MODE_FMT, "模式 %u · %s", "Mode %u · %s") \
-    X(BT_MODE1_DESC, "使用本机麦克风和扬声器", "Use the built-in microphone and speaker") \
-    X(BT_MODE2_DESC, "连接蓝牙音箱或耳机播放声音", "Play audio through a Bluetooth speaker or headset") \
-    X(BT_MODE3_DESC, "接收手机等设备播放的声音", "Receive audio played by a phone or other device") \
-    X(BT_MODE5_DESC, "向连接设备发送按键和语音", "Send keystrokes and voice to the connected device") \
-    X(BT_NAME_EDIT_HINT, "输入新名称，点击勾选键后确认修改。", "Enter a new name, then tap the checkmark to review the change.") \
-    X(BT_NAME_CONFIRM_FMT, "是否将蓝牙名称修改为“%s”？\n模块将重启约 700 ms，当前连接会中断。", "Change Bluetooth name to “%s”?\nThe module will restart (~700 ms) and disconnect.") \
-    X(BT_NAME_CONFIRM, "确认修改", "Confirm change") \
-    X(BT_NAME_RESTARTING, "名称已发送，蓝牙正在重启", "Name sent; Bluetooth restarting") \
-    X(BT_NAME_FAILED, "名称操作失败，请重试", "Name operation failed; try again") \
-    X(BT_NAME_INVALID, "名称需为 1～63 字节，不能含控制字符", "Use 1–63 bytes without control characters") \
-    X(BT_RESET_BTN, "复位蓝牙", "Reset BT")                                                                    \
-    X(BT_MODE1, "本机音频", "Local audio")                                                                             \
-    X(BT_MODE2, "蓝牙发送", "Bluetooth transmit")                                                                             \
-    X(BT_MODE3, "蓝牙接收", "Bluetooth receive")                                                                             \
-    X(BT_MODE5, "蓝牙键盘与语音", "Bluetooth keyboard & voice") \
-    X(BT_MODE5_SET, "模式5：请在电脑配对并选择蓝牙麦克风", "Mode 5: pair on PC and select Bluetooth mic") \
-    X(BT_SWITCH_MODE5, "切换模式5...", "Switching to mode 5...") \
-    X(BT_HID_TITLE, "HID 快捷键测试", "HID shortcut test") \
-    X(BT_AUDIO_DEVICES, "蓝牙设备管理", "Bluetooth device manager") \
-    X(BT_HID_HINT, "先在电脑配对 HID，再打开空白文本框测试。单击按钮发送一次按键，按住 Alt 可测试长按。", "Pair HID on your PC, then test in a blank text field. Click buttons send one keystroke; hold Alt to test a held key.") \
-    X(BT_HID_ENTER, "回车", "Enter") \
-    X(BT_HID_LEFT, "左方向键", "Left") \
-    X(BT_HID_RIGHT, "右方向键", "Right") \
-    X(BT_HID_RELEASE, "释放全部", "Release all") \
-    X(BT_HID_HOLD_ALT, "按住 Alt", "Hold Alt") \
-    X(BT_HID_SPACE, "空格", "Space") \
-    X(BT_HID_TAB, "制表键", "Tab") \
-    X(BT_HID_ESC, "退出键", "Esc") \
-    X(BT_HID_BACKSPACE, "退格", "Backspace") \
-    X(BT_HID_DELETE, "删除", "Delete") \
-    X(BT_HID_UP, "上方向键", "Up") \
-    X(BT_HID_DOWN, "下方向键", "Down") \
-    X(BT_HID_READY, "请在电脑确认按键效果", "Check keystrokes on your PC") \
-    X(BT_HID_WAITING, "已发送，等待蓝牙模块响应", "Sent; waiting for Bluetooth response") \
-    X(BT_HID_SUBMITTED, "已提交按键请求，请在电脑确认效果", "Key request submitted; check the PC") \
-    X(BT_HID_INVALID, "快捷键参数错误", "Invalid shortcut parameters") \
-    X(BT_HID_DISCONNECTED, "HID 未连接，请先在电脑配对并连接", "HID disconnected; pair and connect on PC") \
-    X(BT_HID_SEND_FAILED, "快捷键发送失败，请重试", "Could not send shortcut; try again") \
-    X(BT_HID_NEED_MODE5, "请先切换到模式5", "Switch to mode 5 first") \
-    X(BT_SELECT_MODE, "请选择蓝牙模式", "Select a Bluetooth mode")                                              \
-    X(BT_MODE1_ACTIVE, "模式1 已激活\n(AT+RX=2 / AT+MODE=1)", "Mode 1 active\n(AT+RX=2 / AT+MODE=1)")             \
-    X(BT_SCAN_BTN, "扫描设备", "Scan")                                                                         \
-    X(BT_MUSIC_BTN, "音乐模式", "Music")                                                                       \
-    X(BT_CALL_BTN, "通话模式", "Call")                                                                         \
-    X(BT_CONNECTING_FMT, "连接中: %s...", "Connecting: %s...")                                                  \
-    X(BT_MODE1_SET, "模式1 已设置", "Mode 1 set")                                                               \
-    X(BT_MODE2_SET, "模式2 已设置，可扫描设备", "Mode 2 set, ready to scan")                                     \
-    X(BT_MODE3_SET, "模式3 已设置", "Mode 3 set")                                                               \
-    X(BT_SCANNING, "正在扫描...", "Scanning...")                                                               \
-    X(BT_FOUND_FMT, "发现设备: %s", "Found: %s")                                                                \
-    X(BT_SCAN_DONE_FMT, "扫描完成，共 %d 个设备", "Scan done, %d device(s)")                                     \
-    X(BT_CONNECTING, "正在连接...", "Connecting...")                                                           \
-    X(BT_CONNECT_OK, "连接成功", "Connected")                                                                  \
-    X(BT_CONNECT_TIMEOUT, "连接失败 (超时)", "Connect failed (timeout)")                                        \
-    X(BT_CALL_MODE_SCO, "通话模式 (SCO 已建立)", "Call mode (SCO up)")                                          \
-    X(BT_MUSIC_MODE_SCO, "音乐模式 (SCO 已断开)", "Music mode (SCO down)")                                      \
-    X(BT_SWITCH_MODE1, "切换模式1...", "Switching to mode 1...")                                               \
-    X(BT_SWITCH_MODE2, "切换模式2...", "Switching to mode 2...")                                               \
-    X(BT_SWITCH_MODE3, "切换模式3...", "Switching to mode 3...")                                               \
-    X(BT_UART_NOT_INIT, "UART 未初始化", "UART not initialized")                                               \
-    X(BT_SWITCH_CALL, "切换通话模式...", "Switching to call mode...")                                          \
-    X(BT_SWITCH_MUSIC, "切换音乐模式...", "Switching to music mode...")                                        \
-    X(BT_PWR_RESET_OK, "蓝牙电源已复位", "BT power reset")                                                      \
-    X(BT_PWR_RESETTING, "正在复位，请稍候...", "Resetting, please wait...")                                     \
-    X(BT_PWR_RESET_RECONNECT, "已复位，正在重新连接...", "Reset complete, reconnecting...")                    \
-    X(BT_PWR_RESET_FAILED, "复位失败，请重试", "Reset failed, please retry")                                   \
-    X(BT_NEED_MODE2, "请先切换到模式2", "Switch to mode 2 first")                                               \
-    X(BT_SCAN_START, "开始扫描...", "Starting scan...")                                                        \
-    X(BT_NEED_CONNECT, "请先连接蓝牙设备", "Connect a Bluetooth device first")                                  \
-    X(SETTINGS_FRONTLIGHT_TITLE, "前光", "Front light")                                                        \
-    X(SETTINGS_FRONTLIGHT_HINT, "色温与亮度 0–100", "CCT and brightness 0–100")                                \
-    X(SETTINGS_FRONTLIGHT_COOL, "冷光", "Cool")                                                                \
-    X(SETTINGS_FRONTLIGHT_WARM, "暖光", "Warm")                                                                \
-    X(SETTINGS_FRONTLIGHT_BOTH, "冷暖光", "Cool + warm")                                                       \
-    X(SETTINGS_FRONTLIGHT_OFF, "关闭", "Off")                                                                  \
-    X(SETTINGS_FRONTLIGHT_CURRENT_COOL, "当前：冷光", "Current: Cool")                                         \
-    X(SETTINGS_FRONTLIGHT_CURRENT_WARM, "当前：暖光", "Current: Warm")                                         \
-    X(SETTINGS_FRONTLIGHT_CURRENT_BOTH, "当前：冷暖光", "Current: Cool + warm")                                \
-    X(SETTINGS_FRONTLIGHT_CURRENT_OFF, "当前：关闭", "Current: Off")                                           \
-    X(SETTINGS_FRONTLIGHT_BRIGHTNESS_FMT, "亮度：%d", "Brightness: %d")                                        \
+    X(SETTINGS_LANG_CURRENT_VI, "Hiện tại: Tiếng Việt", "Current: Tiếng Việt")                                         \
+    X(SETTINGS_LANG_CURRENT_EN, "Hiện tại: English", "Current: English")                                           \
+    X(SETTINGS_HAPTIC_TITLE, "Rung khi bấm nút", "Button haptic")                                                      \
+    X(SETTINGS_HAPTIC_HINT, "Nút trên giao diện và phím trên vỏ", "UI buttons and cover keys")                                   \
+    X(SETTINGS_HAPTIC_ON, "Bật", "On")                                                                        \
+    X(SETTINGS_HAPTIC_OFF, "Tắt", "Off")                                                                      \
+    X(SETTINGS_HAPTIC_CURRENT_ON, "Hiện tại: Bật", "Current: On")                                                 \
+    X(SETTINGS_HAPTIC_CURRENT_OFF, "Hiện tại: Tắt", "Current: Off")                                               \
+    X(SETTINGS_HAPTIC_INTENSITY_TITLE, "Độ mạnh rung", "Haptic strength") \
+    X(SETTINGS_HAPTIC_WEAK, "Nhẹ", "Weak") \
+    X(SETTINGS_HAPTIC_MEDIUM, "Vừa", "Medium") \
+    X(SETTINGS_HAPTIC_STRONG, "Mạnh", "Strong") \
+    X(SETTINGS_HAPTIC_CURRENT_WEAK, "Hiện tại: Nhẹ", "Current: Weak") \
+    X(SETTINGS_HAPTIC_CURRENT_MEDIUM, "Hiện tại: Vừa", "Current: Medium") \
+    X(SETTINGS_HAPTIC_CURRENT_STRONG, "Hiện tại: Mạnh", "Current: Strong") \
+    X(SETTINGS_POWER_30_SEC, "30 giây", "30 s")                                                                  \
+    X(SETTINGS_POWER_60_SEC, "60 giây", "60 s")                                                                  \
+    X(SETTINGS_POWER_120_SEC, "120 giây", "120 s")                                                               \
+    X(SETTINGS_POWER_OFF_NEVER, "Không bao giờ", "Never")                                                               \
+    X(SETTINGS_POWER_IDLE_MHZ_TITLE, "CPU khi rảnh (mặc định 320 MHz)", "Idle CPU (def 320 MHz)")                       \
+    X(SETTINGS_POWER_IDLE_MHZ_HINT, "Xung nhịp CPU khi rảnh", "CPU clock when idle")                            \
+    X(SETTINGS_POWER_NET_GRACE_TITLE, "Giữ kết nối (mặc định 30 giây)", "Keep-alive (def 30 s)")                        \
+    X(SETTINGS_POWER_NET_GRACE_HINT, "Thời gian giữ mạng sau lần dùng cuối; chế độ chờ sẽ ngắt kết nối", "Time online after last need; standby disconnects") \
+    X(SETTINGS_POWER_STANDBY_TITLE, "Ngủ nhẹ (mặc định 5 phút)", "Light sleep (def 5 min)")                       \
+    X(SETTINGS_POWER_STANDBY_HINT, "Vào ngủ nhẹ sau 5 phút không thao tác", "Enters light sleep after 5 minutes of inactivity")                     \
+    X(SETTINGS_POWER_OFF_TITLE, "Tự tắt máy (mặc định 30 phút)", "Auto power-off (def 30 min)")                      \
+    X(SETTINGS_POWER_OFF_HINT, "Tắt máy sau 30 phút ở chế độ chờ", "Powers off after 30 minutes in standby")                      \
+    X(SETTINGS_POWER_SCREEN_WALLPAPER, "Hình nền", "Wallpaper") \
+    X(SETTINGS_POWER_SCREEN_COVER, "Bìa sách", "Book cover") \
+    X(SETTINGS_CONV_TITLE, "Phát giọng nói", "Voice playback")                                                       \
+    X(SETTINGS_CONV_HINT, "Hỏi AI có đọc to câu trả lời không\nTắt = chỉ văn bản", "Whether Ask AI speaks aloud\nOff = text only") \
+    X(SETTINGS_CONV_TTS_ON, "Bật đọc", "TTS on")                                                              \
+    X(SETTINGS_CONV_TTS_OFF, "Tắt đọc", "TTS off")                                                            \
+    X(SETTINGS_CONV_CUR_ON, "Hiện tại: Bật đọc", "Current: TTS on")                                               \
+    X(SETTINGS_CONV_CUR_OFF, "Hiện tại: Tắt đọc", "Current: TTS off")                                             \
+    X(SETTINGS_CONV_CUR_DASH, "Hiện tại: —", "Current: —")                                                         \
+    X(SETTINGS_CONV_PARSE_FAIL, "Đọc phản hồi thất bại", "Response parse failed")                                       \
+    X(SETTINGS_CONV_REQUEST_FAIL, "Yêu cầu thất bại", "Request failed")                                                \
+    X(SETTINGS_CONV_MISSING_ENABLED, "Thiếu trường enabled", "Missing enabled")                                        \
+    X(SETTINGS_CONV_NO_NETWORK, "Không có mạng", "No network")                                                         \
+    X(SETTINGS_CONV_CONN_FAIL, "Kết nối thất bại", "Connection failed")                                           \
+    X(SETTINGS_CONV_NET_NOT_READY, "Mạng chưa sẵn sàng", "Network not ready")                                          \
+    X(SETTINGS_CONV_ENABLING, "Đang bật…", "Enabling…")                                                        \
+    X(SETTINGS_CONV_DISABLING, "Đang tắt…", "Disabling…")                                                      \
+    X(SETTINGS_CONV_BUSY, "Đang bận, vui lòng chờ", "Busy, please wait")                                                   \
+    X(SETTINGS_CONV_CONNECTING, "Đang kết nối…", "Connecting…")                                                    \
+    X(SETTINGS_STORAGE_TITLE, "Lưu trữ", "Storage")                                                              \
+    X(SETTINGS_STORAGE_PC_BUSY, "SD: máy tính đang dùng", "SD: in use by PC")                                        \
+    X(SETTINGS_STORAGE_INSERTED, "SD: đã lắp", "SD: inserted")                                               \
+    X(SETTINGS_STORAGE_MISSING, "SD: không phát hiện", "SD: not detected")                                          \
+    X(SETTINGS_STORAGE_CAP_DASH, "Dung lượng: —", "Capacity: —")                                                       \
+    X(SETTINGS_STORAGE_CAP_EXPORT, "Dung lượng: đang chia sẻ; tắt để xem", "Capacity: exporting; disable to view")         \
+    X(SETTINGS_STORAGE_CAP_FMT, "Dung lượng: %.1fGB/%.1fGB", "Capacity: %.1fGB/%.1fGB")                                 \
+    X(SETTINGS_STORAGE_CAP_FAIL, "Dung lượng: đọc thất bại", "Capacity: read failed")                                      \
+    X(SETTINGS_STORAGE_USB_OFF, "Tắt ổ đĩa USB", "Disable USB disk")                                             \
+    X(SETTINGS_STORAGE_USB_ON, "Bật ổ đĩa USB", "Enable USB disk")                                               \
+    X(SETTINGS_STORAGE_USB_DISABLED, "Firmware này chưa bật ổ đĩa USB", "USB disk not enabled in this firmware")         \
+    X(SETTINGS_STORAGE_USB_HINT_IDLE, "Sau khi bật, máy tính sẽ thấy thiết bị này như một ổ USB", "After enabling, a PC can see this device as a USB drive") \
+    X(SETTINGS_STORAGE_USB_HINT_SWITCHING, "Đang chuyển, vui lòng chờ…", "Switching, please wait…")                       \
+    X(SETTINGS_STORAGE_USB_HINT_ENABLING, "Đang bật ổ đĩa USB…", "Enabling USB disk…")                            \
+    X(SETTINGS_STORAGE_USB_HINT_DISABLING, "Đang tắt ổ đĩa USB…", "Disabling USB disk…")                          \
+    X(SETTINGS_STORAGE_USB_HINT_HOST, "Đã bật, hãy mở trên máy tính\nTháo ổ an toàn trước khi tắt", "Enabled, open it on the PC\nEject before turning it off") \
+    X(SETTINGS_STORAGE_USB_HINT_LOCAL, "Đã bật — máy tính chưa dùng; tắt để khôi phục gỡ lỗi USB", "Enabled — host idle; disable to restore USB debug") \
+    X(SETTINGS_STORAGE_USB_HINT_ENABLE_FAIL, "Bật thất bại — kiểm tra cáp USB rồi thử lại", "Enable failed — check USB cable and retry") \
+    X(SETTINGS_STORAGE_USB_HINT_DISABLE_FAIL, "Tắt thất bại — hãy tháo ổ trên máy tính trước", "Disable failed — eject the disk on PC first") \
+    X(SETTINGS_STORAGE_USB_HINT_NO_SD, "Không phát hiện thẻ SD", "No SD card detected")                                  \
+    X(SETTINGS_STORAGE_USB_HINT_FORMAT, "Thẻ SD cần định dạng (FAT32)", "SD card needs formatting (FAT32)")           \
+    X(SETTINGS_STORAGE_USB_HINT_HOST_BUSY, "Thất bại — hãy tháo ổ trên máy tính trước", "Failed — eject the disk on PC first") \
+    X(BT_TITLE, "Bluetooth", "Bluetooth")                                                                           \
+    X(BT_RESET_HINT, "Chạm để đặt lại Bluetooth", "Tap to reset Bluetooth")                                              \
+    X(BT_VERSION_FMT, "Phiên bản Bluetooth: %s", "Bluetooth version: %s")                                              \
+    X(BT_CHECK_VERSION, "Chạm để làm mới", "Tap to refresh") \
+    X(BT_CHECKING_VERSION, "Đang kiểm tra", "Checking") \
+    X(BT_MODE_TITLE, "Chọn chế độ", "Mode selection")                                                           \
+    X(BT_NAME_TITLE, "Tên Bluetooth", "Bluetooth name") \
+    X(BT_EDIT_NAME, "Chạm để sửa tên", "Tap to edit name") \
+    X(BT_FW_TITLE, "Firmware Bluetooth", "Bluetooth firmware") \
+    X(BT_RESET_TITLE, "Đặt lại Bluetooth", "Bluetooth reset") \
+    X(BT_RESET_DETAIL, "Khôi phục chế độ hiện tại sau khi đặt lại", "Restore current mode after reset") \
+    X(BT_RESET_ACTION, "Chạm để đặt lại chip Bluetooth", "Tap to reset Bluetooth chip") \
+    X(BT_CURRENT_MODE, "Chế độ hiện tại", "Current mode") \
+    X(BT_CURRENT_MODE_FMT, "Chế độ %u · %s", "Mode %u · %s") \
+    X(BT_MODE1_DESC, "Dùng micro và loa tích hợp", "Use the built-in microphone and speaker") \
+    X(BT_MODE2_DESC, "Phát âm thanh qua loa hoặc tai nghe Bluetooth", "Play audio through a Bluetooth speaker or headset") \
+    X(BT_MODE3_DESC, "Nhận âm thanh phát từ điện thoại hoặc thiết bị khác", "Receive audio played by a phone or other device") \
+    X(BT_MODE5_DESC, "Gửi phím bấm và giọng nói tới thiết bị đã kết nối", "Send keystrokes and voice to the connected device") \
+    X(BT_NAME_EDIT_HINT, "Nhập tên mới rồi chạm dấu tích để xem lại thay đổi.", "Enter a new name, then tap the checkmark to review the change.") \
+    X(BT_NAME_CONFIRM_FMT, "Đổi tên Bluetooth thành “%s”?\nMô-đun sẽ khởi động lại (~700 ms) và ngắt kết nối.", "Change Bluetooth name to “%s”?\nThe module will restart (~700 ms) and disconnect.") \
+    X(BT_NAME_CONFIRM, "Xác nhận đổi", "Confirm change") \
+    X(BT_NAME_RESTARTING, "Đã gửi tên; Bluetooth đang khởi động lại", "Name sent; Bluetooth restarting") \
+    X(BT_NAME_FAILED, "Đổi tên thất bại; hãy thử lại", "Name operation failed; try again") \
+    X(BT_NAME_INVALID, "Dùng 1–63 byte, không có ký tự điều khiển", "Use 1–63 bytes without control characters") \
+    X(BT_RESET_BTN, "Đặt lại BT", "Reset BT")                                                                    \
+    X(BT_MODE1, "Âm thanh trên máy", "Local audio")                                                                             \
+    X(BT_MODE2, "Phát qua Bluetooth", "Bluetooth transmit")                                                                             \
+    X(BT_MODE3, "Nhận qua Bluetooth", "Bluetooth receive")                                                                             \
+    X(BT_MODE5, "Bàn phím & giọng nói Bluetooth", "Bluetooth keyboard & voice") \
+    X(BT_MODE5_SET, "Chế độ 5: ghép đôi trên máy tính và chọn micro Bluetooth", "Mode 5: pair on PC and select Bluetooth mic") \
+    X(BT_SWITCH_MODE5, "Đang chuyển sang chế độ 5...", "Switching to mode 5...") \
+    X(BT_HID_TITLE, "Thử phím tắt HID", "HID shortcut test") \
+    X(BT_AUDIO_DEVICES, "Quản lý thiết bị Bluetooth", "Bluetooth device manager") \
+    X(BT_HID_HINT, "Ghép đôi HID trên máy tính rồi thử trong một ô văn bản trống. Mỗi lần bấm gửi một phím; giữ Alt để thử phím giữ.", "Pair HID on your PC, then test in a blank text field. Click buttons send one keystroke; hold Alt to test a held key.") \
+    X(BT_HID_ENTER, "Enter", "Enter") \
+    X(BT_HID_LEFT, "Trái", "Left") \
+    X(BT_HID_RIGHT, "Phải", "Right") \
+    X(BT_HID_RELEASE, "Nhả tất cả", "Release all") \
+    X(BT_HID_HOLD_ALT, "Giữ Alt", "Hold Alt") \
+    X(BT_HID_SPACE, "Space", "Space") \
+    X(BT_HID_TAB, "Tab", "Tab") \
+    X(BT_HID_ESC, "Esc", "Esc") \
+    X(BT_HID_BACKSPACE, "Backspace", "Backspace") \
+    X(BT_HID_DELETE, "Delete", "Delete") \
+    X(BT_HID_UP, "Lên", "Up") \
+    X(BT_HID_DOWN, "Xuống", "Down") \
+    X(BT_HID_READY, "Kiểm tra phím bấm trên máy tính", "Check keystrokes on your PC") \
+    X(BT_HID_WAITING, "Đã gửi; đang chờ Bluetooth phản hồi", "Sent; waiting for Bluetooth response") \
+    X(BT_HID_SUBMITTED, "Đã gửi yêu cầu phím; kiểm tra trên máy tính", "Key request submitted; check the PC") \
+    X(BT_HID_INVALID, "Tham số phím tắt không hợp lệ", "Invalid shortcut parameters") \
+    X(BT_HID_DISCONNECTED, "HID mất kết nối; hãy ghép đôi và kết nối trên máy tính", "HID disconnected; pair and connect on PC") \
+    X(BT_HID_SEND_FAILED, "Không gửi được phím tắt; hãy thử lại", "Could not send shortcut; try again") \
+    X(BT_HID_NEED_MODE5, "Hãy chuyển sang chế độ 5 trước", "Switch to mode 5 first") \
+    X(BT_SELECT_MODE, "Chọn chế độ Bluetooth", "Select a Bluetooth mode")                                              \
+    X(BT_MODE1_ACTIVE, "Đang ở chế độ 1\n(AT+RX=2 / AT+MODE=1)", "Mode 1 active\n(AT+RX=2 / AT+MODE=1)")             \
+    X(BT_SCAN_BTN, "Quét", "Scan")                                                                         \
+    X(BT_MUSIC_BTN, "Nhạc", "Music")                                                                       \
+    X(BT_CALL_BTN, "Gọi", "Call")                                                                         \
+    X(BT_CONNECTING_FMT, "Đang kết nối: %s...", "Connecting: %s...")                                                  \
+    X(BT_MODE1_SET, "Đã đặt chế độ 1", "Mode 1 set")                                                               \
+    X(BT_MODE2_SET, "Đã đặt chế độ 2, sẵn sàng quét", "Mode 2 set, ready to scan")                                     \
+    X(BT_MODE3_SET, "Đã đặt chế độ 3", "Mode 3 set")                                                               \
+    X(BT_SCANNING, "Đang quét...", "Scanning...")                                                               \
+    X(BT_FOUND_FMT, "Tìm thấy: %s", "Found: %s")                                                                \
+    X(BT_SCAN_DONE_FMT, "Quét xong, %d thiết bị", "Scan done, %d device(s)")                                     \
+    X(BT_CONNECTING, "Đang kết nối...", "Connecting...")                                                           \
+    X(BT_CONNECT_OK, "Đã kết nối", "Connected")                                                                  \
+    X(BT_CONNECT_TIMEOUT, "Kết nối thất bại (hết thời gian)", "Connect failed (timeout)")                                        \
+    X(BT_CALL_MODE_SCO, "Chế độ gọi (SCO bật)", "Call mode (SCO up)")                                          \
+    X(BT_MUSIC_MODE_SCO, "Chế độ nhạc (SCO tắt)", "Music mode (SCO down)")                                      \
+    X(BT_SWITCH_MODE1, "Đang chuyển sang chế độ 1...", "Switching to mode 1...")                                               \
+    X(BT_SWITCH_MODE2, "Đang chuyển sang chế độ 2...", "Switching to mode 2...")                                               \
+    X(BT_SWITCH_MODE3, "Đang chuyển sang chế độ 3...", "Switching to mode 3...")                                               \
+    X(BT_UART_NOT_INIT, "UART chưa khởi tạo", "UART not initialized")                                               \
+    X(BT_SWITCH_CALL, "Đang chuyển sang chế độ gọi...", "Switching to call mode...")                                          \
+    X(BT_SWITCH_MUSIC, "Đang chuyển sang chế độ nhạc...", "Switching to music mode...")                                        \
+    X(BT_PWR_RESET_OK, "Đã đặt lại nguồn BT", "BT power reset")                                                      \
+    X(BT_PWR_RESETTING, "Đang đặt lại, vui lòng chờ...", "Resetting, please wait...")                                     \
+    X(BT_PWR_RESET_RECONNECT, "Đặt lại xong, đang kết nối lại...", "Reset complete, reconnecting...")                    \
+    X(BT_PWR_RESET_FAILED, "Đặt lại thất bại, vui lòng thử lại", "Reset failed, please retry")                                   \
+    X(BT_NEED_MODE2, "Hãy chuyển sang chế độ 2 trước", "Switch to mode 2 first")                                               \
+    X(BT_SCAN_START, "Đang bắt đầu quét...", "Starting scan...")                                                        \
+    X(BT_NEED_CONNECT, "Hãy kết nối thiết bị Bluetooth trước", "Connect a Bluetooth device first")                                  \
+    X(SETTINGS_FRONTLIGHT_TITLE, "Đèn nền", "Front light")                                                        \
+    X(SETTINGS_FRONTLIGHT_HINT, "Nhiệt độ màu và độ sáng 0–100", "CCT and brightness 0–100")                                \
+    X(SETTINGS_FRONTLIGHT_COOL, "Lạnh", "Cool")                                                                \
+    X(SETTINGS_FRONTLIGHT_WARM, "Ấm", "Warm")                                                                \
+    X(SETTINGS_FRONTLIGHT_BOTH, "Lạnh + ấm", "Cool + warm")                                                       \
+    X(SETTINGS_FRONTLIGHT_OFF, "Tắt", "Off")                                                                  \
+    X(SETTINGS_FRONTLIGHT_CURRENT_COOL, "Hiện tại: Lạnh", "Current: Cool")                                         \
+    X(SETTINGS_FRONTLIGHT_CURRENT_WARM, "Hiện tại: Ấm", "Current: Warm")                                         \
+    X(SETTINGS_FRONTLIGHT_CURRENT_BOTH, "Hiện tại: Lạnh + ấm", "Current: Cool + warm")                                \
+    X(SETTINGS_FRONTLIGHT_CURRENT_OFF, "Hiện tại: Tắt", "Current: Off")                                           \
+    X(SETTINGS_FRONTLIGHT_BRIGHTNESS_FMT, "Độ sáng: %d", "Brightness: %d")                                        \
     X(SETTINGS_FRONTLIGHT_BRIGHTNESS_DEC, "-", "-")                                                            \
     X(SETTINGS_FRONTLIGHT_BRIGHTNESS_INC, "+", "+")                                                            \
-    X(SETTINGS_ABOUT_MODEL, "设备型号", "Device model")                                                        \
-    X(SETTINGS_ABOUT_CHIP, "芯片型号", "Chip")                                                                 \
-    X(SETTINGS_ABOUT_CORES, "CPU 核心", "CPU cores")                                                           \
-    X(SETTINGS_ABOUT_CORES_FMT, "%u 核", "%u cores")                                                           \
-    X(OTA_CHECK_FAILED, "检测失败，请检查网络后重试", "Check failed. Check network and retry.") \
-    X(OTA_ALREADY_LATEST, "当前已是最新版本", "Firmware is up to date") \
-    X(SETTINGS_ABOUT_FW, "点击检测更新", "Check for updates")                                                               \
-    X(SETTINGS_ABOUT_FW_VER_FMT, "固件版本 %s", "Firmware %s")                                                 \
-    X(SETTINGS_ABOUT_BUILD, "编译时间", "Build time")                                                          \
-    X(SETTINGS_ABOUT_MAC, "MAC 地址", "MAC")                                                                   \
-    X(SETTINGS_ABOUT_FLASH, "Flash 容量", "Flash")                                                             \
-    X(SETTINGS_ABOUT_PSRAM, "PSRAM 总大小", "PSRAM")                                                           \
-    X(SETTINGS_ABOUT_NONE, "无", "None")                                                                       \
-    X(SETTINGS_TEST_AUTO, "自动测试", "Auto test")                                                             \
-    X(SETTINGS_TEST_TOUCH, "触摸测试", "Touch test")                                                           \
-    X(SETTINGS_TEST_BATTERY, "电池测试", "Battery test")                                                       \
-    X(SETTINGS_TEST_AGING, "老化测试", "Aging test")                                                           \
-    X(SETTINGS_TEST_SIGNAL_SKIP, "网络信号：本轮未接 WiFi/4G", "Signal: WiFi/4G not wired this round")          \
-    X(SETTINGS_TEST_OK, "正常", "OK")                                                                          \
-    X(SETTINGS_TEST_FAIL, "失败", "Failed")                                                                    \
-    X(SETTINGS_TEST_SKIP, "跳过", "Skip")                                                                      \
-    X(SETTINGS_TEST_NOT_DETECTED, "未检测到", "Not found")                                                     \
-    X(SETTINGS_TEST_READ_FAIL, "读取失败", "Read failed")                                                      \
-    X(SETTINGS_TEST_SDCARD, "SD卡", "SD card")                                                                 \
-    X(SETTINGS_TEST_SD_MOUNT_FAIL, "未插卡/挂载失败", "No card / mount fail")                                  \
-    X(SETTINGS_TEST_AUDIO_TITLE, "音频", "Audio")                                                              \
-    X(SETTINGS_TEST_AUDIO_HOLD, "按住说话", "Hold to talk")                                                    \
-    X(SETTINGS_TEST_AUDIO_RECORDING, "录音中…", "Recording…")                                                  \
-    X(SETTINGS_TEST_AUDIO_CONFIRM, "录音、喇叭是否正常？", "Mic and speaker OK?")                               \
-    X(SETTINGS_TEST_YES, "是", "Yes")                                                                          \
-    X(SETTINGS_TEST_NO, "否", "No")                                                                            \
-    X(RECORD_PLAYING, "播放中…", "Playing…")                                                                   \
-    X(SETTINGS_TEST_CAMERA, "摄像头", "Camera")                                                                \
-    X(SETTINGS_TEST_BACK, "返回", "Back")                                                                      \
-    X(SETTINGS_TEST_TOUCH_START, "点击屏幕，开始测试", "Tap screen to start")                                  \
-    X(SETTINGS_TEST_BATTERY_HINT, "SOC: 3.30~4.30V; ≥4.30需稳30s→100%",                                         \
+    X(SETTINGS_ABOUT_MODEL, "Kiểu máy", "Device model")                                                        \
+    X(SETTINGS_ABOUT_CHIP, "Chip", "Chip")                                                                 \
+    X(SETTINGS_ABOUT_CORES, "Số nhân CPU", "CPU cores")                                                           \
+    X(SETTINGS_ABOUT_CORES_FMT, "%u nhân", "%u cores")                                                           \
+    X(OTA_CHECK_FAILED, "Kiểm tra thất bại. Kiểm tra mạng rồi thử lại.", "Check failed. Check network and retry.") \
+    X(OTA_ALREADY_LATEST, "Firmware đã là bản mới nhất", "Firmware is up to date") \
+    X(SETTINGS_ABOUT_FW, "Kiểm tra cập nhật", "Check for updates")                                                               \
+    X(SETTINGS_ABOUT_FW_VER_FMT, "Firmware %s", "Firmware %s")                                                 \
+    X(SETTINGS_ABOUT_BUILD, "Thời gian build", "Build time")                                                          \
+    X(SETTINGS_ABOUT_MAC, "MAC", "MAC")                                                                   \
+    X(SETTINGS_ABOUT_FLASH, "Flash", "Flash")                                                             \
+    X(SETTINGS_ABOUT_PSRAM, "PSRAM", "PSRAM")                                                           \
+    X(SETTINGS_ABOUT_NONE, "Không có", "None")                                                                       \
+    X(SETTINGS_TEST_AUTO, "Kiểm tra tự động", "Auto test")                                                             \
+    X(SETTINGS_TEST_TOUCH, "Kiểm tra cảm ứng", "Touch test")                                                           \
+    X(SETTINGS_TEST_BATTERY, "Kiểm tra pin", "Battery test")                                                       \
+    X(SETTINGS_TEST_AGING, "Kiểm tra lão hóa", "Aging test")                                                           \
+    X(SETTINGS_TEST_SIGNAL_SKIP, "Tín hiệu: lượt này chưa nối WiFi/4G", "Signal: WiFi/4G not wired this round")          \
+    X(SETTINGS_TEST_OK, "OK", "OK")                                                                          \
+    X(SETTINGS_TEST_FAIL, "Thất bại", "Failed")                                                                    \
+    X(SETTINGS_TEST_SKIP, "Bỏ qua", "Skip")                                                                      \
+    X(SETTINGS_TEST_NOT_DETECTED, "Không tìm thấy", "Not found")                                                     \
+    X(SETTINGS_TEST_READ_FAIL, "Đọc thất bại", "Read failed")                                                      \
+    X(SETTINGS_TEST_SDCARD, "Thẻ SD", "SD card")                                                                 \
+    X(SETTINGS_TEST_SD_MOUNT_FAIL, "Không có thẻ / gắn thất bại", "No card / mount fail")                                  \
+    X(SETTINGS_TEST_AUDIO_TITLE, "Âm thanh", "Audio")                                                              \
+    X(SETTINGS_TEST_AUDIO_HOLD, "Giữ để nói", "Hold to talk")                                                    \
+    X(SETTINGS_TEST_AUDIO_RECORDING, "Đang ghi âm…", "Recording…")                                                  \
+    X(SETTINGS_TEST_AUDIO_CONFIRM, "Micro và loa hoạt động tốt?", "Mic and speaker OK?")                               \
+    X(SETTINGS_TEST_YES, "Có", "Yes")                                                                          \
+    X(SETTINGS_TEST_NO, "Không", "No")                                                                            \
+    X(RECORD_PLAYING, "Đang phát…", "Playing…")                                                                   \
+    X(SETTINGS_TEST_CAMERA, "Camera", "Camera")                                                                \
+    X(SETTINGS_TEST_BACK, "Quay lại", "Back")                                                                      \
+    X(SETTINGS_TEST_TOUCH_START, "Chạm màn hình để bắt đầu", "Tap screen to start")                                  \
+    X(SETTINGS_TEST_BATTERY_HINT, "SOC: 3.30~4.30V; ≥4.30 giữ 30s→100%",                                         \
       "SOC: 3.30~4.30V; ≥4.30 hold 30s→100%")                                                                   \
-    X(SETTINGS_TEST_BATTERY_GAUGE, "电量计", "Fuel gauge")                                                     \
-    X(SETTINGS_TEST_BATTERY_SOC_SMOOTH, "电量(平滑)", "SOC (smooth)")                                          \
-    X(SETTINGS_TEST_BATTERY_SOC_RAW, "电量(瞬时)", "SOC (instant)")                                            \
-    X(SETTINGS_TEST_BATTERY_VOLT, "电压", "Voltage")                                                           \
-    X(SETTINGS_TEST_BATTERY_VOLT_RANGE, "电压波动", "Voltage swing")                                           \
-    X(SETTINGS_TEST_BATTERY_CURR, "电流", "Current")                                                           \
-    X(SETTINGS_TEST_BATTERY_GAUGE_STAT, "表计状态", "Gauge state")                                             \
-    X(SETTINGS_TEST_BATTERY_CHARGING, "充电中", "Charging")                                                    \
-    X(SETTINGS_TEST_BATTERY_DISCHARGING, "放电中", "Discharging")                                              \
-    X(SETTINGS_TEST_BATTERY_IDLE_LOAD, "空载", "Idle")                                                         \
+    X(SETTINGS_TEST_BATTERY_GAUGE, "Bộ đo pin", "Fuel gauge")                                                     \
+    X(SETTINGS_TEST_BATTERY_SOC_SMOOTH, "SOC (làm mượt)", "SOC (smooth)")                                          \
+    X(SETTINGS_TEST_BATTERY_SOC_RAW, "SOC (tức thời)", "SOC (instant)")                                            \
+    X(SETTINGS_TEST_BATTERY_VOLT, "Điện áp", "Voltage")                                                           \
+    X(SETTINGS_TEST_BATTERY_VOLT_RANGE, "Dao động điện áp", "Voltage swing")                                           \
+    X(SETTINGS_TEST_BATTERY_CURR, "Dòng điện", "Current")                                                           \
+    X(SETTINGS_TEST_BATTERY_GAUGE_STAT, "Trạng thái bộ đo", "Gauge state")                                             \
+    X(SETTINGS_TEST_BATTERY_CHARGING, "Đang sạc", "Charging")                                                    \
+    X(SETTINGS_TEST_BATTERY_DISCHARGING, "Đang xả", "Discharging")                                              \
+    X(SETTINGS_TEST_BATTERY_IDLE_LOAD, "Rảnh", "Idle")                                                         \
     X(SETTINGS_TEST_BATTERY_VBUS, "VBUS", "VBUS")                                                              \
-    X(SETTINGS_TEST_BATTERY_CHIP_CHG, "芯片充电", "Chip charge")                                               \
-    X(SETTINGS_TEST_BATTERY_CHG_EN, "充电使能", "Charge enable")                                               \
-    X(SETTINGS_TEST_BATTERY_ICHG, "设定电流", "Charge current")                                                \
-    X(SETTINGS_TEST_BATTERY_VREG, "截止电压", "Charge voltage")                                                \
-    X(SETTINGS_TEST_BATTERY_MATCH, "一致性", "Consistency")                                                    \
-    X(SETTINGS_TEST_BATTERY_CHG_NOT, "未充电/已满", "Not charging / full")                                     \
-    X(SETTINGS_TEST_BATTERY_CHG_CC, "涓流/预充/CC", "Trickle/pre/CC")                                          \
-    X(SETTINGS_TEST_BATTERY_CHG_CV, "恒压降流", "CV taper")                                                    \
-    X(SETTINGS_TEST_BATTERY_CHG_TOPOFF, "Top-off", "Top-off")                                                  \
-    X(SETTINGS_TEST_BATTERY_EN_ON, "开", "On")                                                                 \
-    X(SETTINGS_TEST_BATTERY_EN_OFF, "关", "Off")                                                               \
-    X(SETTINGS_TEST_BATTERY_VBUS_NONE, "无输入", "No input")                                                   \
+    X(SETTINGS_TEST_BATTERY_CHIP_CHG, "Chip sạc", "Chip charge")                                               \
+    X(SETTINGS_TEST_BATTERY_CHG_EN, "Cho phép sạc", "Charge enable")                                               \
+    X(SETTINGS_TEST_BATTERY_ICHG, "Dòng sạc", "Charge current")                                                \
+    X(SETTINGS_TEST_BATTERY_VREG, "Điện áp sạc", "Charge voltage")                                                \
+    X(SETTINGS_TEST_BATTERY_MATCH, "Nhất quán", "Consistency")                                                    \
+    X(SETTINGS_TEST_BATTERY_CHG_NOT, "Không sạc / đã đầy", "Not charging / full")                                     \
+    X(SETTINGS_TEST_BATTERY_CHG_CC, "Nhỏ giọt/trước/CC", "Trickle/pre/CC")                                          \
+    X(SETTINGS_TEST_BATTERY_CHG_CV, "Giảm dòng CV", "CV taper")                                                    \
+    X(SETTINGS_TEST_BATTERY_CHG_TOPOFF, "Sạc bù", "Top-off")                                                  \
+    X(SETTINGS_TEST_BATTERY_EN_ON, "Bật", "On")                                                                 \
+    X(SETTINGS_TEST_BATTERY_EN_OFF, "Tắt", "Off")                                                               \
+    X(SETTINGS_TEST_BATTERY_VBUS_NONE, "Không có nguồn vào", "No input")                                                   \
     X(SETTINGS_TEST_BATTERY_VBUS_SDP, "USB SDP", "USB SDP")                                                    \
     X(SETTINGS_TEST_BATTERY_VBUS_CDP, "USB CDP", "USB CDP")                                                    \
     X(SETTINGS_TEST_BATTERY_VBUS_DCP, "USB DCP", "USB DCP")                                                    \
-    X(SETTINGS_TEST_BATTERY_VBUS_UNK_ADP, "未知适配器", "Unknown adapter")                                     \
-    X(SETTINGS_TEST_BATTERY_VBUS_NONSTD, "非标适配器", "Non-std adapter")                                      \
+    X(SETTINGS_TEST_BATTERY_VBUS_UNK_ADP, "Bộ sạc không rõ", "Unknown adapter")                                     \
+    X(SETTINGS_TEST_BATTERY_VBUS_NONSTD, "Bộ sạc không chuẩn", "Non-std adapter")                                      \
     X(SETTINGS_TEST_BATTERY_VBUS_OTG, "OTG", "OTG")                                                            \
-    X(SETTINGS_TEST_BATTERY_VBUS_ADP, "适配器", "Adapter")                                                     \
-    X(SETTINGS_TEST_BATTERY_VBUS_UNKNOWN_IN, "有输入(未识别)", "Input (unknown)")                              \
-    X(SETTINGS_TEST_BATTERY_MATCH_OK, "一致", "Match")                                                         \
-    X(SETTINGS_TEST_BATTERY_MATCH_DPDM, "一致(DPDM关)", "Match (DPDM off)")                                    \
-    X(SETTINGS_TEST_BATTERY_MISMATCH_CHIP, "芯片在充/表计否", "Chip chg / gauge no")                           \
-    X(SETTINGS_TEST_BATTERY_MISMATCH_GAUGE, "表计在充/芯片否", "Gauge chg / chip no")                          \
-    X(SETTINGS_TEST_BATTERY_MISMATCH_NO_CHG, "有输入未在充", "Input, not charging")                            \
-    X(SETTINGS_TEST_BATTERY_MISMATCH_NO_IN, "无输入却在充?", "No input but charging?")                         \
-    X(SETTINGS_TEST_AGING_NO_WALLPAPER, "暂无壁纸", "No wallpaper") \
-    X(SETTINGS_TEST_AGING_SD_NOT_READY, "SD 卡尚未挂载", "SD card not mounted.") \
-    X(SETTINGS_TEST_AGING_SD_INIT_TIMEOUT, "SD 卡初始化超时，请检查插卡及接触", "SD init timed out. Check card and contacts.") \
-    X(SETTINGS_TEST_AGING_SD_MOUNT_FAILED, "SD 卡挂载失败，请检查文件系统", "SD mount failed. Check the file system.") \
-    X(SETTINGS_TEST_AGING_SD_INIT_MEMORY, "SD 卡初始化内存不足，请重启设备", "Not enough memory to initialize SD. Restart.") \
-    X(SETTINGS_TEST_AGING_SD_INIT_FAILED, "SD 卡初始化失败，请检查卡片", "SD initialization failed. Check the card.") \
-    X(SETTINGS_TEST_AGING_SD_USB, "SD 卡正由电脑占用，请关闭虚拟 U 盘", "SD in use by PC. Turn off USB drive mode.") \
-    X(SETTINGS_TEST_AGING_SD_BUSY, "SD 卡访问暂不可用，稍后重试", "SD access unavailable. Retrying.") \
-    X(SETTINGS_TEST_AGING_SD_DIR_MISSING, "壁纸文件夹不存在，请检查 SD 卡", "Wallpaper folder missing. Check SD card.") \
-    X(SETTINGS_TEST_AGING_SD_DIR_OPEN, "壁纸文件夹打开失败，请检查 SD 卡", "Cannot open wallpaper folder. Check SD card.") \
-    X(SETTINGS_TEST_AGING_SD_DIR_READ, "壁纸文件夹读取失败，请检查 SD 卡", "Cannot read wallpaper folder. Check SD card.") \
-    X(SETTINGS_TEST_AGING_SD_FILE_STAT, "壁纸文件信息读取失败，请检查 SD 卡", "Cannot read file info. Check SD card.") \
-    X(SETTINGS_TEST_AGING_SD_FILE_READ, "壁纸文件读取失败，请检查 SD 卡", "Cannot read wallpaper file. Check SD card.") \
-    X(SETTINGS_TEST_AGING_SD_IMAGE_INVALID, "壁纸损坏或不完整，请更换图片", "Image damaged or incomplete. Replace wallpaper.") \
-    X(SETTINGS_TEST_AGING_SD_IMAGE_UNSUPPORTED, "壁纸格式或尺寸不支持，请更换图片", "Format or size unsupported. Replace wallpaper.") \
-    X(SETTINGS_TEST_AGING_SD_DECODE, "壁纸解码失败，请更换图片后重试", "Cannot decode wallpaper. Replace image, retry.") \
-    X(SETTINGS_TEST_AGING_SD_MEMORY, "壁纸解码内存不足，稍后重试", "Not enough memory to decode. Retrying.") \
-    X(SETTINGS_TEST_AGING_SD_TASK, "壁纸读取任务创建失败，稍后重试", "Cannot start wallpaper read task. Retrying.") \
-    X(SETTINGS_TEST_AGING_RESTART_COUNT_FMT, "重启次数：%d", "Restarts: %d") \
-    X(SETTINGS_TEST_AGING_SAVE_FAILED, "老化状态保存失败，正在重试", "Cannot save aging state. Retrying.") \
-    X(SETTINGS_TEST_AGING_RUNNING, "老化测试中（震动循环）", "Aging in progress")                              \
-    X(SETTINGS_TEST_AGING_TICK_FMT, "运行 %u s  震=%d", "Running %u s  vibe=%d")                               \
-    X(STANDBY, "待命", "Standby")                                                                              \
-    X(CONNECTING, "连接中...", "Connecting...")                                                                \
-    X(LISTENING, "聆听中...", "Listening...")                                                                  \
-    X(SPEAKING, "回答中...", "Speaking...")                                                                    \
-    X(PLEASE_WAIT, "请稍候...", "Please wait...")                                                              \
-    X(LOADING_PROTOCOL, "登录服务...", "Logging in...")                                                        \
-    X(VOICE_STARTING_NET, "正在联网启动，完成后自动开始", "Connecting; will start automatically")           \
-    X(SERVER_NOT_CONNECTED, "无法连接服务，请稍后再试", "Unable to connect to service")                      \
-    X(WIFI_CONFIG_MODE, "配网模式", "Wi-Fi Setup")                                                             \
-    X(NEED_WIFI_CFG, "请先完成配网", "Set up Wi-Fi first")                                                     \
-    X(VERSION, "版本 ", "Ver ")                                                                                \
-    X(FOUND_NEW_ASSETS, "发现新资源: %s", "Found new assets: %s")                                              \
-    X(LOADING_ASSETS, "加载资源...", "Loading assets...")                                                      \
-    X(ERROR, "错误", "Error")                                                                                  \
-    X(DOWNLOAD_ASSETS_FAILED, "下载资源失败", "Failed to download assets")                                     \
-    X(CHECKING_NEW_VERSION, "检查新版本...", "Checking for new version...")                                    \
-    X(CHECK_NEW_VERSION_FAILED, "检查新版本失败，将在 %d 秒后重试: %s", "Check version failed, retry in %d s: %s") \
-    X(ACTIVATION, "激活设备", "Activation")                                                                    \
-    X(ACTIVATION_CODE_FMT, "验证码:%s", "Code:%s")                                                             \
-    X(OTA_UPGRADE, "OTA 升级", "OTA Upgrade")                                                                  \
-    X(UPGRADING, "正在升级系统...", "System is upgrading...")                                                  \
-    X(UPGRADE_FAILED, "升级失败", "Upgrade failed")                                                            \
-    X(OTA_SUCCESS_REBOOT, "升级成功，即将重启", "Upgrade OK, rebooting")                                       \
-    X(OTA_MANUAL, "手动升级", "Manual upgrade")                                                                \
-    X(RTC_MODE_OFF, "AEC 关闭", "AEC Off")                                                                     \
-    X(RTC_MODE_ON, "AEC 开启", "AEC On")                                                                       \
-    X(SERVER_ERROR, "服务错误", "Server error")                                                                \
-    X(SERVER_TIMEOUT, "服务超时", "Server timeout")                                                            \
-    X(OTA_TITLE, "系统升级", "System upgrade")                                                                 \
-    X(OTA_CUR_VER_FMT, "当前版本: %s", "Current: %s")                                                          \
-    X(OTA_NEW_VER_FMT, "新版本: %s", "New: %s")                                                                \
-    X(OTA_HINT, "升级过程请勿断电", "Do not power off during upgrade")                                         \
-    X(OTA_CONFIRM_FMT, "发现新版本 %s\n是否升级？", "New version %s\nUpgrade?")                                 \
-    X(OTA_SD_CONFIRM_FMT, "SD 固件升级\n当前 %s\n是否升级？", "SD firmware\nCurrent %s\nUpgrade?")              \
-    X(OTA_UPGRADE_NOW, "立即升级", "Upgrade now")                                                              \
-    X(OTA_IGNORE_VERSION, "忽略此版本", "Ignore version")                                                      \
-    X(OTA_REMIND_LATER, "稍后提醒", "Remind later")                                                            \
-    X(COMMON_CANCEL, "取消", "Cancel")                                                                         \
-    X(COMMON_REMOVE, "移除", "Remove")                                                                         \
-    X(COMMON_SELECT_ALL, "全选", "Select all")                                                                 \
-    X(TASK_API_ERROR, "接口返回错误", "API error")                                                             \
-    X(TASK_BATCH_COMPLETING, "批量完成中...", "Batch completing...")                                           \
-    X(TASK_BATCH_FAIL, "批量操作失败", "Batch failed")                                                         \
-    X(TASK_BATCH_REMOVING, "批量移除中...", "Batch removing...")                                               \
-    X(TASK_BATCH_RESULT_FMT, "成功 %d，失败 %d", "%d ok, %d failed")                                            \
-    X(TASK_BATCH_START_FAIL, "批量任务启动失败", "Failed to start batch")                                      \
-    X(TASK_CHOOSE_ACTION, "选择操作", "Choose action")                                                         \
-    X(TASK_COMPLETE, "完成", "Done")                                                                           \
-    X(TASK_COMPLETED, "已完成", "Completed")                                                                   \
-    X(TASK_COMPLETED_N_FMT, "已完成 %d 项", "Completed %d")                                                    \
-    X(TASK_COMPLETE_FAIL, "完成失败", "Complete failed")                                                       \
-    X(TASK_COMPLETE_START_FAIL, "完成任务启动失败", "Failed to start complete")                                \
-    X(TASK_COMPLETE_TODO, "完成待办", "Complete")                                                              \
-    X(TASK_COMPLETING, "完成中...", "Completing...")                                                           \
-    X(TASK_CONNECTING_NET, "正在联网…", "Connecting…")                                                         \
-    X(TASK_CONN_FAIL, "创建连接失败", "Connection failed")                                                     \
-    X(TASK_DATA_FORMAT_ERR, "数据格式错误", "Bad data format")                                                 \
-    X(TASK_DELETED, "已删除", "Deleted")                                                                       \
-    X(TASK_DELETE_FAIL, "删除失败", "Delete failed")                                                           \
-    X(TASK_DELETE_START_FAIL, "删除任务启动失败", "Failed to start delete")                                    \
-    X(TASK_DELETE_TODO, "删除待办", "Delete")                                                                  \
-    X(TASK_DELETING, "删除中...", "Deleting...")                                                               \
-    X(TASK_DONE_OK, "任务已完成", "Task completed")                                                            \
-    X(TASK_EMPTY_DONE, "暂无已完成任务", "No completed tasks")                                                 \
-    X(TASK_EMPTY_TODO, "暂无待办", "No todos")                                                                 \
-    X(TASK_INVALID, "无效待办", "Invalid todo")                                                                \
-    X(TASK_LOAD_FAIL, "加载失败", "Load failed")                                                               \
-    X(TASK_NEED_WIFI_CFG, "请先完成配网", "Set up Wi-Fi first")                                                 \
-    X(TASK_NET_NOT_READY, "网络未就绪", "Network not ready")                                                   \
-    X(TASK_NO_COMPLETABLE, "没有可完成的待办", "Nothing to complete")                                          \
-    X(TASK_NO_NETWORK, "无网络", "No network")                                                                 \
-    X(TASK_PARSE_FAIL, "响应解析失败", "Response parse failed")                                                \
-    X(TASK_PLEASE_WAIT, "请稍候...", "Please wait...")                                                         \
-    X(TASK_REFRESH, "刷新", "Refresh")                                                                         \
-    X(TASK_REFRESHED, "已刷新", "Refreshed")                                                                   \
-    X(TASK_REFRESHING, "刷新中...", "Refreshing...")                                                           \
-    X(TASK_REFRESH_START_FAIL, "刷新启动失败", "Failed to start refresh")                                      \
-    X(TASK_REMOVED_N_FMT, "已移除 %d 项", "Removed %d")                                                        \
-    X(TASK_REQUEST_FAIL, "请求失败", "Request failed")                                                         \
-    X(TASK_SELECTED_FMT, "已选 %d", "Selected %d")                                                             \
-    X(TASK_SELECT_FIRST, "请先选择", "Select items first")                                                     \
-    X(TASK_TAB_DONE, "已完成", "Done")                                                                         \
-    X(TASK_TAB_TODO, "待办", "Todo")                                                                           \
-    X(TASK_TITLE_DONE, "已完成", "Done")                                                                       \
-    X(TASK_TITLE_TODO, "待办事项", "Schedule")                                                                 \
-    X(CONNECT_TO, "连接 ", "Connect ")                                                                         \
-    X(CONNECTED_TO, "已连接 ", "Connected ")                                                                   \
-    X(SETTINGS_NET_WIFI_CFG_TITLE, "WiFi 网络", "Wi-Fi network")                                               \
-    X(SETTINGS_NET_WIFI_CFG_HINT, "扫描附近 WiFi，选择后输入密码", "Scan nearby Wi-Fi and enter the password") \
-    X(SETTINGS_NET_ENTER_CFG, "配置 WIFI 网络", "Configure Wi-Fi")                                             \
-    X(SETTINGS_NET_REBOOT_COUNT_FMT, "%s\n%d 秒后重启…", "%s\nRebooting in %d s…")                             \
-    X(SETTINGS_NET_REBOOTING, "正在重启…", "Rebooting…")                                                       \
-    X(NETWORK_TITLE, "配置 WIFI", "Configure Wi-Fi")                                                           \
-    X(NETWORK_TAB_NEARBY, "附近", "Nearby")                                                                    \
-    X(NETWORK_TAB_SAVED, "已保存", "Saved")                                                                    \
-    X(NETWORK_SCAN, "刷新", "Refresh")                                                                         \
-    X(NETWORK_SCANNING, "正在扫描附近 WiFi…", "Scanning nearby Wi-Fi…")                                        \
-    X(NETWORK_WIFI_INIT, "正在初始化 WiFi…", "Initializing Wi-Fi…")                                            \
-    X(NETWORK_WIFI_INIT_FAIL, "WiFi 初始化失败", "Wi-Fi init failed")                                          \
-    X(NETWORK_SCAN_FAIL, "启动扫描失败", "Failed to start scan")                                               \
-    X(NETWORK_SCAN_TIMEOUT, "扫描超时", "Scan timed out")                                                      \
-    X(NETWORK_SCAN_DONE_FMT, "扫描完成，共 %d 个网络", "Scan done, %d networks")                               \
-    X(NETWORK_SCAN_TASK_FAIL, "无法启动扫描任务", "Cannot start scan task")                                    \
-    X(NETWORK_BUSY_CONNECT, "正在连接，请稍后再扫描", "Connecting; scan later")                                \
-    X(NETWORK_NEARBY_EMPTY, "未发现网络，点「刷新」重试", "No networks. Tap Refresh to retry")                  \
-    X(NETWORK_SAVED_EMPTY, "暂无已保存的 WiFi", "No saved Wi-Fi yet")                                           \
-    X(NETWORK_AUTH_OPEN, "[开放]", "[Open]")                                                                   \
-    X(NETWORK_AUTH_SECURE, "[加密]", "[Secured]")                                                              \
-    X(NETWORK_CONNECT_TO_FMT, "连接到：%s", "Connect to: %s")                                                  \
-    X(NETWORK_PWD_HINT, "请输入 WiFi 密码（8~63 字符）", "Enter Wi-Fi password (8–63 chars)")                   \
-    X(NETWORK_PWD_PLACEHOLDER, "WiFi 密码", "Wi-Fi password")                                                  \
-    X(NETWORK_SHOW_PWD, "显示密码", "Show password")                                                           \
-    X(NETWORK_CANCEL, "取消", "Cancel")                                                                        \
-    X(NETWORK_CONNECT, "连接", "Connect")                                                                      \
-    X(NETWORK_CONNECTING_FMT, "正在连接 %s …", "Connecting to %s …")                                           \
-    X(NETWORK_CONNECTED_FMT, "已连接 %s", "Connected to %s")                                                   \
-    X(NETWORK_CONNECT_FAIL, "连接失败", "Connection failed")                                                   \
-    X(NETWORK_CONNECT_FAIL_REFRESH, "请重新刷新 WiFi 列表", "Please refresh the Wi-Fi list")                   \
-    X(NETWORK_CONNECT_TIMEOUT, "连接超时", "Connection timed out")                                             \
-    X(NETWORK_CONNECT_TIMEOUT_HINT, "未能在 15 秒内完成连接，请重试", "Could not connect within 15s; retry")   \
-    X(NETWORK_CONNECT_TASK_FAIL, "无法启动连接任务", "Cannot start connect task")                              \
-    X(NETWORK_SSID_INVALID, "SSID 不合法", "Invalid SSID")                                                     \
-    X(NETWORK_PWD_TOO_LONG, "密码超长", "Password too long")                                                   \
-    X(NETWORK_ERR_BAD_PASSWORD, "密码错误，请重新输入", "Wrong password; try again")                           \
-    X(NETWORK_ERR_AP_GONE, "未找到该 WiFi（信号丢失）", "Wi-Fi not found (signal lost)")                       \
-    X(NETWORK_ERR_ASSOC, "关联失败，路由器拒绝连接", "Association failed; AP rejected")                        \
-    X(NETWORK_ERR_WEAK, "信号太弱，连接超时", "Signal too weak; timed out")                                    \
-    X(NETWORK_ERR_REASON_FMT, "连接被拒绝 (reason=%u)", "Rejected (reason=%u)")                                \
-    X(NETWORK_DEFAULT_FMT, "%s（默认）", "%s (default)")                                                       \
-    X(NETWORK_SET_DEFAULT, "置顶", "Default")                                                                  \
-    X(NETWORK_DELETE, "删除", "Delete")                                                                        \
-    X(NETWORK_CLEAR_ALL, "清空", "Clear")                                                                      \
-    X(NETWORK_SET_DEFAULT_OK, "已设为默认网络", "Set as default network")                                      \
-    X(NETWORK_DELETED_OK, "已删除该网络", "Network deleted")                                                   \
-    X(NETWORK_CLEARED_OK, "已清空已保存网络", "Cleared saved networks")                                        \
-    X(SCANNING, "扫描中...", "Scanning...")                                                                    \
-    X(SCANNING_WIFI, "扫描 WiFi...", "Scanning Wi-Fi...")                                                      \
-    X(WIFI_STATUS_SCANNING, "WiFi扫描中", "WiFi scanning")                                                     \
-    X(WIFI_STATUS_CONNECTING, "WiFi连接中", "WiFi connecting")                                                 \
-    X(VOLUME, "音量 ", "Volume ")                                                                              \
-    X(MAX_VOLUME, "最大音量", "Max volume")                                                                    \
-    X(MUTED, "已静音", "Muted")                                                                    \
-    X(BOOK_ANTIALIAS, "抗锯齿", "Anti-aliasing") \
-    X(BOOK_BAD_ARG, "参数错误", "Invalid argument") \
-    X(BOOK_BLANK, "（空白）", "(Blank)") \
-    X(BOOK_BODY, "正文", "Body") \
-    X(BOOK_CANCELLED, "已取消", "Cancelled") \
-    X(BOOK_CHAPTER_FMT, "第%d章", "Ch.%d") \
-    X(BOOK_CHAPTER_NO_TEXT, "（本章无文本）", "(No text in chapter)") \
-    X(BOOK_CHAPTER_PROGRESS, "底栏信息", "Footer info") \
-    X(BOOK_CHECKSUM_FAIL, "校验失败", "Checksum failed") \
-    X(BOOK_CONN_FAIL, "创建连接失败", "Connection failed") \
-    X(BOOK_CONTINUE, "继续阅读", "Continue") \
-    X(BOOK_COUNT_FMT, "%d本", "%d") \
-    X(BOOK_COVER_TOO_LARGE, "封面过大", "Cover too large") \
-    X(BOOK_DELETE_FAILED, "删除失败", "Delete failed") \
-    X(BOOK_DETAIL, "详情", "Details") \
-    X(BOOK_DOWNLOAD_FAIL, "下载失败", "Download failed") \
-    X(BOOK_EMPTY_COVER, "空封面", "Empty cover") \
-    X(BOOK_EMPTY_FILE, "空文件", "Empty file") \
-    X(BOOK_EMPTY_HOME_FMT, "暂无书籍\n请将 .epub / .txt / .ebook\n放到 %s", "No books\nPut .epub / .txt / .ebook\nin %s") \
-    X(BOOK_EMPTY_SHELF_FMT, "书架为空\n请将 .epub / .txt / .ebook\n放到 %s", "Bookshelf empty\nPut .epub / .txt / .ebook\nin %s") \
-    X(BOOK_FILE_TOO_LARGE, "文件过大", "File too large") \
-    X(BOOK_FINISHED, "已看完", "Finished") \
-    X(BOOK_FONT_EMPTY, "无可用字体", "No fonts") \
-    X(BOOK_FONT_NAME_INVALID, "文件名无效", "Invalid filename") \
-    X(BOOK_FONT_TITLE, "字体", "Font") \
-    X(BOOK_FOOTER_BATTERY, "电量", "Battery") \
-    X(BOOK_FOOTER_PROGRESS, "进度", "Progress") \
-    X(BOOK_FOOTER_TIME, "时间", "Time") \
-    X(BOOK_FOOTER_TITLE, "章节名", "Chapter") \
-    X(BOOK_IMAGE_PLACEHOLDER, "[图片]", "[Image]") \
-    X(BOOK_LAYOUT_BUSY, "编排中", "Building") \
-    X(BOOK_LAYOUT_DONE, "完成", "Done") \
-    X(BOOK_LINE_GAP, "行距", "Line spacing") \
-    X(BOOK_MARGIN_TOP, "上", "Top") \
-    X(BOOK_MARGIN_BOTTOM, "下", "Bottom") \
-    X(BOOK_MARGIN_LEFT, "左", "Left") \
-    X(BOOK_MARGIN_RIGHT, "右", "Right") \
-    X(BOOK_MARGIN_SIDES, "左右", "Sides") \
-    X(BOOK_MARGIN, "边距", "Margin") \
-    X(BOOK_MARGIN_NARROW, "窄", "Narrow") \
-    X(BOOK_MARGIN_STANDARD, "标准", "Standard") \
-    X(BOOK_MARGIN_VERY_WIDE, "很宽", "Very wide") \
-    X(BOOK_MARGIN_WIDE, "宽", "Wide") \
-    X(BOOK_ALIGNMENT, "对齐", "Alignment") \
-    X(BOOK_ALIGN_JUSTIFY, "两端对齐", "Justified") \
-    X(BOOK_ALIGN_LEFT, "左对齐", "Left") \
-    X(BOOK_NET_NOT_READY, "网络未就绪", "Network not ready") \
-    X(BOOK_NO_CONTINUE, "暂无可续", "Nothing to continue") \
-    X(BOOK_NO_COVER_URL, "无封面地址", "No cover URL") \
-    X(BOOK_NO_DOWNLOAD_URL, "缺少下载地址", "Missing download URL") \
-    X(BOOK_NO_LOCAL_FILE, "无本地文件", "No local file") \
-    X(BOOK_NO_NETWORK, "无网络", "No network") \
-    X(BOOK_NO_RECENT, "暂无最近阅读", "No recent books") \
-    X(BOOK_NO_SD, "未检测到 SD 卡\n请插入后重试", "No SD card\nInsert and retry") \
-    X(BOOK_NO_SD_SHORT, "未检测到 SD 卡", "No SD card") \
-    X(BOOK_OPEN_FAILED, "打开失败", "Open failed") \
-    X(BOOK_OPEN_FAILED_IO, "打开失败\n文件不存在或 SD 读取失败", "Open failed\nFile missing or SD read failed") \
-    X(BOOK_OPEN_FAILED_DATA, "打开失败\n书籍损坏或正文格式无效", "Open failed\nDamaged book or invalid content") \
-    X(BOOK_OPEN_FAILED_MEMORY, "打开失败\n可用内存不足", "Open failed\nNot enough memory") \
-    X(BOOK_OPEN_FAILED_CACHE, "打开失败\n无法创建或读取阅读缓存，请检查存储卡和剩余空间", "Open failed\nCannot create or read the cache. Check the SD card and free space") \
-    X(BOOK_OPEN_FAILED_UNSUPPORTED, "打开失败\n暂不支持此书籍格式或文件参数", "Open failed\nUnsupported book format or file parameters") \
-    X(BOOK_OPEN_CANCELLED, "已取消打开", "Opening cancelled") \
-    X(BOOK_OPEN_FAILED_TASK, "打开失败\n无法启动解析任务", "Open failed\nCannot start parse task") \
-    X(BOOK_OPENING, "正在打开", "Opening") \
-    X(DIRECTORY_READ_FAILED, "目录读取失败，请重新打开", "Cannot read folder. Please reopen it.") \
-    X(BOOK_FOLDER, "文件夹", "Folder") \
-    X(BOOK_LOADING, "加载中...", "Loading...") \
-    X(BOOK_ORIENT, "屏幕方向", "Orientation") \
-    X(BOOK_ORIENT_LAND_LEFT, "左横", "Left") \
-    X(BOOK_ORIENT_LAND_RIGHT, "右横", "Right") \
-    X(BOOK_ORIENT_PORTRAIT, "竖屏", "Port.") \
-    X(BOOK_OUT_OF_MEMORY, "内存不足", "Out of memory") \
-    X(BOOK_PAGE_LOAD_FAILED, "无法加载页面", "Cannot load page") \
-    X(BOOK_PATH_INVALID, "路径无效", "Invalid path") \
-    X(BOOK_READ_DURATION, "阅读时长", "Total time") \
-    X(BOOK_READ_FAIL, "读取失败", "Read failed") \
-    X(BOOK_READ_FILE_FAIL, "（读文件失败）", "(Read failed)") \
-    X(BOOK_READ_PCT_FMT, "已阅读%d.%d%%", "Read %d.%d%%") \
-    X(BOOK_RECENT, "最近阅读", "Recent") \
-    X(BOOK_SAVE_FAIL, "保存失败", "Save failed") \
-    X(BOOK_SELECTED_FMT, "已选 %d", "Selected %d") \
-    X(BOOK_DELETING, "正在移除，请等待操作结束...", "Removing. Please wait for the operation to finish...") \
-    X(BOOK_DELETE_STOPPING, "正在停止，请等待当前文件清理完成...", "Stopping. Please wait for the current file cleanup to finish...") \
-    X(BOOK_SHELF_TITLE, "我的书架", "My bookshelf") \
-    X(BOOK_SPACING_COMPACT, "紧凑", "Compact") \
-    X(BOOK_SPACING_RELAXED, "宽松", "Relaxed") \
-    X(BOOK_SPACING_STANDARD, "标准", "Standard") \
-    X(BOOK_SPACING_VERY_RELAXED, "很宽松", "Very relaxed") \
-    X(BOOK_START, "开始阅读", "Start reading") \
-    X(BOOK_STORAGE_UNAVAIL, "存储目录不可用", "Storage unavailable") \
-    X(BOOK_SYNC_EMPTY_BODY, "空请求体", "Empty request body") \
-    X(BOOK_TAP_ZONE_BACK, "返回", "Back") \
-    X(BOOK_TAP_ZONE_FULL_REFRESH, "全刷一次", "Full refresh") \
-    X(BOOK_TAP_ZONE_MENU, "菜单", "Menu") \
-    X(BOOK_TAP_ZONE_NEXT, "下一页", "Next") \
-    X(BOOK_TAP_ZONE_NONE, "无", "None") \
-    X(BOOK_TAP_ZONE_PREV, "上一页", "Prev") \
-    X(BOOK_TAP_ZONES, "触摸分区", "Tap zones") \
-    X(BOOK_TAP_ZONES_PICK, "选择动作", "Choose action") \
-    X(BOOK_TAP_ZONES_RESET, "恢复默认", "Reset") \
-    X(BOOK_TAP_ZONES_TITLE, "触摸分区", "Tap zones") \
-    X(BOOK_TOC, "目录", "Contents") \
-    X(BOOK_TOC_BUILDING, "目录识别中…", "Finding contents...") \
-    X(BOOK_TOC_HOME, "首页", "Home") \
-    X(BOOK_TOC_EMPTY, "暂无目录", "No contents") \
-    X(BOOK_TOC_PAGE_FMT, "目录 %d/%d", "Contents %d/%d") \
-    X(BOOK_TODAY_DURATION, "今日时长", "Today") \
-    X(BOOK_UNDERLINE, "下划线", "Underline") \
-    X(BOOK_UNDERLINE_DASHED, "虚线", "Dashed") \
-    X(BOOK_UNDERLINE_SOLID, "实线", "Solid") \
-    X(BOOK_WRITE_FAIL, "写文件失败", "Write failed") \
-    X(CLOUD_API_ERROR, "接口返回错误", "API error") \
-    X(CLOUD_CANCELLED, "已取消", "Cancelled") \
-    X(CLOUD_CANCELLING, "正在取消…", "Cancelling…") \
-    X(CLOUD_CONN_FAIL, "创建连接失败", "Connection failed") \
-    X(CLOUD_CONNECT_NET, "连接网络…", "Connecting…") \
-    X(CLOUD_CONNECTING_NET, "正在联网…", "Connecting…") \
-    X(CLOUD_COVER_FAIL, "封面加载失败", "Cover load failed") \
-    X(CLOUD_DATA_FORMAT_ERR, "数据格式错误", "Bad data format") \
-    X(CLOUD_DECODE_FAIL, "解码失败", "Decode failed") \
-    X(CLOUD_DELETE_FAIL, "删除失败", "Delete failed") \
-    X(CLOUD_DOWNLOAD_FAIL, "下载失败", "Download failed") \
-    X(CLOUD_DOWNLOADING, "正在下载", "Downloading") \
-    X(CLOUD_EMPTY_ALL, "暂无待传输资源", "Nothing to transfer") \
-    X(CLOUD_EMPTY_BOOK, "暂无书籍", "No books") \
-    X(CLOUD_EMPTY_FONT, "暂无字体", "No fonts") \
-    X(CLOUD_EMPTY_WALLPAPER, "暂无壁纸", "No Walls") \
-    X(CLOUD_FETCHING_LIST, "正在拉取列表…", "Fetching list…") \
-    X(CLOUD_FILE_INVALID, "文件无效", "Invalid file") \
-    X(CLOUD_IN_QUEUE, "已在队列中", "Already queued") \
-    X(CLOUD_JSON_CREATE_FAIL, "JSON 创建失败", "JSON create failed") \
-    X(CLOUD_JSON_PARSE_FAIL, "JSON 解析失败", "JSON parse failed") \
-    X(CLOUD_JSON_SERIALIZE_FAIL, "JSON 序列化失败", "JSON serialize failed") \
-    X(CLOUD_LIST_TOO_LARGE, "列表过大", "List too large") \
-    X(CLOUD_LOAD_COVER, "加载封面…", "Loading covers…") \
-    X(CLOUD_LOAD_FAIL, "加载失败", "Load failed") \
-    X(CLOUD_LOADING, "加载中…", "Loading…") \
-    X(CLOUD_MISSING_TASK_ID, "缺少 taskId", "Missing taskId") \
-    X(CLOUD_NEED_WIFI_CFG, "请先完成配网", "Set up Wi-Fi first") \
-    X(CLOUD_NET_NOT_READY, "网络未就绪", "Network not ready") \
-    X(CLOUD_NO_COVER, "暂无封面", "No cover") \
-    X(CLOUD_NO_DOWNLOAD_URL, "缺少下载地址", "Missing download URL") \
-    X(CLOUD_NO_LOCAL_FILE, "无本地文件", "No local file") \
-    X(CLOUD_NO_NETWORK, "无网络", "No network") \
-    X(CLOUD_NO_SD, "未检测到 SD 卡", "No SD card") \
-    X(CLOUD_PATH_INVALID, "路径无效", "Invalid path") \
-    X(CLOUD_PENDING, "待接收", "Incoming") \
-    X(CLOUD_PLEASE_WAIT, "请稍候", "Please wait") \
-    X(CLOUD_PREVIEW_FAIL, "无法预览", "Cannot preview") \
-    X(CLOUD_PREVIEW_START_FAIL, "预览启动失败", "Failed to start preview") \
-    X(CLOUD_PREVIEW_URL_LONG, "预览地址过长", "Preview URL too long") \
-    X(CLOUD_READ_TIMEOUT, "读取超时或中断", "Read timeout or interrupted") \
-    X(CLOUD_REFRESH, "刷新", "Refresh") \
-    X(CLOUD_REFRESHED, "已刷新", "Refreshed") \
-    X(CLOUD_REFRESHING, "刷新中…", "Refreshing…") \
-    X(CLOUD_REQUEST_FAIL, "请求失败", "Request failed") \
-    X(CLOUD_FETCH_FAIL, "获取推送内容失败，请检查网络后重试", "Failed to fetch incoming content. Check your network and try again.") \
-    X(CLOUD_SAVE, "保存", "Save") \
-    X(CLOUD_FILE_EXISTS, "此位置已有同名文件", "A file with this name already exists") \
-    X(CLOUD_CONFLICT_FMT, "此位置已有同名文件\n%s\n请选择保存方式", "File already exists\n%s\nChoose how to save") \
-    X(CLOUD_KEEP_BOTH, "保留两份", "Keep both") \
-    X(CLOUD_SKIP_FILE, "跳过此文件", "Skip file") \
-    X(CLOUD_REPLACE_FILE, "覆盖原文件", "Replace file") \
-    X(CLOUD_SAVE_FAIL, "保存失败", "Save failed") \
-    X(CLOUD_SAVE_LOCAL, "保存到本地", "Save to device") \
-    X(CLOUD_SAVED_0_1, "已保存 0 / 共 1", "Saved 0 / 1") \
-    X(CLOUD_SAVED_FMT, "已保存 %d / 共 %d", "Saved %d / %d") \
-    X(CLOUD_SAVED_SYNC_FAIL, "已保存(同步失败)", "Saved (sync failed)") \
-    X(CLOUD_SAVING, "正在保存", "Saving") \
-    X(CLOUD_SAVING_NAME_FMT, "正在保存\n%s", "Saving\n%s") \
-    X(CLOUD_SELECT_FIRST, "请先选择", "Select items first") \
-    X(CLOUD_SELECTED_FMT, "已选 %d", "Selected %d") \
-    X(CLOUD_STORAGE_UNAVAIL, "存储目录不可用", "Storage unavailable") \
-    X(CLOUD_SYNC_FAIL, "同步失败", "Sync failed") \
-    X(CLOUD_TAB_ALL, "全部", "All") \
-    X(CLOUD_TAB_APP, "APP推送", "APP Push") \
-    X(CLOUD_TAB_AP, "AP传输", "Hotspot") \
-    X(CLOUD_TAB_USB, "USB传输", "USB") \
-    X(CLOUD_AP_STEP1, "第一步", "Step 1") \
-    X(CLOUD_AP_JOIN, "用手机或电脑连接到热点或扫码连接", "Join the hotspot, or scan the code") \
-    X(CLOUD_AP_SSID_FMT, "WiFi名称：%s", "Wi-Fi: %s") \
-    X(CLOUD_AP_STEP2, "第二步", "Step 2") \
-    X(CLOUD_AP_OPEN, "用手机或电脑浏览器访问这个地址：", "Open this address in a browser:") \
-    X(CLOUD_AP_HINT, "也可以扫描下方二维码打开地址", "Or scan the code below") \
-    X(CLOUD_AP_OPENING, "AP打开中...", "Starting hotspot...") \
-    X(CLOUD_AP_FAIL, "热点启动失败", "Hotspot failed to start") \
-    X(CLOUD_AP_FAIL_INIT, "WiFi初始化失败", "Wi-Fi init failed") \
-    X(CLOUD_AP_FAIL_START, "热点打开失败", "Hotspot failed to start") \
-    X(CLOUD_AP_FAIL_HTTP, "网页服务启动失败", "Web page failed to start") \
-    X(CLOUD_WIFI_FAIL, "WiFi连接失败", "Wi-Fi connection failed") \
-    X(CLOUD_CELLULAR_NEED_WIFI, "当前为4G联网，请切换到Wi-Fi后重试", "Using 4G. Switch to Wi-Fi and try again.") \
-    X(CLOUD_USB_WAY, "方式一", "Method") \
-    X(CLOUD_TAB_BOOK, "书籍", "Books") \
-    X(CLOUD_TAB_FONT, "字体", "Fonts") \
-    X(CLOUD_TAB_WALLPAPER, "壁纸", "Walls") \
-    X(CLOUD_TASK_FAIL, "任务失败", "Task failed") \
-    X(CLOUD_TYPE_BOOK, "书籍", "Book") \
-    X(CLOUD_TYPE_FONT, "字体", "Font") \
-    X(CLOUD_TYPE_WALLPAPER, "壁纸", "Walls") \
-    X(CLOUD_UNKNOWN_TYPE, "未知类型", "Unknown type") \
-    X(CLOUD_WAIT_DOWNLOAD, "请等待下载任务结束", "Wait for download to finish") \
-    X(COMMON_DELETE, "删除", "Delete") \
-    X(COMMON_EMPTY, "暂无内容", "Empty") \
-    X(COMMON_OFF, "关闭", "Off") \
-    X(COMMON_ON, "开启", "On") \
-    X(STANDBY_CONN_FAIL, "创建连接失败", "Connection failed") \
-    X(STANDBY_DATE_FMT, "%02d月%02d日", "%02d/%02d") \
-    X(STANDBY_DATE_PLACEHOLDER, "--月--日", "--/--") \
-    X(STANDBY_DECODE_FAIL, "解码失败", "Decode failed") \
-    X(STANDBY_EMPTY_TODO, "暂无待办", "No todos") \
-    X(STANDBY_NO_DATA, "无数据", "No data") \
-    X(STANDBY_NO_NETWORK, "无网络", "No network") \
-    X(STANDBY_NO_TODO_CACHE, "暂无清单缓存", "No task cache") \
-    X(STANDBY_NO_WEATHER, "无天气", "No weather") \
-    X(STANDBY_PARSE_FAIL, "解析失败", "Parse failed") \
-    X(STANDBY_REQUEST_FAIL, "请求失败", "Request failed") \
-    X(STANDBY_WEATHER_FAIL, "天气失败", "Weather failed") \
-    X(STANDBY_WP_NOT_FOUND, "未找到待机壁纸", "Standby wallpaper not found") \
-    X(WALLPAPER_ADJUST, "调整", "Adjust") \
-    X(WALLPAPER_CHIP_SHUTDOWN, "关机", "Power-off") \
-    X(WALLPAPER_CHIP_STANDBY, "待机", "Standby") \
-    X(WALLPAPER_DECODE_FAIL, "解码失败", "Decode failed") \
-    X(WALLPAPER_DELETE_BTN, "删除壁纸", "Delete wallpaper") \
-    X(WALLPAPER_DELETE_FAIL, "删除失败", "Delete failed") \
-    X(WALLPAPER_DELETE_START_FAIL, "删除启动失败", "Failed to start delete") \
-    X(WALLPAPER_DELETING, "正在删除…", "Deleting…") \
-    X(WALLPAPER_EMPTY_FMT, "暂无壁纸\n请放到 %s", "No wallpapers\nPlace in %s") \
-    X(WALLPAPER_ENABLE_FAIL, "启用失败", "Enable failed") \
-    X(WALLPAPER_FILE_INVALID, "文件无效", "Invalid file") \
-    X(WALLPAPER_FILE_MISSING, "文件不存在", "File not found") \
-    X(WALLPAPER_LOADING, "加载中…", "Loading…") \
-    X(WALLPAPER_ENTER_LOADING, "壁纸正在加载中...", "Loading wallpaper...") \
-    X(WALLPAPER_MIRROR_H, "镜像", "Mirror") \
-    X(WALLPAPER_NAME_INVALID, "文件名无效", "Invalid filename") \
-    X(WALLPAPER_NO_SD, "未检测到 SD 卡", "No SD card") \
-    X(WALLPAPER_OVERWRITE, "覆盖", "Overwrite") \
-    X(WALLPAPER_PATH_INVALID, "路径无效", "Invalid path") \
-    X(WALLPAPER_PREVIEW_OOM, "内存不足，预览失败", "Out of memory, preview failed") \
-    X(WALLPAPER_ROTATE_LEFT, "左转", "Left") \
-    X(WALLPAPER_ROTATE_RIGHT, "右转", "Right") \
-    X(WALLPAPER_SAVE, "保存", "Save") \
-    X(WALLPAPER_SAVE_AS, "另存为", "Save as") \
-    X(WALLPAPER_SAVE_FAIL, "保存失败", "Save failed") \
-    X(WALLPAPER_SAVING, "正在保存…", "Saving…") \
-    X(WALLPAPER_SELECTED_FMT, "已选 %d", "Selected %d") \
-    X(WALLPAPER_SET_SHUTDOWN, "设为关机", "Set as power-off") \
-    X(WALLPAPER_SET_STANDBY, "设为待机", "Set as standby") \
-    X(WALLPAPER_SET_READING, "设为阅读背景", "Set as reading background") \
-    X(WALLPAPER_READING_ON, "已设为阅读背景", "Reading background selected") \
-    X(WALLPAPER_DISPLAY_MODE, "显示方式", "Display mode") \
-    X(WALLPAPER_DECODE_FAIL_CODE, "解码失败（%u）", "Decode failed (%u)") \
-    X(WALLPAPER_MODE_FULLSCREEN, "全屏壁纸", "Fullscreen wallpaper") \
-    X(WALLPAPER_MODE_OVERLAY, "透明壁纸", "Transparent wallpaper") \
-    X(WALLPAPER_CLEAR_SELECTION, "取消设置", "Clear selection") \
-    X(WALLPAPER_SHUTDOWN_ON, "已设为关机", "Power-off selected") \
-    X(WALLPAPER_STANDBY_ON, "已设为待机", "Standby selected")
+    X(SETTINGS_TEST_BATTERY_VBUS_ADP, "Bộ sạc", "Adapter")                                                     \
+    X(SETTINGS_TEST_BATTERY_VBUS_UNKNOWN_IN, "Nguồn vào (không rõ)", "Input (unknown)")                              \
+    X(SETTINGS_TEST_BATTERY_MATCH_OK, "Khớp", "Match")                                                         \
+    X(SETTINGS_TEST_BATTERY_MATCH_DPDM, "Khớp (DPDM tắt)", "Match (DPDM off)")                                    \
+    X(SETTINGS_TEST_BATTERY_MISMATCH_CHIP, "Chip sạc / bộ đo không", "Chip chg / gauge no")                           \
+    X(SETTINGS_TEST_BATTERY_MISMATCH_GAUGE, "Bộ đo sạc / chip không", "Gauge chg / chip no")                          \
+    X(SETTINGS_TEST_BATTERY_MISMATCH_NO_CHG, "Có nguồn, không sạc", "Input, not charging")                            \
+    X(SETTINGS_TEST_BATTERY_MISMATCH_NO_IN, "Không có nguồn mà đang sạc?", "No input but charging?")                         \
+    X(SETTINGS_TEST_AGING_NO_WALLPAPER, "Không có hình nền", "No wallpaper") \
+    X(SETTINGS_TEST_AGING_SD_NOT_READY, "Chưa gắn thẻ SD.", "SD card not mounted.") \
+    X(SETTINGS_TEST_AGING_SD_INIT_TIMEOUT, "Khởi tạo SD quá lâu. Kiểm tra thẻ và tiếp điểm.", "SD init timed out. Check card and contacts.") \
+    X(SETTINGS_TEST_AGING_SD_MOUNT_FAILED, "Gắn SD thất bại. Kiểm tra hệ thống tệp.", "SD mount failed. Check the file system.") \
+    X(SETTINGS_TEST_AGING_SD_INIT_MEMORY, "Không đủ bộ nhớ để khởi tạo SD. Hãy khởi động lại.", "Not enough memory to initialize SD. Restart.") \
+    X(SETTINGS_TEST_AGING_SD_INIT_FAILED, "Khởi tạo SD thất bại. Kiểm tra thẻ.", "SD initialization failed. Check the card.") \
+    X(SETTINGS_TEST_AGING_SD_USB, "Máy tính đang dùng SD. Tắt chế độ ổ USB.", "SD in use by PC. Turn off USB drive mode.") \
+    X(SETTINGS_TEST_AGING_SD_BUSY, "Không truy cập được SD. Đang thử lại.", "SD access unavailable. Retrying.") \
+    X(SETTINGS_TEST_AGING_SD_DIR_MISSING, "Thiếu thư mục hình nền. Kiểm tra thẻ SD.", "Wallpaper folder missing. Check SD card.") \
+    X(SETTINGS_TEST_AGING_SD_DIR_OPEN, "Không mở được thư mục hình nền. Kiểm tra thẻ SD.", "Cannot open wallpaper folder. Check SD card.") \
+    X(SETTINGS_TEST_AGING_SD_DIR_READ, "Không đọc được thư mục hình nền. Kiểm tra thẻ SD.", "Cannot read wallpaper folder. Check SD card.") \
+    X(SETTINGS_TEST_AGING_SD_FILE_STAT, "Không đọc được thông tin tệp. Kiểm tra thẻ SD.", "Cannot read file info. Check SD card.") \
+    X(SETTINGS_TEST_AGING_SD_FILE_READ, "Không đọc được tệp hình nền. Kiểm tra thẻ SD.", "Cannot read wallpaper file. Check SD card.") \
+    X(SETTINGS_TEST_AGING_SD_IMAGE_INVALID, "Ảnh hỏng hoặc thiếu. Hãy thay hình nền.", "Image damaged or incomplete. Replace wallpaper.") \
+    X(SETTINGS_TEST_AGING_SD_IMAGE_UNSUPPORTED, "Định dạng hoặc kích thước không hỗ trợ. Hãy thay hình nền.", "Format or size unsupported. Replace wallpaper.") \
+    X(SETTINGS_TEST_AGING_SD_DECODE, "Không giải mã được hình nền. Thay ảnh rồi thử lại.", "Cannot decode wallpaper. Replace image, retry.") \
+    X(SETTINGS_TEST_AGING_SD_MEMORY, "Không đủ bộ nhớ để giải mã. Đang thử lại.", "Not enough memory to decode. Retrying.") \
+    X(SETTINGS_TEST_AGING_SD_TASK, "Không bắt đầu được tác vụ đọc hình nền. Đang thử lại.", "Cannot start wallpaper read task. Retrying.") \
+    X(SETTINGS_TEST_AGING_RESTART_COUNT_FMT, "Số lần khởi động lại: %d", "Restarts: %d") \
+    X(SETTINGS_TEST_AGING_SAVE_FAILED, "Không lưu được trạng thái lão hóa. Đang thử lại.", "Cannot save aging state. Retrying.") \
+    X(SETTINGS_TEST_AGING_RUNNING, "Đang chạy lão hóa", "Aging in progress")                              \
+    X(SETTINGS_TEST_AGING_TICK_FMT, "Đã chạy %u giây  rung=%d", "Running %u s  vibe=%d")                               \
+    X(STANDBY, "Chờ", "Standby")                                                                              \
+    X(CONNECTING, "Đang kết nối...", "Connecting...")                                                                \
+    X(LISTENING, "Đang nghe...", "Listening...")                                                                  \
+    X(SPEAKING, "Đang nói...", "Speaking...")                                                                    \
+    X(PLEASE_WAIT, "Vui lòng chờ...", "Please wait...")                                                              \
+    X(LOADING_PROTOCOL, "Đang đăng nhập...", "Logging in...")                                                        \
+    X(VOICE_STARTING_NET, "Đang kết nối; sẽ tự bắt đầu", "Connecting; will start automatically")           \
+    X(SERVER_NOT_CONNECTED, "Không kết nối được dịch vụ", "Unable to connect to service")                      \
+    X(WIFI_CONFIG_MODE, "Cài đặt Wi-Fi", "Wi-Fi Setup")                                                             \
+    X(NEED_WIFI_CFG, "Hãy cài đặt Wi-Fi trước", "Set up Wi-Fi first")                                                     \
+    X(VERSION, "Phiên bản ", "Ver ")                                                                                \
+    X(FOUND_NEW_ASSETS, "Có tài nguyên mới: %s", "Found new assets: %s")                                              \
+    X(LOADING_ASSETS, "Đang tải tài nguyên...", "Loading assets...")                                                      \
+    X(ERROR, "Lỗi", "Error")                                                                                  \
+    X(DOWNLOAD_ASSETS_FAILED, "Tải tài nguyên thất bại", "Failed to download assets")                                     \
+    X(CHECKING_NEW_VERSION, "Đang kiểm tra phiên bản mới...", "Checking for new version...")                                    \
+    X(CHECK_NEW_VERSION_FAILED, "Kiểm tra phiên bản thất bại, thử lại sau %d giây: %s", "Check version failed, retry in %d s: %s") \
+    X(ACTIVATION, "Kích hoạt", "Activation")                                                                    \
+    X(ACTIVATION_CODE_FMT, "Mã:%s", "Code:%s")                                                             \
+    X(OTA_UPGRADE, "Nâng cấp OTA", "OTA Upgrade")                                                                  \
+    X(UPGRADING, "Hệ thống đang nâng cấp...", "System is upgrading...")                                                  \
+    X(UPGRADE_FAILED, "Nâng cấp thất bại", "Upgrade failed")                                                            \
+    X(OTA_SUCCESS_REBOOT, "Nâng cấp xong, đang khởi động lại", "Upgrade OK, rebooting")                                       \
+    X(OTA_MANUAL, "Nâng cấp thủ công", "Manual upgrade")                                                                \
+    X(RTC_MODE_OFF, "Tắt AEC", "AEC Off")                                                                     \
+    X(RTC_MODE_ON, "Bật AEC", "AEC On")                                                                       \
+    X(SERVER_ERROR, "Lỗi máy chủ", "Server error")                                                                \
+    X(SERVER_TIMEOUT, "Máy chủ quá thời gian", "Server timeout")                                                            \
+    X(OTA_TITLE, "Nâng cấp hệ thống", "System upgrade")                                                                 \
+    X(OTA_CUR_VER_FMT, "Hiện tại: %s", "Current: %s")                                                          \
+    X(OTA_NEW_VER_FMT, "Mới: %s", "New: %s")                                                                \
+    X(OTA_HINT, "Không tắt nguồn khi đang nâng cấp", "Do not power off during upgrade")                                         \
+    X(OTA_CONFIRM_FMT, "Phiên bản mới %s\nNâng cấp?", "New version %s\nUpgrade?")                                 \
+    X(OTA_SD_CONFIRM_FMT, "Firmware trên SD\nHiện tại %s\nNâng cấp?", "SD firmware\nCurrent %s\nUpgrade?")              \
+    X(OTA_UPGRADE_NOW, "Nâng cấp ngay", "Upgrade now")                                                              \
+    X(OTA_IGNORE_VERSION, "Bỏ qua phiên bản", "Ignore version")                                                      \
+    X(OTA_REMIND_LATER, "Nhắc sau", "Remind later")                                                            \
+    X(COMMON_CANCEL, "Hủy", "Cancel")                                                                         \
+    X(COMMON_REMOVE, "Xóa", "Remove")                                                                         \
+    X(COMMON_SELECT_ALL, "Chọn tất cả", "Select all")                                                                 \
+    X(TASK_API_ERROR, "Lỗi API", "API error")                                                             \
+    X(TASK_BATCH_COMPLETING, "Đang hoàn thành hàng loạt...", "Batch completing...")                                           \
+    X(TASK_BATCH_FAIL, "Xử lý hàng loạt thất bại", "Batch failed")                                                         \
+    X(TASK_BATCH_REMOVING, "Đang xóa hàng loạt...", "Batch removing...")                                               \
+    X(TASK_BATCH_RESULT_FMT, "%d thành công, %d thất bại", "%d ok, %d failed")                                            \
+    X(TASK_BATCH_START_FAIL, "Không bắt đầu được xử lý hàng loạt", "Failed to start batch")                                      \
+    X(TASK_CHOOSE_ACTION, "Chọn thao tác", "Choose action")                                                         \
+    X(TASK_COMPLETE, "Xong", "Done")                                                                           \
+    X(TASK_COMPLETED, "Đã hoàn thành", "Completed")                                                                   \
+    X(TASK_COMPLETED_N_FMT, "Đã hoàn thành %d", "Completed %d")                                                    \
+    X(TASK_COMPLETE_FAIL, "Hoàn thành thất bại", "Complete failed")                                                       \
+    X(TASK_COMPLETE_START_FAIL, "Không bắt đầu được việc hoàn thành", "Failed to start complete")                                \
+    X(TASK_COMPLETE_TODO, "Hoàn thành", "Complete")                                                              \
+    X(TASK_COMPLETING, "Đang hoàn thành...", "Completing...")                                                           \
+    X(TASK_CONNECTING_NET, "Đang kết nối…", "Connecting…")                                                         \
+    X(TASK_CONN_FAIL, "Kết nối thất bại", "Connection failed")                                                     \
+    X(TASK_DATA_FORMAT_ERR, "Sai định dạng dữ liệu", "Bad data format")                                                 \
+    X(TASK_DELETED, "Đã xóa", "Deleted")                                                                       \
+    X(TASK_DELETE_FAIL, "Xóa thất bại", "Delete failed")                                                           \
+    X(TASK_DELETE_START_FAIL, "Không bắt đầu được việc xóa", "Failed to start delete")                                    \
+    X(TASK_DELETE_TODO, "Xóa", "Delete")                                                                  \
+    X(TASK_DELETING, "Đang xóa...", "Deleting...")                                                               \
+    X(TASK_DONE_OK, "Đã hoàn thành công việc", "Task completed")                                                            \
+    X(TASK_EMPTY_DONE, "Chưa có công việc đã hoàn thành", "No completed tasks")                                                 \
+    X(TASK_EMPTY_TODO, "Không có việc cần làm", "No todos")                                                                 \
+    X(TASK_INVALID, "Việc cần làm không hợp lệ", "Invalid todo")                                                                \
+    X(TASK_LOAD_FAIL, "Tải thất bại", "Load failed")                                                               \
+    X(TASK_NEED_WIFI_CFG, "Hãy cài đặt Wi-Fi trước", "Set up Wi-Fi first")                                                 \
+    X(TASK_NET_NOT_READY, "Mạng chưa sẵn sàng", "Network not ready")                                                   \
+    X(TASK_NO_COMPLETABLE, "Không có gì để hoàn thành", "Nothing to complete")                                          \
+    X(TASK_NO_NETWORK, "Không có mạng", "No network")                                                                 \
+    X(TASK_PARSE_FAIL, "Đọc phản hồi thất bại", "Response parse failed")                                                \
+    X(TASK_PLEASE_WAIT, "Vui lòng chờ...", "Please wait...")                                                         \
+    X(TASK_REFRESH, "Làm mới", "Refresh")                                                                         \
+    X(TASK_REFRESHED, "Đã làm mới", "Refreshed")                                                                   \
+    X(TASK_REFRESHING, "Đang làm mới...", "Refreshing...")                                                           \
+    X(TASK_REFRESH_START_FAIL, "Không bắt đầu được việc làm mới", "Failed to start refresh")                                      \
+    X(TASK_REMOVED_N_FMT, "Đã xóa %d", "Removed %d")                                                        \
+    X(TASK_REQUEST_FAIL, "Yêu cầu thất bại", "Request failed")                                                         \
+    X(TASK_SELECTED_FMT, "Đã chọn %d", "Selected %d")                                                             \
+    X(TASK_SELECT_FIRST, "Hãy chọn mục trước", "Select items first")                                                     \
+    X(TASK_TAB_DONE, "Đã xong", "Done")                                                                         \
+    X(TASK_TAB_TODO, "Cần làm", "Todo")                                                                           \
+    X(TASK_TITLE_DONE, "Đã xong", "Done")                                                                       \
+    X(TASK_TITLE_TODO, "Lịch trình", "Schedule")                                                                 \
+    X(CONNECT_TO, "Kết nối ", "Connect ")                                                                         \
+    X(CONNECTED_TO, "Đã kết nối ", "Connected ")                                                                   \
+    X(SETTINGS_NET_WIFI_CFG_TITLE, "Mạng Wi-Fi", "Wi-Fi network")                                               \
+    X(SETTINGS_NET_WIFI_CFG_HINT, "Quét Wi-Fi gần đây và nhập mật khẩu", "Scan nearby Wi-Fi and enter the password") \
+    X(SETTINGS_NET_ENTER_CFG, "Cấu hình Wi-Fi", "Configure Wi-Fi")                                             \
+    X(SETTINGS_NET_REBOOT_COUNT_FMT, "%s\nKhởi động lại sau %d giây…", "%s\nRebooting in %d s…")                             \
+    X(SETTINGS_NET_REBOOTING, "Đang khởi động lại…", "Rebooting…")                                                       \
+    X(NETWORK_TITLE, "Cấu hình Wi-Fi", "Configure Wi-Fi")                                                           \
+    X(NETWORK_TAB_NEARBY, "Gần đây", "Nearby")                                                                    \
+    X(NETWORK_TAB_SAVED, "Đã lưu", "Saved")                                                                    \
+    X(NETWORK_SCAN, "Làm mới", "Refresh")                                                                         \
+    X(NETWORK_SCANNING, "Đang quét Wi-Fi gần đây…", "Scanning nearby Wi-Fi…")                                        \
+    X(NETWORK_WIFI_INIT, "Đang khởi tạo Wi-Fi…", "Initializing Wi-Fi…")                                            \
+    X(NETWORK_WIFI_INIT_FAIL, "Khởi tạo Wi-Fi thất bại", "Wi-Fi init failed")                                          \
+    X(NETWORK_SCAN_FAIL, "Không bắt đầu quét được", "Failed to start scan")                                               \
+    X(NETWORK_SCAN_TIMEOUT, "Quét quá thời gian", "Scan timed out")                                                      \
+    X(NETWORK_SCAN_DONE_FMT, "Quét xong, %d mạng", "Scan done, %d networks")                               \
+    X(NETWORK_SCAN_TASK_FAIL, "Không bắt đầu được tác vụ quét", "Cannot start scan task")                                    \
+    X(NETWORK_BUSY_CONNECT, "Đang kết nối; hãy quét sau", "Connecting; scan later")                                \
+    X(NETWORK_NEARBY_EMPTY, "Không có mạng. Chạm Làm mới để thử lại", "No networks. Tap Refresh to retry")                  \
+    X(NETWORK_SAVED_EMPTY, "Chưa lưu Wi-Fi nào", "No saved Wi-Fi yet")                                           \
+    X(NETWORK_AUTH_OPEN, "[Mở]", "[Open]")                                                                   \
+    X(NETWORK_AUTH_SECURE, "[Bảo mật]", "[Secured]")                                                              \
+    X(NETWORK_CONNECT_TO_FMT, "Kết nối tới: %s", "Connect to: %s")                                                  \
+    X(NETWORK_PWD_HINT, "Nhập mật khẩu Wi-Fi (8–63 ký tự)", "Enter Wi-Fi password (8–63 chars)")                   \
+    X(NETWORK_PWD_PLACEHOLDER, "Mật khẩu Wi-Fi", "Wi-Fi password")                                                  \
+    X(NETWORK_SHOW_PWD, "Hiện mật khẩu", "Show password")                                                           \
+    X(NETWORK_CANCEL, "Hủy", "Cancel")                                                                        \
+    X(NETWORK_CONNECT, "Kết nối", "Connect")                                                                      \
+    X(NETWORK_CONNECTING_FMT, "Đang kết nối tới %s …", "Connecting to %s …")                                           \
+    X(NETWORK_CONNECTED_FMT, "Đã kết nối tới %s", "Connected to %s")                                                   \
+    X(NETWORK_CONNECT_FAIL, "Kết nối thất bại", "Connection failed")                                                   \
+    X(NETWORK_CONNECT_FAIL_REFRESH, "Hãy làm mới danh sách Wi-Fi", "Please refresh the Wi-Fi list")                   \
+    X(NETWORK_CONNECT_TIMEOUT, "Kết nối quá thời gian", "Connection timed out")                                             \
+    X(NETWORK_CONNECT_TIMEOUT_HINT, "Không kết nối được trong 15 giây; hãy thử lại", "Could not connect within 15s; retry")   \
+    X(NETWORK_CONNECT_TASK_FAIL, "Không bắt đầu được tác vụ kết nối", "Cannot start connect task")                              \
+    X(NETWORK_SSID_INVALID, "SSID không hợp lệ", "Invalid SSID")                                                     \
+    X(NETWORK_PWD_TOO_LONG, "Mật khẩu quá dài", "Password too long")                                                   \
+    X(NETWORK_ERR_BAD_PASSWORD, "Sai mật khẩu; hãy thử lại", "Wrong password; try again")                           \
+    X(NETWORK_ERR_AP_GONE, "Không tìm thấy Wi-Fi (mất sóng)", "Wi-Fi not found (signal lost)")                       \
+    X(NETWORK_ERR_ASSOC, "Liên kết thất bại; điểm truy cập từ chối", "Association failed; AP rejected")                        \
+    X(NETWORK_ERR_WEAK, "Sóng quá yếu; quá thời gian", "Signal too weak; timed out")                                    \
+    X(NETWORK_ERR_REASON_FMT, "Bị từ chối (reason=%u)", "Rejected (reason=%u)")                                \
+    X(NETWORK_DEFAULT_FMT, "%s (mặc định)", "%s (default)")                                                       \
+    X(NETWORK_SET_DEFAULT, "Mặc định", "Default")                                                                  \
+    X(NETWORK_DELETE, "Xóa", "Delete")                                                                        \
+    X(NETWORK_CLEAR_ALL, "Xóa hết", "Clear")                                                                      \
+    X(NETWORK_SET_DEFAULT_OK, "Đã đặt làm mạng mặc định", "Set as default network")                                      \
+    X(NETWORK_DELETED_OK, "Đã xóa mạng", "Network deleted")                                                   \
+    X(NETWORK_CLEARED_OK, "Đã xóa các mạng đã lưu", "Cleared saved networks")                                        \
+    X(SCANNING, "Đang quét...", "Scanning...")                                                                    \
+    X(SCANNING_WIFI, "Đang quét Wi-Fi...", "Scanning Wi-Fi...")                                                      \
+    X(WIFI_STATUS_SCANNING, "WiFi đang quét", "WiFi scanning")                                                     \
+    X(WIFI_STATUS_CONNECTING, "WiFi đang kết nối", "WiFi connecting")                                                 \
+    X(VOLUME, "Âm lượng ", "Volume ")                                                                              \
+    X(MAX_VOLUME, "Âm lượng tối đa", "Max volume")                                                                    \
+    X(MUTED, "Đã tắt tiếng", "Muted")                                                                    \
+    X(BOOK_ANTIALIAS, "Khử răng cưa", "Anti-aliasing") \
+    X(BOOK_BAD_ARG, "Tham số không hợp lệ", "Invalid argument") \
+    X(BOOK_BLANK, "(Trống)", "(Blank)") \
+    X(BOOK_BODY, "Nội dung", "Body") \
+    X(BOOK_CANCELLED, "Đã hủy", "Cancelled") \
+    X(BOOK_CHAPTER_FMT, "Ch.%d", "Ch.%d") \
+    X(BOOK_CHAPTER_NO_TEXT, "(Chương không có chữ)", "(No text in chapter)") \
+    X(BOOK_CHAPTER_PROGRESS, "Thông tin chân trang", "Footer info") \
+    X(BOOK_CHECKSUM_FAIL, "Sai checksum", "Checksum failed") \
+    X(BOOK_CONN_FAIL, "Kết nối thất bại", "Connection failed") \
+    X(BOOK_CONTINUE, "Đọc tiếp", "Continue") \
+    X(BOOK_COUNT_FMT, "%d", "%d") \
+    X(BOOK_COVER_TOO_LARGE, "Ảnh bìa quá lớn", "Cover too large") \
+    X(BOOK_DELETE_FAILED, "Xóa thất bại", "Delete failed") \
+    X(BOOK_DETAIL, "Chi tiết", "Details") \
+    X(BOOK_DOWNLOAD_FAIL, "Tải xuống thất bại", "Download failed") \
+    X(BOOK_EMPTY_COVER, "Không có bìa", "Empty cover") \
+    X(BOOK_EMPTY_FILE, "Tệp trống", "Empty file") \
+    X(BOOK_EMPTY_HOME_FMT, "Chưa có sách\nĐặt tệp .epub / .txt / .ebook\nvào %s", "No books\nPut .epub / .txt / .ebook\nin %s") \
+    X(BOOK_EMPTY_SHELF_FMT, "Kệ sách trống\nĐặt tệp .epub / .txt / .ebook\nvào %s", "Bookshelf empty\nPut .epub / .txt / .ebook\nin %s") \
+    X(BOOK_FILE_TOO_LARGE, "Tệp quá lớn", "File too large") \
+    X(BOOK_FINISHED, "Đã đọc xong", "Finished") \
+    X(BOOK_FONT_EMPTY, "Không có phông", "No fonts") \
+    X(BOOK_FONT_NAME_INVALID, "Tên tệp không hợp lệ", "Invalid filename") \
+    X(BOOK_FONT_TITLE, "Phông chữ", "Font") \
+    X(BOOK_FOOTER_BATTERY, "Pin", "Battery") \
+    X(BOOK_FOOTER_PROGRESS, "Tiến độ", "Progress") \
+    X(BOOK_FOOTER_TIME, "Giờ", "Time") \
+    X(BOOK_FOOTER_TITLE, "Chương", "Chapter") \
+    X(BOOK_IMAGE_PLACEHOLDER, "[Ảnh]", "[Image]") \
+    X(BOOK_LAYOUT_BUSY, "Đang dàn trang", "Building") \
+    X(BOOK_LAYOUT_DONE, "Xong", "Done") \
+    X(BOOK_LINE_GAP, "Giãn dòng", "Line spacing") \
+    X(BOOK_MARGIN_TOP, "Trên", "Top") \
+    X(BOOK_MARGIN_BOTTOM, "Dưới", "Bottom") \
+    X(BOOK_MARGIN_LEFT, "Trái", "Left") \
+    X(BOOK_MARGIN_RIGHT, "Phải", "Right") \
+    X(BOOK_MARGIN_SIDES, "Hai bên", "Sides") \
+    X(BOOK_MARGIN, "Lề", "Margin") \
+    X(BOOK_MARGIN_NARROW, "Hẹp", "Narrow") \
+    X(BOOK_MARGIN_STANDARD, "Chuẩn", "Standard") \
+    X(BOOK_MARGIN_VERY_WIDE, "Rất rộng", "Very wide") \
+    X(BOOK_MARGIN_WIDE, "Rộng", "Wide") \
+    X(BOOK_ALIGNMENT, "Căn lề", "Alignment") \
+    X(BOOK_ALIGN_JUSTIFY, "Đều hai bên", "Justified") \
+    X(BOOK_ALIGN_LEFT, "Trái", "Left") \
+    X(BOOK_NET_NOT_READY, "Mạng chưa sẵn sàng", "Network not ready") \
+    X(BOOK_NO_CONTINUE, "Không có sách đang đọc", "Nothing to continue") \
+    X(BOOK_NO_COVER_URL, "Không có URL ảnh bìa", "No cover URL") \
+    X(BOOK_NO_DOWNLOAD_URL, "Thiếu URL tải xuống", "Missing download URL") \
+    X(BOOK_NO_LOCAL_FILE, "Không có tệp trên máy", "No local file") \
+    X(BOOK_NO_NETWORK, "Không có mạng", "No network") \
+    X(BOOK_NO_RECENT, "Chưa có sách đọc gần đây", "No recent books") \
+    X(BOOK_NO_SD, "Không có thẻ SD\nLắp thẻ rồi thử lại", "No SD card\nInsert and retry") \
+    X(BOOK_NO_SD_SHORT, "Không có thẻ SD", "No SD card") \
+    X(BOOK_OPEN_FAILED, "Mở thất bại", "Open failed") \
+    X(BOOK_OPEN_FAILED_IO, "Mở thất bại\nThiếu tệp hoặc đọc SD lỗi", "Open failed\nFile missing or SD read failed") \
+    X(BOOK_OPEN_FAILED_DATA, "Mở thất bại\nSách hỏng hoặc nội dung không hợp lệ", "Open failed\nDamaged book or invalid content") \
+    X(BOOK_OPEN_FAILED_MEMORY, "Mở thất bại\nKhông đủ bộ nhớ", "Open failed\nNot enough memory") \
+    X(BOOK_OPEN_FAILED_CACHE, "Mở thất bại\nKhông tạo hoặc đọc được bộ đệm. Kiểm tra thẻ SD và dung lượng trống", "Open failed\nCannot create or read the cache. Check the SD card and free space") \
+    X(BOOK_OPEN_FAILED_UNSUPPORTED, "Mở thất bại\nĐịnh dạng sách hoặc tham số tệp không được hỗ trợ", "Open failed\nUnsupported book format or file parameters") \
+    X(BOOK_OPEN_CANCELLED, "Đã hủy mở sách", "Opening cancelled") \
+    X(BOOK_OPEN_FAILED_TASK, "Mở thất bại\nKhông bắt đầu được tác vụ phân tích", "Open failed\nCannot start parse task") \
+    X(BOOK_OPENING, "Đang mở", "Opening") \
+    X(DIRECTORY_READ_FAILED, "Không đọc được thư mục. Hãy mở lại.", "Cannot read folder. Please reopen it.") \
+    X(BOOK_FOLDER, "Thư mục", "Folder") \
+    X(BOOK_LOADING, "Đang tải...", "Loading...") \
+    X(BOOK_ORIENT, "Hướng", "Orientation") \
+    X(BOOK_ORIENT_LAND_LEFT, "Trái", "Left") \
+    X(BOOK_ORIENT_LAND_RIGHT, "Phải", "Right") \
+    X(BOOK_ORIENT_PORTRAIT, "Dọc", "Port.") \
+    X(BOOK_OUT_OF_MEMORY, "Hết bộ nhớ", "Out of memory") \
+    X(BOOK_PAGE_LOAD_FAILED, "Không tải được trang", "Cannot load page") \
+    X(BOOK_PATH_INVALID, "Đường dẫn không hợp lệ", "Invalid path") \
+    X(BOOK_READ_DURATION, "Tổng thời gian", "Total time") \
+    X(BOOK_READ_FAIL, "Đọc thất bại", "Read failed") \
+    X(BOOK_READ_FILE_FAIL, "(Đọc thất bại)", "(Read failed)") \
+    X(BOOK_READ_PCT_FMT, "Đã đọc %d.%d%%", "Read %d.%d%%") \
+    X(BOOK_RECENT, "Gần đây", "Recent") \
+    X(BOOK_SAVE_FAIL, "Lưu thất bại", "Save failed") \
+    X(BOOK_SELECTED_FMT, "Đã chọn %d", "Selected %d") \
+    X(BOOK_DELETING, "Đang xóa. Vui lòng chờ thao tác hoàn tất...", "Removing. Please wait for the operation to finish...") \
+    X(BOOK_DELETE_STOPPING, "Đang dừng. Vui lòng chờ dọn xong tệp hiện tại...", "Stopping. Please wait for the current file cleanup to finish...") \
+    X(BOOK_SHELF_TITLE, "Kệ sách của tôi", "My bookshelf") \
+    X(BOOK_SPACING_COMPACT, "Sát", "Compact") \
+    X(BOOK_SPACING_RELAXED, "Thoáng", "Relaxed") \
+    X(BOOK_SPACING_STANDARD, "Chuẩn", "Standard") \
+    X(BOOK_SPACING_VERY_RELAXED, "Rất thoáng", "Very relaxed") \
+    X(BOOK_START, "Bắt đầu đọc", "Start reading") \
+    X(BOOK_STORAGE_UNAVAIL, "Không dùng được bộ nhớ", "Storage unavailable") \
+    X(BOOK_SYNC_EMPTY_BODY, "Nội dung yêu cầu trống", "Empty request body") \
+    X(BOOK_TAP_ZONE_BACK, "Quay lại", "Back") \
+    X(BOOK_TAP_ZONE_FULL_REFRESH, "Làm mới toàn màn", "Full refresh") \
+    X(BOOK_TAP_ZONE_MENU, "Menu", "Menu") \
+    X(BOOK_TAP_ZONE_NEXT, "Trang sau", "Next") \
+    X(BOOK_TAP_ZONE_NONE, "Không", "None") \
+    X(BOOK_TAP_ZONE_PREV, "Trang trước", "Prev") \
+    X(BOOK_TAP_ZONES, "Vùng chạm", "Tap zones") \
+    X(BOOK_TAP_ZONES_PICK, "Chọn thao tác", "Choose action") \
+    X(BOOK_TAP_ZONES_RESET, "Đặt lại", "Reset") \
+    X(BOOK_TAP_ZONES_TITLE, "Vùng chạm", "Tap zones") \
+    X(BOOK_TOC, "Mục lục", "Contents") \
+    X(BOOK_TOC_BUILDING, "Đang tìm mục lục...", "Finding contents...") \
+    X(BOOK_TOC_HOME, "Trang chính", "Home") \
+    X(BOOK_TOC_EMPTY, "Không có mục lục", "No contents") \
+    X(BOOK_TOC_PAGE_FMT, "Mục lục %d/%d", "Contents %d/%d") \
+    X(BOOK_TODAY_DURATION, "Hôm nay", "Today") \
+    X(BOOK_UNDERLINE, "Gạch chân", "Underline") \
+    X(BOOK_UNDERLINE_DASHED, "Nét đứt", "Dashed") \
+    X(BOOK_UNDERLINE_SOLID, "Nét liền", "Solid") \
+    X(BOOK_WRITE_FAIL, "Ghi thất bại", "Write failed") \
+    X(CLOUD_API_ERROR, "Lỗi API", "API error") \
+    X(CLOUD_CANCELLED, "Đã hủy", "Cancelled") \
+    X(CLOUD_CANCELLING, "Đang hủy…", "Cancelling…") \
+    X(CLOUD_CONN_FAIL, "Kết nối thất bại", "Connection failed") \
+    X(CLOUD_CONNECT_NET, "Đang kết nối…", "Connecting…") \
+    X(CLOUD_CONNECTING_NET, "Đang kết nối…", "Connecting…") \
+    X(CLOUD_COVER_FAIL, "Tải ảnh bìa thất bại", "Cover load failed") \
+    X(CLOUD_DATA_FORMAT_ERR, "Sai định dạng dữ liệu", "Bad data format") \
+    X(CLOUD_DECODE_FAIL, "Giải mã thất bại", "Decode failed") \
+    X(CLOUD_DELETE_FAIL, "Xóa thất bại", "Delete failed") \
+    X(CLOUD_DOWNLOAD_FAIL, "Tải xuống thất bại", "Download failed") \
+    X(CLOUD_DOWNLOADING, "Đang tải xuống", "Downloading") \
+    X(CLOUD_EMPTY_ALL, "Không có gì để truyền", "Nothing to transfer") \
+    X(CLOUD_EMPTY_BOOK, "Không có sách", "No books") \
+    X(CLOUD_EMPTY_FONT, "Không có phông", "No fonts") \
+    X(CLOUD_EMPTY_WALLPAPER, "Không có hình nền", "No Walls") \
+    X(CLOUD_FETCHING_LIST, "Đang tải danh sách…", "Fetching list…") \
+    X(CLOUD_FILE_INVALID, "Tệp không hợp lệ", "Invalid file") \
+    X(CLOUD_IN_QUEUE, "Đã có trong hàng đợi", "Already queued") \
+    X(CLOUD_JSON_CREATE_FAIL, "Tạo JSON thất bại", "JSON create failed") \
+    X(CLOUD_JSON_PARSE_FAIL, "Phân tích JSON thất bại", "JSON parse failed") \
+    X(CLOUD_JSON_SERIALIZE_FAIL, "Tuần tự hóa JSON thất bại", "JSON serialize failed") \
+    X(CLOUD_LIST_TOO_LARGE, "Danh sách quá lớn", "List too large") \
+    X(CLOUD_LOAD_COVER, "Đang tải ảnh bìa…", "Loading covers…") \
+    X(CLOUD_LOAD_FAIL, "Tải thất bại", "Load failed") \
+    X(CLOUD_LOADING, "Đang tải…", "Loading…") \
+    X(CLOUD_MISSING_TASK_ID, "Thiếu taskId", "Missing taskId") \
+    X(CLOUD_NEED_WIFI_CFG, "Hãy cài đặt Wi-Fi trước", "Set up Wi-Fi first") \
+    X(CLOUD_NET_NOT_READY, "Mạng chưa sẵn sàng", "Network not ready") \
+    X(CLOUD_NO_COVER, "Không có bìa", "No cover") \
+    X(CLOUD_NO_DOWNLOAD_URL, "Thiếu URL tải xuống", "Missing download URL") \
+    X(CLOUD_NO_LOCAL_FILE, "Không có tệp trên máy", "No local file") \
+    X(CLOUD_NO_NETWORK, "Không có mạng", "No network") \
+    X(CLOUD_NO_SD, "Không có thẻ SD", "No SD card") \
+    X(CLOUD_PATH_INVALID, "Đường dẫn không hợp lệ", "Invalid path") \
+    X(CLOUD_PENDING, "Đang chờ nhận", "Incoming") \
+    X(CLOUD_PLEASE_WAIT, "Vui lòng chờ", "Please wait") \
+    X(CLOUD_PREVIEW_FAIL, "Không xem trước được", "Cannot preview") \
+    X(CLOUD_PREVIEW_START_FAIL, "Không bắt đầu xem trước được", "Failed to start preview") \
+    X(CLOUD_PREVIEW_URL_LONG, "URL xem trước quá dài", "Preview URL too long") \
+    X(CLOUD_READ_TIMEOUT, "Đọc quá thời gian hoặc bị gián đoạn", "Read timeout or interrupted") \
+    X(CLOUD_REFRESH, "Làm mới", "Refresh") \
+    X(CLOUD_REFRESHED, "Đã làm mới", "Refreshed") \
+    X(CLOUD_REFRESHING, "Đang làm mới…", "Refreshing…") \
+    X(CLOUD_REQUEST_FAIL, "Yêu cầu thất bại", "Request failed") \
+    X(CLOUD_FETCH_FAIL, "Không lấy được nội dung gửi đến. Kiểm tra mạng rồi thử lại.", "Failed to fetch incoming content. Check your network and try again.") \
+    X(CLOUD_SAVE, "Lưu", "Save") \
+    X(CLOUD_FILE_EXISTS, "Đã có tệp cùng tên", "A file with this name already exists") \
+    X(CLOUD_CONFLICT_FMT, "Tệp đã tồn tại\n%s\nChọn cách lưu", "File already exists\n%s\nChoose how to save") \
+    X(CLOUD_KEEP_BOTH, "Giữ cả hai", "Keep both") \
+    X(CLOUD_SKIP_FILE, "Bỏ qua tệp", "Skip file") \
+    X(CLOUD_REPLACE_FILE, "Thay thế tệp", "Replace file") \
+    X(CLOUD_SAVE_FAIL, "Lưu thất bại", "Save failed") \
+    X(CLOUD_SAVE_LOCAL, "Lưu vào thiết bị", "Save to device") \
+    X(CLOUD_SAVED_0_1, "Đã lưu 0 / 1", "Saved 0 / 1") \
+    X(CLOUD_SAVED_FMT, "Đã lưu %d / %d", "Saved %d / %d") \
+    X(CLOUD_SAVED_SYNC_FAIL, "Đã lưu (đồng bộ thất bại)", "Saved (sync failed)") \
+    X(CLOUD_SAVING, "Đang lưu", "Saving") \
+    X(CLOUD_SAVING_NAME_FMT, "Đang lưu\n%s", "Saving\n%s") \
+    X(CLOUD_SELECT_FIRST, "Hãy chọn mục trước", "Select items first") \
+    X(CLOUD_SELECTED_FMT, "Đã chọn %d", "Selected %d") \
+    X(CLOUD_STORAGE_UNAVAIL, "Không dùng được bộ nhớ", "Storage unavailable") \
+    X(CLOUD_SYNC_FAIL, "Đồng bộ thất bại", "Sync failed") \
+    X(CLOUD_TAB_ALL, "Tất cả", "All") \
+    X(CLOUD_TAB_APP, "Đẩy từ APP", "APP Push") \
+    X(CLOUD_TAB_AP, "Điểm phát", "Hotspot") \
+    X(CLOUD_TAB_USB, "USB", "USB") \
+    X(CLOUD_AP_STEP1, "Bước 1", "Step 1") \
+    X(CLOUD_AP_JOIN, "Kết nối điểm phát, hoặc quét mã", "Join the hotspot, or scan the code") \
+    X(CLOUD_AP_SSID_FMT, "Wi-Fi: %s", "Wi-Fi: %s") \
+    X(CLOUD_AP_STEP2, "Bước 2", "Step 2") \
+    X(CLOUD_AP_OPEN, "Mở địa chỉ này trong trình duyệt:", "Open this address in a browser:") \
+    X(CLOUD_AP_HINT, "Hoặc quét mã bên dưới", "Or scan the code below") \
+    X(CLOUD_AP_OPENING, "Đang bật điểm phát...", "Starting hotspot...") \
+    X(CLOUD_AP_FAIL, "Không bật được điểm phát", "Hotspot failed to start") \
+    X(CLOUD_AP_FAIL_INIT, "Khởi tạo Wi-Fi thất bại", "Wi-Fi init failed") \
+    X(CLOUD_AP_FAIL_START, "Không bật được điểm phát", "Hotspot failed to start") \
+    X(CLOUD_AP_FAIL_HTTP, "Không khởi động được trang web", "Web page failed to start") \
+    X(CLOUD_WIFI_FAIL, "Kết nối Wi-Fi thất bại", "Wi-Fi connection failed") \
+    X(CLOUD_CELLULAR_NEED_WIFI, "Đang dùng 4G. Chuyển sang Wi-Fi rồi thử lại.", "Using 4G. Switch to Wi-Fi and try again.") \
+    X(CLOUD_USB_WAY, "Cách thức", "Method") \
+    X(CLOUD_TAB_BOOK, "Sách", "Books") \
+    X(CLOUD_TAB_FONT, "Phông", "Fonts") \
+    X(CLOUD_TAB_WALLPAPER, "Hình nền", "Walls") \
+    X(CLOUD_TASK_FAIL, "Tác vụ thất bại", "Task failed") \
+    X(CLOUD_TYPE_BOOK, "Sách", "Book") \
+    X(CLOUD_TYPE_FONT, "Phông", "Font") \
+    X(CLOUD_TYPE_WALLPAPER, "Hình nền", "Walls") \
+    X(CLOUD_UNKNOWN_TYPE, "Loại không rõ", "Unknown type") \
+    X(CLOUD_WAIT_DOWNLOAD, "Chờ tải xuống xong", "Wait for download to finish") \
+    X(COMMON_DELETE, "Xóa", "Delete") \
+    X(COMMON_EMPTY, "Trống", "Empty") \
+    X(COMMON_OFF, "Tắt", "Off") \
+    X(COMMON_ON, "Bật", "On") \
+    X(STANDBY_CONN_FAIL, "Kết nối thất bại", "Connection failed") \
+    X(STANDBY_DATE_FMT, "%02d/%02d", "%02d/%02d") \
+    X(STANDBY_DATE_PLACEHOLDER, "--/--", "--/--") \
+    X(STANDBY_DECODE_FAIL, "Giải mã thất bại", "Decode failed") \
+    X(STANDBY_EMPTY_TODO, "Không có việc cần làm", "No todos") \
+    X(STANDBY_NO_DATA, "Không có dữ liệu", "No data") \
+    X(STANDBY_NO_NETWORK, "Không có mạng", "No network") \
+    X(STANDBY_NO_TODO_CACHE, "Chưa có công việc lưu sẵn", "No task cache") \
+    X(STANDBY_NO_WEATHER, "Không có thời tiết", "No weather") \
+    X(STANDBY_PARSE_FAIL, "Phân tích thất bại", "Parse failed") \
+    X(STANDBY_REQUEST_FAIL, "Yêu cầu thất bại", "Request failed") \
+    X(STANDBY_WEATHER_FAIL, "Lỗi thời tiết", "Weather failed") \
+    X(STANDBY_WP_NOT_FOUND, "Không tìm thấy hình nền chờ", "Standby wallpaper not found") \
+    X(WALLPAPER_ADJUST, "Điều chỉnh", "Adjust") \
+    X(WALLPAPER_CHIP_SHUTDOWN, "Tắt máy", "Power-off") \
+    X(WALLPAPER_CHIP_STANDBY, "Chờ", "Standby") \
+    X(WALLPAPER_DECODE_FAIL, "Giải mã thất bại", "Decode failed") \
+    X(WALLPAPER_DELETE_BTN, "Xóa hình nền", "Delete wallpaper") \
+    X(WALLPAPER_DELETE_FAIL, "Xóa thất bại", "Delete failed") \
+    X(WALLPAPER_DELETE_START_FAIL, "Không bắt đầu được việc xóa", "Failed to start delete") \
+    X(WALLPAPER_DELETING, "Đang xóa…", "Deleting…") \
+    X(WALLPAPER_EMPTY_FMT, "Chưa có hình nền\nĐặt vào %s", "No wallpapers\nPlace in %s") \
+    X(WALLPAPER_ENABLE_FAIL, "Bật thất bại", "Enable failed") \
+    X(WALLPAPER_FILE_INVALID, "Tệp không hợp lệ", "Invalid file") \
+    X(WALLPAPER_FILE_MISSING, "Không tìm thấy tệp", "File not found") \
+    X(WALLPAPER_LOADING, "Đang tải…", "Loading…") \
+    X(WALLPAPER_ENTER_LOADING, "Đang tải hình nền...", "Loading wallpaper...") \
+    X(WALLPAPER_MIRROR_H, "Lật ngang", "Mirror") \
+    X(WALLPAPER_NAME_INVALID, "Tên tệp không hợp lệ", "Invalid filename") \
+    X(WALLPAPER_NO_SD, "Không có thẻ SD", "No SD card") \
+    X(WALLPAPER_OVERWRITE, "Ghi đè", "Overwrite") \
+    X(WALLPAPER_PATH_INVALID, "Đường dẫn không hợp lệ", "Invalid path") \
+    X(WALLPAPER_PREVIEW_OOM, "Hết bộ nhớ, xem trước thất bại", "Out of memory, preview failed") \
+    X(WALLPAPER_ROTATE_LEFT, "Trái", "Left") \
+    X(WALLPAPER_ROTATE_RIGHT, "Phải", "Right") \
+    X(WALLPAPER_SAVE, "Lưu", "Save") \
+    X(WALLPAPER_SAVE_AS, "Lưu thành", "Save as") \
+    X(WALLPAPER_SAVE_FAIL, "Lưu thất bại", "Save failed") \
+    X(WALLPAPER_SAVING, "Đang lưu…", "Saving…") \
+    X(WALLPAPER_SELECTED_FMT, "Đã chọn %d", "Selected %d") \
+    X(WALLPAPER_SET_SHUTDOWN, "Đặt làm màn tắt máy", "Set as power-off") \
+    X(WALLPAPER_SET_STANDBY, "Đặt làm màn chờ", "Set as standby") \
+    X(WALLPAPER_SET_READING, "Đặt làm nền đọc sách", "Set as reading background") \
+    X(WALLPAPER_READING_ON, "Đã chọn nền đọc sách", "Reading background selected") \
+    X(WALLPAPER_DISPLAY_MODE, "Chế độ hiển thị", "Display mode") \
+    X(WALLPAPER_DECODE_FAIL_CODE, "Giải mã thất bại (%u)", "Decode failed (%u)") \
+    X(WALLPAPER_MODE_FULLSCREEN, "Hình nền toàn màn", "Fullscreen wallpaper") \
+    X(WALLPAPER_MODE_OVERLAY, "Hình nền trong suốt", "Transparent wallpaper") \
+    X(WALLPAPER_CLEAR_SELECTION, "Bỏ chọn", "Clear selection") \
+    X(WALLPAPER_SHUTDOWN_ON, "Đã chọn màn tắt máy", "Power-off selected") \
+    X(WALLPAPER_STANDBY_ON, "Đã chọn màn chờ", "Standby selected")
 
 
 namespace Lang {
 
 enum class LangStringId : size_t {
-#define LANG_ENUM(name, zh, en) name,
+#define LANG_ENUM(name, vi, en) name,
     LANG_STRING_LIST(LANG_ENUM)
 #undef LANG_ENUM
     kCount,
@@ -1354,47 +1354,48 @@ enum class LangStringId : size_t {
 
 static constexpr size_t kStringCount = static_cast<size_t>(LangStringId::kCount);
 
-static const char* const kZh[kStringCount] = {
-#define LANG_ZH(name, zh, en) zh,
-    LANG_STRING_LIST(LANG_ZH)
-#undef LANG_ZH
+static const char* const kVi[kStringCount] = {
+#define LANG_VI(name, vi, en) vi,
+    LANG_STRING_LIST(LANG_VI)
+#undef LANG_VI
 };
 
 static const char* const kEn[kStringCount] = {
-#define LANG_EN(name, zh, en) en,
+#define LANG_EN(name, vi, en) en,
     LANG_STRING_LIST(LANG_EN)
 #undef LANG_EN
 };
 
 const char* CODE = LANG_DEFAULT_CODE;
 
-const char* BookHomeLabel(bool chinese) {
+const char* BookHomeLabel(bool vietnamese) {
     const size_t index = static_cast<size_t>(LangStringId::BOOK_TOC_HOME);
-    return chinese ? kZh[index] : kEn[index];
+    return vietnamese ? kVi[index] : kEn[index];
 }
 
 namespace Strings {
-#define LANG_DECL(name, zh, en) const char* name = "";
+#define LANG_DECL(name, vi, en) const char* name = "";
 LANG_STRING_LIST(LANG_DECL)
 #undef LANG_DECL
 } // namespace Strings
 
+// 仅支持 vi-VN / en-US；旧固件保存的 zh-CN 等其它值回退 en-US
 static const char* NormalizeCode(const char* code) {
-    if (code != nullptr && std::strcmp(code, "zh-CN") == 0) {
-        return "zh-CN";
+    if (code != nullptr && std::strcmp(code, "vi-VN") == 0) {
+        return "vi-VN";
     }
     return "en-US";
 }
 
 static const char* const* LiteralsFor(const char* code) {
-    if (code != nullptr && std::strcmp(code, "zh-CN") == 0) {
-        return kZh;
+    if (code != nullptr && std::strcmp(code, "vi-VN") == 0) {
+        return kVi;
     }
     return kEn;
 }
 
 static void ApplyLiterals(const char* const* literals) {
-#define LANG_APPLY(name, zh, en)                                                                               \
+#define LANG_APPLY(name, vi, en)                                                                               \
     Strings::name = literals[static_cast<size_t>(LangStringId::name)];
     LANG_STRING_LIST(LANG_APPLY)
 #undef LANG_APPLY

@@ -1,16 +1,16 @@
 #pragma once
 
 #ifndef LANG_DEFAULT_CODE
-#define LANG_DEFAULT_CODE "zh-CN"
+#define LANG_DEFAULT_CODE "en-US"
 #endif
 
 namespace Lang {
-/** 当前 UI 语言码（zh-CN / en-US），可热切换 */
+/** 当前 UI 语言码（vi-VN / en-US），可热切换 */
 extern const char* CODE;
 
 /**
  * @brief 切换 UI 语言并重绑 Strings 指针
- * @param code "zh-CN" 或 "en-US"；其它值回退 en-US
+ * @param code "vi-VN" 或 "en-US"；其它值回退 en-US
  * @param persist true 时异步写入 NVS ui/language
  * @return 语言实际发生变化时为 true
  */
@@ -229,9 +229,9 @@ extern const char* SETTINGS_THEME_CURRENT_BORDER;
 extern const char* SETTINGS_THEME_CURRENT_SLASH;
 extern const char* SETTINGS_LANG_TITLE;
 extern const char* SETTINGS_LANG_HINT;
-extern const char* SETTINGS_LANG_ZH_CN;
+extern const char* SETTINGS_LANG_VI_VN;
 extern const char* SETTINGS_LANG_EN_US;
-extern const char* SETTINGS_LANG_CURRENT_ZH;
+extern const char* SETTINGS_LANG_CURRENT_VI;
 extern const char* SETTINGS_LANG_CURRENT_EN;
 extern const char* SETTINGS_HAPTIC_TITLE;
 extern const char* SETTINGS_HAPTIC_HINT;

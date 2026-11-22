@@ -12,15 +12,15 @@ struct SettingsLangOption {
     const char* (*title)(); // 选项标题
 };
 
-static const char* TitleZh() {
-    return Lang::Strings::SETTINGS_LANG_ZH_CN;
+static const char* TitleVi() {
+    return Lang::Strings::SETTINGS_LANG_VI_VN;
 }
 static const char* TitleEn() {
     return Lang::Strings::SETTINGS_LANG_EN_US;
 }
 
 static constexpr SettingsLangOption kLangOptions[] = {
-    {"zh-CN", TitleZh},
+    {"vi-VN", TitleVi},
     {"en-US", TitleEn},
 };
 static constexpr int kLangOptionCount = sizeof(kLangOptions) / sizeof(kLangOptions[0]);
@@ -33,8 +33,8 @@ struct SettingsLangUi {
 static SettingsLangUi s_ui;
 
 static const char* CurrentLabelText() {
-    if (std::strcmp(Lang::CODE, "zh-CN") == 0) {
-        return Lang::Strings::SETTINGS_LANG_CURRENT_ZH;
+    if (std::strcmp(Lang::CODE, "vi-VN") == 0) {
+        return Lang::Strings::SETTINGS_LANG_CURRENT_VI;
     }
     return Lang::Strings::SETTINGS_LANG_CURRENT_EN;
 }
