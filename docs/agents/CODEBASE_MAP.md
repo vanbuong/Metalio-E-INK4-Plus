@@ -19,6 +19,14 @@ before relying on them if `git log fd3fa03..HEAD -- <area>` shows changes. Areas
 - Host tests (reader text rules): `python tools/tests/test_text_break.py` → `text_break: PASS`
   (g++ ≥ C++17 on PATH or `CXX`; tests the header-only rules in `main/reader/vertical_text.h`
   and `book_screen/reader/book_margin_rules.h`). Verified 2026-11-21 with MinGW g++ 13.1.
+- Host tests (reader dictionary): `python tools/tests/test_reader_dict.py` → `reader_dict: PASS`
+  (word hit-test, lookup rules, StarDict reader; LVGL/FatFS replaced by `tools/tests/stubs/`) and
+  `python tools/tests/test_prepare_stardict.py` → `prepare_stardict: PASS`.
+- New `.cc` files under `main/` are found by `file(GLOB ...)` in `main/CMakeLists.txt` only at
+  configure time: run `./tools/idf.ps1 reconfigure` before the next build, or they are silently
+  not compiled (and only fail at link once something calls them).
+- App slot headroom (2026-11-22): app 5,240,896 B in a 5 MiB OTA slot (~2 KB free) — any new
+  feature needs space found first.
 - Host tests (lifecycle): `python tools/tests/test_lifecycle_fixes.py`. Compiles C
   harnesses with MSVC; paths hard-coded to VS2022 BuildTools 14.44.35207 / SDK 10.0.26100.0
   (`tools/tests/test_lifecycle_fixes.py:12-13`). Covers Wi-Fi scan init cleanup and display feeder
@@ -193,6 +201,16 @@ Justification stretches only `JustifySlot` gaps (word gaps in Latin text). Chang
 needs a bump of `kLayoutRulesVersion` (`book_session.cc`) so page caches rebuild. Alignment
 (Justified/Left) is draw-time only (`TextStyle::justify`, NVS `justify`); side margins are one
 symmetric value 5–40 px (`book_margin_rules.h`). Spec: `docs/specs/2026-11-21-reader-word-wrap-design.md`.
+Horizontal page positions: `page_line_walk.h` (`ForEachPageTextLine`: rows, paragraph gaps, indent,
+centred titles) and `text_glyph_pen.h` (`HorizontalGlyphPen`: per-glyph x with shrink/justify) are
+shared by `RasterPageTextToL8` and the word hit-test — change layout there, not in one caller.
+Dictionary lookup: `page_word_hit.*` (`PageWordAt`, `WordAround`), `dict_word_rules.h`
+(`DictLookupCandidates`: case + English suffix stripping), `dictionary.*` (StarDict on SD under
+`/sdcard/dict/<name>/`, binary search via our `.pos` table, files opened per lookup, caller holds
+`sd_access::Transaction`). Data prep: `tools/dict/prepare_stardict.py`. UI: book_screen
+`reader/book_dict_sheet.*` — long-press (`LV_EVENT_LONG_PRESSED`) on the page body; page taps use
+`LV_EVENT_SHORT_CLICKED`; sheet is outside `ReadChrome` (`DictSheetVisible()` gates taps, keys,
+auto-turn); one-shot `book_dict` task. Spec: `docs/specs/2026-11-22-reader-dictionary-design.md`.
 
 ### Services — top-level `main/`
 - OTA: `ota.cc/.h` (`MarkCurrentVersionValid` `:344`, `StartUpgrade*` `:516-526`; writes next
