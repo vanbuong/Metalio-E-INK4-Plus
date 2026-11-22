@@ -65,7 +65,7 @@ void HomeHero_BuildClassicUi(lv_obj_t* parent, lv_coord_t y_offset) {
 
     HomeHero_State().time_lbl = lv_label_create(box);
     lv_label_set_text(HomeHero_State().time_lbl, "00:00");
-    lv_obj_set_style_text_font(HomeHero_State().time_lbl, SystemFontClock(&font_misans_regular_160_2), 0);
+    lv_obj_set_style_text_font(HomeHero_State().time_lbl, SystemFontClock(&font_literata_160_2), 0);
     lv_obj_set_style_text_color(HomeHero_State().time_lbl, lv_color_black(), 0);
     lv_obj_set_style_text_align(HomeHero_State().time_lbl, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_clear_flag(HomeHero_State().time_lbl, LV_OBJ_FLAG_CLICKABLE);

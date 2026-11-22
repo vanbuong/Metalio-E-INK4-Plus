@@ -22,7 +22,7 @@ const lv_font_t* HomeHero_SlashTimeFont() {
     static lv_font_t font;
     static bool inited = false;
     if (!inited) {
-        font = font_misans_regular_160_2;
+        font = font_literata_160_2;
         font.line_height = 134;
         font.base_line = 10;
         inited = true;

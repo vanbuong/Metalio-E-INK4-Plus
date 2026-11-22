@@ -27,7 +27,7 @@
 #include "ui_scale.h"
 #include "vk_key_handler.h"
 
-LV_FONT_DECLARE(font_misans_regular_160_2);
+LV_FONT_DECLARE(font_literata_160_2);
 
 static constexpr const char* TAG = "SettingsTestAging";
 static constexpr const char* kScreenId = "settings_test_aging";
@@ -80,7 +80,7 @@ static void ClearStatusBindings() {
 }
 
 static int DigitsPerLine() {
-    const lv_font_t* font = &font_misans_regular_160_2;
+    const lv_font_t* font = &font_literata_160_2;
     lv_point_t sz = {};
     lv_text_get_size(&sz, "0", font, 0, 0, LV_COORD_MAX, LV_TEXT_FLAG_NONE);
     const int avail = static_cast<int>(LV_HOR_RES) - 2 * kPad;
@@ -560,7 +560,7 @@ lv_obj_t* SettingsTestAgingScreen::Create() {
     lv_obj_set_width(s_counter_lbl, LV_HOR_RES - 2 * kPad);
     lv_obj_set_height(s_counter_lbl, LV_SIZE_CONTENT);
     lv_label_set_long_mode(s_counter_lbl, LV_LABEL_LONG_WRAP);
-    lv_obj_set_style_text_font(s_counter_lbl, &font_misans_regular_160_2, 0);
+    lv_obj_set_style_text_font(s_counter_lbl, &font_literata_160_2, 0);
     lv_obj_set_style_text_color(s_counter_lbl, lv_color_black(), 0);
     lv_obj_set_style_text_align(s_counter_lbl, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_align_to(s_counter_lbl, count_title, LV_ALIGN_OUT_BOTTOM_MID, 0, kPad);
