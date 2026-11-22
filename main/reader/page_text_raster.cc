@@ -6,6 +6,7 @@
 
 #include "reader_page_render.h"
 #include "text_encoding.h"
+#include "text_glyph_pen.h"
 #include "vertical_text.h"
 
 #include <algorithm>
@@ -143,8 +144,7 @@ bool DrawUtf8Line(RasterImage& img, const lv_font_t* font, int x, int line_top, 
     int ink_bottom = -1;
 
     int glyph_index = 0;
-    TextSpacingState spacing_state;
-    spacing_state.cjk_context = TextLineCjkContext(utf8, left);
+    HorizontalGlyphPen pen(font, utf8, left, x, spacing, letter_gap); // 横排笔位，竖排不用
     while (left > 0) {
         uint32_t cp = 0;
         const size_t n = Utf8Next(p, left, &cp);
@@ -162,13 +162,13 @@ bool DrawUtf8Line(RasterImage& img, const lv_font_t* font, int x, int line_top, 
         const uint32_t glyph_cp = vertical ? VerticalGlyph(cp) : cp;
         lv_font_glyph_dsc_t gdsc{};
         if (!lv_font_get_glyph_dsc(font, &gdsc, glyph_cp, 0)) {
-            if (!vertical) ObserveTextGlyph(spacing_state, font, cp, gdsc, false, letter_gap);
-            pen_x += TextAdvanceWithGap(vertical ? VerticalAdvance(cp, font->line_height, 1)
-                              : std::max(1, static_cast<int>(lv_font_get_glyph_width(font, cp, 0))), letter_gap);
+            if (vertical) pen_x += TextAdvanceWithGap(VerticalAdvance(cp, font->line_height, 1), letter_gap);
+            else pen.Step(cp, gdsc, false, nullptr, nullptr);
             continue;
         }
-        if (!vertical) ObserveTextGlyph(spacing_state, font, cp, gdsc, true, letter_gap);
-        const int shift = vertical ? spacing.Offset(vertical_slot) : spacing.Offset(spacing_state.slots, spacing_state.capacity);
+        int cell_x = 0;
+        if (!vertical) pen.Step(cp, gdsc, true, &cell_x, nullptr);
+        const int shift = vertical ? spacing.Offset(vertical_slot) : 0;
         if (gdsc.resolved_font == nullptr) {
             gdsc.resolved_font = font;
         }
@@ -195,7 +195,7 @@ bool DrawUtf8Line(RasterImage& img, const lv_font_t* font, int x, int line_top, 
             const int rotated_height = vertical && cp == 0x2014 ? font->line_height : 0;
             const int box_w = rotate ? gdsc.box_h : gdsc.box_w;
             const int box_h = rotated_height > 0 ? rotated_height : rotate ? gdsc.box_w : gdsc.box_h;
-            int gx = vertical ? x + (font->line_height - box_w) / 2 : pen_x + shift + gdsc.ofs_x;
+            int gx = vertical ? x + (font->line_height - box_w) / 2 : cell_x + gdsc.ofs_x;
             // 与 lv_draw_label：y1 = line_top + (lh - base) - box_h - ofs_y
             int gy = vertical ? line_top + pen_x - x + shift + (font->line_height - box_h) / 2
                                     : line_top + static_cast<int>(font->line_height - font->base_line) -
@@ -223,11 +223,10 @@ bool DrawUtf8Line(RasterImage& img, const lv_font_t* font, int x, int line_top, 
                 font->release_glyph(font, &gdsc);
             }
         }
-        pen_x += TextAdvanceWithGap(vertical ? VerticalAdvance(cp, font->line_height, std::max(1, static_cast<int>(gdsc.adv_w))) : TextGlyphAdvance(gdsc), letter_gap);
+        if (vertical) pen_x += TextAdvanceWithGap(VerticalAdvance(cp, font->line_height, std::max(1, static_cast<int>(gdsc.adv_w))), letter_gap);
     }
     if (out_end_x != nullptr) {
-        *out_end_x = pen_x + (vertical ? spacing.Offset(std::max(0, glyph_index - 1))
-            : spacing.Offset(spacing_state.slots, spacing_state.capacity) - spacing.trim);
+        *out_end_x = vertical ? pen_x + spacing.Offset(std::max(0, glyph_index - 1)) : pen.EndX();
     }
     if (out_ink_bottom != nullptr) *out_ink_bottom = ink_bottom;
     return true;
