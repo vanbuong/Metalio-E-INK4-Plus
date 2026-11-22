@@ -40,6 +40,7 @@
 #include "reader/text_encoding.h"
 #include "screen_common.h"
 #include "vk_key_handler.h"
+#include "book_screen/reader/book_dict_sheet.h"
 
 #include <esp_timer.h>
 
@@ -165,6 +166,7 @@ void RenderReaderPage() {
     }
     // Loading/errors/TOC stay binary; opt into text gray only when a page exists.
     EpdSetContentRole(st.reader.content,EpdContentRole::Monochrome);
+    CloseDictSheet();  // 换页/重排后旧释义不再对应正文
     st.reader.open_bar = nullptr;
     st.reader.open_pct_lbl = nullptr;
     if (st.reader.read_chrome == BookUiState::ReadChrome::kToc) {

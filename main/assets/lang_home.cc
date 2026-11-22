@@ -1190,6 +1190,10 @@
     X(BOOK_TOC_BUILDING, "Đang tìm mục lục...", "Finding contents...") \
     X(BOOK_TOC_HOME, "Trang chính", "Home") \
     X(BOOK_TOC_EMPTY, "Không có mục lục", "No contents") \
+    X(BOOK_DICT_LOOKING_UP, "Đang tra từ...", "Looking up...") \
+    X(BOOK_DICT_NOT_FOUND, "Không tìm thấy “%s”", "“%s” not found") \
+    X(BOOK_DICT_NONE, "Chưa có từ điển. Chép từ điển vào thư mục /dict trên thẻ SD.", "No dictionary found. Copy dictionaries to /dict on the SD card.") \
+    X(BOOK_DICT_SD_UNAVAILABLE, "Thẻ SD đang bận", "SD card unavailable") \
     X(BOOK_TOC_PAGE_FMT, "Mục lục %d/%d", "Contents %d/%d") \
     X(BOOK_TODAY_DURATION, "Hôm nay", "Today") \
     X(BOOK_UNDERLINE, "Gạch chân", "Underline") \

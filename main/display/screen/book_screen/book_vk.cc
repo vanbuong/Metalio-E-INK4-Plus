@@ -38,6 +38,7 @@
 #include "lv_adapter_display.h"
 #include "vk_key_handler.h"
 #include "vk_page_repeat.h"
+#include "book_screen/reader/book_dict_sheet.h"
 
 void RequestOpenAssistantFromBook() {
     const char* screen = VkKey_ActiveScreen();
@@ -62,7 +63,7 @@ bool BookScreen::IsReadingActive() {
         return false;
     }
     auto& st = Book_State();
-    return !IsReadOverlayChrome(st.reader.read_chrome);
+    return !IsReadOverlayChrome(st.reader.read_chrome) && !DictSheetVisible();
 }
 
 bool BookPageRepeatStep(int page_delta) {
@@ -212,6 +213,12 @@ bool BookScreen::OnVkKey(const char* key_name) {
     }
 
     if (std::strcmp(screen, kScreenRead) == 0) {
+        // 取词卡片：HOME/上一页收起，下一页忽略
+        if (DictSheetVisible()) {
+            if (std::strcmp(key_name, "vk_prev") == 0 || std::strcmp(key_name, "vk_home") == 0)
+                BookLvAsync([](void*) { CloseDictSheet(); });
+            return true;
+        }
         if (std::strcmp(key_name, "vk_prev") == 0 || std::strcmp(key_name, "vk_next") == 0)
             ReaderAutoTurnManualInput();
         // 正文 vk_home 短按：设置/目录浮层→收起；长按经阅读退出清理回系统首页

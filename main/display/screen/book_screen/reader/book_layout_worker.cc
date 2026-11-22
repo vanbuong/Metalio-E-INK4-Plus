@@ -14,6 +14,7 @@
 #include "book_screen/reader/book_reader_body.h"
 #include "book_screen/reader/book_reader_overlay.h"
 #include "book_screen/settings/book_settings_sheet.h"
+#include "book_screen/reader/book_dict_sheet.h"
 
 #include <freertos/FreeRTOS.h>
 #include <lvgl.h>
@@ -313,6 +314,10 @@ void OnReadContentClicked(lv_event_t* e) {
         return;
     }
     if (st.reader.opening.load() || !st.reader.session || !st.reader.session->IsOpen()) {
+        return;
+    }
+    if (DictSheetVisible()) {
+        CloseDictSheet();  // 取词卡片打开时点正文只收起
         return;
     }
     if (st.reader.read_chrome == BookUiState::ReadChrome::kSettings) {

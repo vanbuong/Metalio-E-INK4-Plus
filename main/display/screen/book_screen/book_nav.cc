@@ -45,6 +45,7 @@
 #include "lv_adapter_display.h"
 #include "screen_common.h"
 #include "vk_key_handler.h"
+#include "book_screen/reader/book_dict_sheet.h"
 
 namespace {
 using Kind = reader::BookSession::NavigationKind;
@@ -408,6 +409,7 @@ void DetachReadBodyInput(lv_obj_t* obj) {
         return;
     }
     lv_obj_remove_event_cb(obj, OnReadContentClicked);
+    lv_obj_remove_event_cb(obj, OnReadContentLongPressed);
     // 正文整页热区：进目录/设置后须摘掉，否则空白处仍早震
     HapticDetachClick(obj);
 }
@@ -420,7 +422,9 @@ void AttachReadBodyInput(lv_obj_t* obj) {
     lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
     // 页内热区：touch_feed 按下早震；业务回调里勿再 Pulse
     HapticAttachClick(obj);
-    lv_obj_add_event_cb(obj, OnReadContentClicked, LV_EVENT_CLICKED, nullptr);
+    // 短按走分区动作；长按取词后松手不再触发 SHORT_CLICKED
+    lv_obj_add_event_cb(obj, OnReadContentClicked, LV_EVENT_SHORT_CLICKED, nullptr);
+    lv_obj_add_event_cb(obj, OnReadContentLongPressed, LV_EVENT_LONG_PRESSED, nullptr);
 }
 
 bool QueueReaderPageTurn(int dir) {
