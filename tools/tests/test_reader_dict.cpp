@@ -10,6 +10,7 @@
 #include "page_line_walk.h"
 #include "page_word_hit.h"
 #include "dict_word_rules.h"
+#include "dictionary.h"
 
 #include <algorithm>
 
@@ -242,10 +243,45 @@ static void test_lookup_candidates() {
     CHECK(DictLookupCandidates("").empty());
 }
 
+static void test_dictionary(const std::string& fixtures) {
+    const auto dicts = ScanDictionaries(fixtures + "/dict");
+    CHECK(dicts.size() == 2);  // nopos is skipped
+    if (dicts.size() != 2) return;
+    CHECK(dicts[0].name == "zz_envi" && dicts[0].lang == DictLang::kEnVi);
+    CHECK(dicts[1].name == "aa_wordnet" && dicts[1].lang == DictLang::kEnEn);
+    CHECK(dicts[0].bookname == "zz_envi book");
+    CHECK(dicts[0].wordcount == 5);
+
+    DictEntry e;
+    CHECK(DictLookupExact(dicts[0], "Apple", e) && e.headword == "Apple" && e.definition == "c\xC3\xB4ng ty Apple");
+    CHECK(DictLookupExact(dicts[0], "apple", e) && e.headword == "apple" && e.definition == "qu\xE1\xBA\xA3 t\xC3\xA1o");
+    CHECK(DictLookupExact(dicts[0], "APPLE", e) && (e.headword == "Apple" || e.headword == "apple"));
+    CHECK(DictLookupExact(dicts[0], "zebra", e) && e.headword == "zebra");
+    CHECK(DictLookupExact(dicts[0], "banana", e) && e.bookname == "zz_envi book");
+    CHECK(!DictLookupExact(dicts[0], "zzz", e));
+    CHECK(!DictLookupExact(dicts[0], "aaa", e));
+    CHECK(!DictLookupExact(dicts[0], "", e));
+
+    const auto hits = DictLookup(dicts, "Running");
+    CHECK(hits.size() == 2);
+    if (hits.size() == 2) {
+        CHECK(hits[0].headword == "run" && hits[0].definition == "ch\xE1\xBA\xA1y");
+        CHECK(hits[1].headword == "run" && hits[1].bookname == "aa_wordnet book");
+    }
+    const auto books = DictLookup(dicts, "books");
+    CHECK(books.size() == 1 && books[0].headword == "book");
+    CHECK(DictLookup(dicts, "ng\xC6\xB0\xE1\xBB\x9Di").empty());
+
+    const auto trunc = ScanDictionaries(fixtures + "/trunc");
+    CHECK(trunc.size() == 1);
+    if (trunc.size() == 1) CHECK(!DictLookupExact(trunc[0], "beta", e));
+    CHECK(ScanDictionaries(fixtures + "/missing").empty());
+}
+
 int main(int argc, char** argv) {
-    (void)argc;
-    (void)argv;
     test_lookup_candidates();
+    if (argc > 1) test_dictionary(argv[1]);
+    else { std::printf("missing fixtures directory argument\n"); ++g_failures; }
     test_glyph_pen_matches_spacing_width();
     test_word_around();
     test_line_walk_rows_match_raster_rules();
