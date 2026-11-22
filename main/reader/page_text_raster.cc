@@ -6,6 +6,7 @@
 
 #include "reader_page_render.h"
 #include "text_encoding.h"
+#include "page_line_walk.h"
 #include "text_glyph_pen.h"
 #include "vertical_text.h"
 
@@ -280,7 +281,6 @@ bool RasterPageTextToL8(const Page& page, const lv_font_t* font, int spacing_per
     if (font == nullptr || page_w <= 0 || page_h <= 0) {
         return false;
     }
-    const auto layout = MakeTextLineLayout(font, page_h, spacing_percent, false, style.line_gap);
     const int image_h = EstimatePageTextHeight(page, font, spacing_percent, para_gap, page_h, style.line_gap);
     if (image_h <= 0) return false;
     const size_t n = static_cast<size_t>(page_w) * static_cast<size_t>(image_h);
@@ -297,83 +297,30 @@ bool RasterPageTextToL8(const Page& page, const lv_font_t* font, int spacing_per
     out.width = static_cast<uint16_t>(page_w);
     out.height = static_cast<uint16_t>(image_h);
 
-    const lv_coord_t indent_px = ParaIndentPadPx(font, style.indent_chars);
-    lv_coord_t y = 0;
-    int row = 0;
-    bool any = false, previous_title = false;
-
-    for (const auto& item : page.items) {
-        if (item.kind != ContentKind::kText) {
-            if (image_tops) image_tops->push_back(y);
-            y += item.image_h;
-            previous_title = false;
-            any = true;
-            continue;
-        }
-        if (item.text.empty()) continue;
-        if (item.para_gap_before && any) {
-            y = static_cast<lv_coord_t>(y + ReaderParagraphGap(para_gap, previous_title));
-        }
-        if (row >= layout.count || y + layout.CellHeight(row) > page_h) return false;
-
-        lv_coord_t text_x = 0;
-        const char* txt = item.text.c_str();
-        // 章名可能含「第N章\\n章节名」：按行画并垂直推进
-        if (item.chapter_title && std::strchr(txt, '\n') != nullptr) {
-            const char* p = txt;
-            int end_x = 0;
-            while (p != nullptr && *p != '\0') {
-                const char* nl = std::strchr(p, '\n');
-                std::string line = nl ? std::string(p, static_cast<size_t>(nl - p)) : std::string(p);
-                const auto spacing = MakeTextLineSpacing(font, line, page_w, false, false, style.letter_gap);
-                const lv_coord_t tw = spacing.width;
-                text_x = tw < page_w ? static_cast<lv_coord_t>((page_w - tw) / 2) : 0;
-                if (row >= layout.count || y + layout.CellHeight(row) > page_h) return false;
-                const int line_y = y + layout.TextOffset(row);
-                int ink_bottom = -1;
-                if (!DrawUtf8Line(out, font, text_x, line_y, line.c_str(), true,
-                                  &end_x, false, antialias, &ink_bottom, spacing, style.letter_gap)) {
-                    out.Reset();
-                    return false;
-                }
-                if (underline_mode > 0 && ink_bottom >= 0) {
-                    const int ul_y = line_y + ReaderUnderlineTop(ink_bottom) + style.underline_offset;
-                    DrawUnderline(out, text_x, end_x - 1, ul_y, underline_mode);
-                }
-                y += layout.CellHeight(row++);
-                p = nl ? nl + 1 : nullptr;
+    bool draw_failed = false;
+    const bool any = ForEachPageTextLine(page, font, spacing_percent, para_gap, page_w, page_h, style,
+        [&](const PageTextLine& line) {
+            int end_x = line.x;
+            int ink_bottom = -1;
+            if (!DrawUtf8Line(out, font, line.x, line.line_y, line.text->c_str(), line.faux_bold, &end_x, false,
+                              antialias, &ink_bottom, line.spacing, style.letter_gap)) {
+                draw_failed = true;
+                return false;
             }
-            any = true;
-            previous_title = true;
-            continue;
-        }
-        const int available = page_w - (item.para_indent && !item.chapter_title ? indent_px : 0);
-        const auto spacing = MakeTextLineSpacing(font, item.text, available, item.justify && style.justify && !item.chapter_title, false, style.letter_gap);
-        if (item.chapter_title) {
-            const lv_coord_t tw = spacing.width;
-            text_x = tw < page_w ? static_cast<lv_coord_t>((page_w - tw) / 2) : 0;
-        } else if (item.para_indent) {
-            text_x = indent_px;
-        }
-
-        int end_x = text_x;
-        int ink_bottom = -1;
-        const int line_y = y + layout.TextOffset(row);
-        if (!DrawUtf8Line(out, font, text_x, line_y, txt, item.chapter_title, &end_x, false, antialias, &ink_bottom, spacing, style.letter_gap)) {
-            out.Reset();
-            return false;
-        }
-        if (underline_mode > 0 && ink_bottom >= 0) {
-            const int ul_y = line_y + ReaderUnderlineTop(ink_bottom) + style.underline_offset;
-            DrawUnderline(out, text_x, end_x - 1, ul_y, underline_mode);
-        }
-        y += layout.CellHeight(row++);
-        any = true;
-        previous_title = item.chapter_title;
+            if (underline_mode > 0 && ink_bottom >= 0) {
+                const int ul_y = line.line_y + ReaderUnderlineTop(ink_bottom) + style.underline_offset;
+                DrawUnderline(out, line.x, end_x - 1, ul_y, underline_mode);
+            }
+            return true;
+        },
+        [&](int top) { if (image_tops) image_tops->push_back(top); });
+    if (!any || draw_failed) {
+        if (draw_failed) out.Reset();
+        return false;
     }
 
     FinishTextRaster(out, antialias, style.aa_strength);
-    return any;
+    return true;
 }
 
 bool RasterPageVerticalTextToL8(const Page& page, const lv_font_t* font, int spacing_percent,

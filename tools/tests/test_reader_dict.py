@@ -16,6 +16,7 @@ INCLUDES = [ROOT / "tools/tests/stubs", ROOT / "main/reader"]
 SOURCES = [
     ROOT / "tools/tests/test_reader_dict.cpp",
     ROOT / "main/reader/text_encoding.cc",
+    ROOT / "main/reader/page_word_hit.cc",
 ]
 
 

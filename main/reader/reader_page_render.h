@@ -14,24 +14,6 @@ inline void DisableObjScroll(lv_obj_t* obj) {
     lv_obj_set_scrollbar_mode(obj, LV_SCROLLBAR_MODE_OFF);
 }
 
-inline lv_coord_t ParaIndentPadPx(const lv_font_t* font, int indent_chars = 2) {
-    // 与 TxtParaIndentWidth / 分页 indent_w 一致：优先「一」字宽
-    lv_coord_t em = 0;
-    if (font != nullptr) {
-        em = static_cast<lv_coord_t>(lv_font_get_glyph_width(font, 0x4E00u, 0));
-        if (em <= 1) {
-            em = static_cast<lv_coord_t>(lv_font_get_glyph_width(font, 0x3000u, 0));
-        }
-        if (em <= 1) {
-            em = font->line_height / 2;
-        }
-    }
-    if (em < 1) {
-        em = 12;
-    }
-    return em * indent_chars;
-}
-
 /** @brief 按压缩后的行宽及段首缩进计算整页正文的居中栏宽。 */
 inline lv_coord_t PageTextColumnWidth(const Page& page, const lv_font_t* font, lv_coord_t max_width, const TextStyle& style = {}) {
     if (!font || max_width <= 0) return max_width;

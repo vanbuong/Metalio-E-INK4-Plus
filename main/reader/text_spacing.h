@@ -111,4 +111,22 @@ inline TextLineSpacing MakeTextLineSpacing(const lv_font_t* font, const std::str
     return spacing;
 }
 
+inline lv_coord_t ParaIndentPadPx(const lv_font_t* font, int indent_chars = 2) {
+    // 与 TxtParaIndentWidth / 分页 indent_w 一致：优先「一」字宽
+    lv_coord_t em = 0;
+    if (font != nullptr) {
+        em = static_cast<lv_coord_t>(lv_font_get_glyph_width(font, 0x4E00u, 0));
+        if (em <= 1) {
+            em = static_cast<lv_coord_t>(lv_font_get_glyph_width(font, 0x3000u, 0));
+        }
+        if (em <= 1) {
+            em = font->line_height / 2;
+        }
+    }
+    if (em < 1) {
+        em = 12;
+    }
+    return em * indent_chars;
+}
+
 } // namespace reader
