@@ -650,7 +650,7 @@ void ShowActionDialog(int idx) {
     const TaskItem& item = s_items[static_cast<size_t>(idx)];
     if (s_ui.dialog_msg != nullptr) {
         char buf[128];
-        std::snprintf(buf, sizeof(buf), "「%s」", item.title);
+        std::snprintf(buf, sizeof(buf), "“%s”", item.title);
         lv_label_set_text(s_ui.dialog_msg, buf);
     }
     // 已完成任务不再显示「完成待办」

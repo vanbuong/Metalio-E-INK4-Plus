@@ -121,7 +121,7 @@ void UpdateReadFooter() {
         return;
     }
 
-    char hint[16] = "";
+    char hint[32] = "";
     const bool busy = IsLayoutHintBusy();
     const bool show_done = !busy && st.reader.layout_hint_done_until_us > 0 &&
                            esp_timer_get_time() < st.reader.layout_hint_done_until_us;

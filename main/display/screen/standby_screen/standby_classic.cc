@@ -59,7 +59,7 @@ void StandbyClassic_ApplyWeatherUi() {
     if (StandbyClassic_State().weather_temp != nullptr) {
         if (snap.has_temp) {
             char buf[16];
-            std::snprintf(buf, sizeof(buf), "%d℃", snap.temp);
+            std::snprintf(buf, sizeof(buf), "%d°C", snap.temp);
             lv_label_set_text(StandbyClassic_State().weather_temp, buf);
         } else {
             lv_label_set_text(StandbyClassic_State().weather_temp, "");

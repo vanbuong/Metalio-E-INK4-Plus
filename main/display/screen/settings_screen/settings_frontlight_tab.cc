@@ -57,11 +57,11 @@ static void RefreshDepth() {
     const bool fallback = !calibrated && state.revision != 0;
     char text[128];
     if (calibrated) {
-        std::snprintf(text, sizeof(text), "%s：%dmv", Lang::Strings::SETTINGS_SCREEN_BLACK_DEPTH_TITLE, state.vcom_mv);
+        std::snprintf(text, sizeof(text), "%s: %dmv", Lang::Strings::SETTINGS_SCREEN_BLACK_DEPTH_TITLE, state.vcom_mv);
     } else if (fallback) {
         std::snprintf(text, sizeof(text), "%s", Lang::Strings::SETTINGS_SCREEN_BLACK_DEPTH_TITLE);
     } else {
-        std::snprintf(text, sizeof(text), "%s：%s", Lang::Strings::SETTINGS_SCREEN_BLACK_DEPTH_TITLE,
+        std::snprintf(text, sizeof(text), "%s: %s", Lang::Strings::SETTINGS_SCREEN_BLACK_DEPTH_TITLE,
                       Lang::Strings::SETTINGS_TEST_SIGNAL_READING);
     }
     if (std::strcmp(lv_label_get_text(s_ui.depth_label), text)) lv_label_set_text(s_ui.depth_label, text);

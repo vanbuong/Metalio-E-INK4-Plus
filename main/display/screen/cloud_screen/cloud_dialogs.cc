@@ -341,7 +341,7 @@ static void ShowResourceDialog(int cloud_index, bool conflict) {
     // 单行省略书名/文件名，避免 WRAP 顶掉底部按钮
     const std::string short_name = EllipsizeText(item.name, Cloud_UiFont(), text_w);
     char title_buf[192];
-    std::snprintf(title_buf, sizeof(title_buf), "「%s」\n%s", short_name.c_str(), item.TypeLabel());
+    std::snprintf(title_buf, sizeof(title_buf), "“%s”\n%s", short_name.c_str(), item.TypeLabel());
     if (conflict) {
         st.xfer.pending_index = cloud_index;
         const std::string path = item.LocalPath();

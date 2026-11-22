@@ -27,6 +27,9 @@ def main():
         "vietnamese": all(has(c, s, b) for c in range(0x1EA0, 0x1EFA) for s, b in roles),
         "o/u horn": all(has(c, s, b) for c in (0x1A0, 0x1A1, 0x1AF, 0x1B0) for s, b in roles),
         "ellipsis": all(has(0x2026, s, b) for s, b in roles),
+        # UI 符号：多选勾、翻页箭头、温度、比较符、增量
+        "ui symbols": all(has(c, s, b) for c in (0x221A, 0x25B2, 0x25BC, 0xB0, 0x2264, 0x2265, 0x394)
+                          for s, b in roles),
         "emoji 30@2": has(0x1F600, 30, 2),
         "math 28@2": has(0x03C0, 28, 2),
         "no Han": not any(has(0x4E2D, s, b) for s, b in roles),

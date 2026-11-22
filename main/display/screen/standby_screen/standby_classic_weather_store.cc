@@ -135,6 +135,11 @@ const char* StandbyClassic_LocalizedPhenomText(const WeatherSnap& snap) {
         }
     }
     if (p == nullptr) {
+        // 内置字体无汉字：服务器返回的中文原文不显示
+        for (const char* c = snap.text; *c != '\0'; ++c) {
+            const unsigned char b = static_cast<unsigned char>(*c);
+            if (b >= 0xE3 && b <= 0xE9) return "";
+        }
         return snap.text;
     }
     return (std::strcmp(Lang::CODE, "zh-CN") == 0) ? p->zh : p->en_day;

@@ -284,7 +284,7 @@ void AssistantScreen::FlushYunxinSpeech() {
     FlowItem item;
     item.kind = FlowKind::RichText;
     SpanRun prefix;
-    prefix.text = "AI：";
+    prefix.text = "AI: ";
     prefix.bold = true;
     item.spans.push_back(std::move(prefix));
     SpanRun text;
@@ -329,7 +329,7 @@ void AssistantScreen::FinishYunxinSpeech() {
     auto* spans = cJSON_AddArrayToObject(comp, "spans");
     auto* prefix = cJSON_CreateObject();
     cJSON_AddItemToArray(spans, prefix);
-    cJSON_AddStringToObject(prefix, "text", "AI：");
+    cJSON_AddStringToObject(prefix, "text", "AI: ");
     cJSON_AddBoolToObject(prefix, "bold", true);
     auto* message = cJSON_CreateObject();
     cJSON_AddItemToArray(spans, message);

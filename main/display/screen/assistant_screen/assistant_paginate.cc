@@ -303,7 +303,7 @@ void PaginateTextLike(const FlowItem& item, FlowList& cur, lv_coord_t& y,
     const auto ranges = LineRanges(full, lines);
 
     const bool cache_yunxin = card_depth == 0 && item.kind == FlowKind::RichText &&
-        item.spans.size() == 2 && item.spans[0].text == "AI：" &&
+        item.spans.size() == 2 && item.spans[0].text == "AI: " &&
         item.spans[1].text == Assistant_State().stream.yunxin_formatter.Text().c_str() &&
         !Assistant_State().stream.yunxin_text.empty() &&
         Assistant_State().layout.building_flow_fi + 1 == Assistant_State().layout.flow.size();
@@ -486,7 +486,7 @@ int Assistant_RebuildYunxinTextTail() try {
     }
     const auto& item = st.layout.flow.back();
     const ChatString full = SpansConcat(item.spans);
-    if (item.kind != FlowKind::RichText || item.spans.size() != 2 || item.spans[0].text != "AI：" ||
+    if (item.kind != FlowKind::RichText || item.spans.size() != 2 || item.spans[0].text != "AI: " ||
         cache.letter_space != Assistant_VariantLetterSpace(item.variant.c_str()) ||
         full.size() < cache.text.size() || full.compare(0, cache.text.size(), cache.text) != 0) {
         Assistant_RebuildPages();

@@ -163,7 +163,7 @@ void HomeHero_FillWeatherWidgets(const StandbyClassicWeatherView& snap) {
     if (HomeHero_State().weather_temp != nullptr) {
         if (snap.has_temp) {
             char buf[16];
-            std::snprintf(buf, sizeof(buf), "%d℃", snap.temp);
+            std::snprintf(buf, sizeof(buf), "%d°C", snap.temp);
             lv_label_set_text(HomeHero_State().weather_temp, buf);
         } else {
             lv_label_set_text(HomeHero_State().weather_temp, "");
