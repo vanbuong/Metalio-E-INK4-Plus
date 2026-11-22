@@ -6,7 +6,7 @@
 
 // 系统字体：除阅读正文外的全部界面字体。四个角色（30@2 正文、30@4 粗体、25@2、18@2）
 // 的 lv_font_t 地址固定；所选字体的常用拉丁字形在后台一次栅格化到 PSRAM 快照，
-// 缺字逐字回退内置 MiSans。默认字体为 SD 卡上的 Bookerly，缺失时即为 MiSans。
+// 缺字逐字回退内置 Literata。默认即内置 Literata（无需加载）。
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,11 +25,11 @@ const lv_font_t* SystemFontClock(const lv_font_t* builtin);
 #include <vector>
 
 enum class SystemFontState : uint8_t {
-    kBuiltin, // 使用内置 MiSans
+    kBuiltin, // 使用内置 Literata
     kLoading, // 正在后台生成快照
     kActive,  // SD 字体已生效
-    kFailed,  // 读取或内存失败，使用 MiSans
-    kMissing, // 未找到所选字体文件，使用 MiSans
+    kFailed,  // 读取或内存失败，使用 Literata
+    kMissing, // 未找到所选字体文件，使用 Literata
 };
 
 struct SystemFontEntry {

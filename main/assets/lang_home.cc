@@ -660,9 +660,9 @@
     X(SETTINGS_THEME_TITLE, "首页主题", "Home theme")                                                          \
     X(SETTINGS_THEME_HINT, "返回首页后立即生效", "Applies when you return home")                               \
     X(SETTINGS_SYSTEM_FONT_TITLE, "系统字体", "System font") \
-    X(SETTINGS_SYSTEM_FONT_BUILTIN, "内置 MiSans", "Built-in (MiSans)") \
+    X(SETTINGS_SYSTEM_FONT_BUILTIN, "内置 Literata", "Built-in (Literata)") \
     X(SETTINGS_SYSTEM_FONT_LOADING, "正在加载字体…", "Loading font…") \
-    X(SETTINGS_SYSTEM_FONT_MISSING, "未找到字体文件，正在使用 MiSans", "Font not found, using MiSans") \
+    X(SETTINGS_SYSTEM_FONT_MISSING, "未找到字体文件，正在使用 Literata", "Font not found, using Literata") \
     X(SYSTEM_FONT_LOAD_FAILED, "字体加载失败", "Could not load the font") \
     X(SETTINGS_THEME_PIXEL, "像素视界", "Pixel Vision") \
     X(SETTINGS_THEME_CURRENT_PIXEL, "当前：像素视界", "Current: Pixel Vision") \

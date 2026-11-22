@@ -43,10 +43,9 @@ struct Role {
     uint16_t bpp;
 };
 
-// 系统字体角色：正文 30@2、粗体 30@4、小号 25@2、最小 18@2（与内置 MiSans 规格一致）
+// 系统字体角色：正文 30@2、粗体 30@4、小号 25@2、最小 18@2（与内置字体包规格一致）
 inline constexpr Role kRoles[] = {{30, 2}, {30, 4}, {25, 2}, {18, 2}};
 inline constexpr int kRoleCount = 4;
-inline constexpr char kDefaultFamily[] = "Bookerly";
 
 inline std::string Lower(std::string s) {
     for (char& c : s) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
@@ -120,9 +119,9 @@ inline EfName ParseEfName(const std::string& name) {
     return out;
 }
 
-/** @brief 内置 MiSans 已覆盖的族，不在 SD 列表中重复显示 */
+/** @brief 内置 Literata 已覆盖的族，不在 SD 列表中重复显示 */
 inline bool IsBuiltinFamily(const std::string& family) {
-    return Lower(family).find("misans") != std::string::npos;
+    return Lower(family).find("literata") != std::string::npos;
 }
 
 inline std::string EfRoleFile(const std::string& family, int px, int bpp) {
@@ -137,7 +136,7 @@ inline int RoleIndex(uint16_t size, uint16_t bpp) {
     return -1;
 }
 
-/** @brief 快照覆盖的码位：拉丁基础 / 补充 / 扩展 A、越南语、常用标点与符号；其余回退 MiSans */
+/** @brief 快照覆盖的码位：拉丁基础 / 补充 / 扩展 A、越南语、常用标点与符号；其余回退内置 Literata */
 inline bool InCoverage(uint32_t cp) {
     static constexpr uint32_t kRanges[][2] = {
         {0x0020, 0x007E}, {0x00A0, 0x017F}, {0x01A0, 0x01A1}, {0x01AF, 0x01B0},
@@ -157,13 +156,11 @@ inline bool InClockCoverage(uint32_t cp) {
     return (cp >= '0' && cp <= '9') || cp == ':' || cp == ' ';
 }
 
-/** @brief NVS 选择串：builtin | ttf:<族> | ef:<族>；缺失或非法时为默认 Bookerly */
+/** @brief NVS 选择串：builtin | ttf:<族> | ef:<族>；缺失或非法时为内置 Literata */
 inline Choice ParseChoice(const std::string& stored) {
-    Choice c{FontKind::kTtf, kDefaultFamily};
-    if (stored == "builtin") return Choice{FontKind::kBuiltin, ""};
     if (stored.rfind("ttf:", 0) == 0 && stored.size() > 4) return Choice{FontKind::kTtf, stored.substr(4)};
     if (stored.rfind("ef:", 0) == 0 && stored.size() > 3) return Choice{FontKind::kEf, stored.substr(3)};
-    return c;
+    return Choice{FontKind::kBuiltin, ""};
 }
 
 inline std::string FormatChoice(const Choice& c) {

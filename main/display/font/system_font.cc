@@ -52,7 +52,7 @@ struct SysFace {
 
 struct RoleSlot {
     lv_font_t font{};                       // 地址固定，供界面长期持有
-    const lv_font_t* builtin = nullptr;     // 同规格内置 MiSans，亦为回退
+    const lv_font_t* builtin = nullptr;     // 同规格内置 Literata，亦为回退
     std::atomic<const SysFace*> face{nullptr};
     const SysFace* retired = nullptr;       // 被替换下来的快照，稍后释放
     std::atomic<const SysFace*>* source = nullptr; // 字形来源：角色自身快照或共享的时钟快照
@@ -75,7 +75,7 @@ struct BuildResult {
 };
 
 std::mutex s_mu;                 // 保护以下字符串、请求与回调
-std::string s_choice = "ttf:Bookerly"; // 用户当前选择（含正在加载的）
+std::string s_choice = "builtin";      // 用户当前选择（含正在加载的）
 std::string s_settled_id = "builtin";  // 最近一次已生效或已确定结果的选择
 SystemFontState s_settled_state = SystemFontState::kBuiltin;
 std::string s_pending;           // 待构建的选择串，空表示无

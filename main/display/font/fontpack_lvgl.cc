@@ -365,7 +365,7 @@ const lv_font_t* fontpack_lv_font_builtin(uint16_t size, uint16_t bpp) {
     }
     // 冒烟：确认该规格在包内
     GlyphInfo g{};
-    if (!get_glyph(0x4E2Du /* 中 */, size, bpp, &g) && !get_glyph(0x0041u /* A */, size, bpp, &g)) {
+    if (!get_glyph(0x0041u /* A */, size, bpp, &g)) {
         ESP_LOGW(TAG, "no glyphs for size=%u bpp=%u", size, bpp);
         return nullptr;
     }

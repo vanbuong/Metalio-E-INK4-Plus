@@ -266,8 +266,9 @@ static void sysfont_ef_names() {
     auto e = sysfont::ParseEfName("literata_30_2.ef");
     CHECK(e.ok && e.family == "literata" && e.px == 30 && e.bpp == 2);
     e = sysfont::ParseEfName("font_misans_regular_25_2.ef");
-    CHECK(e.ok && e.family == "font_misans_regular" && sysfont::IsBuiltinFamily(e.family));
-    CHECK(sysfont::IsBuiltinFamily("MiSans") && !sysfont::IsBuiltinFamily("Bookerly"));
+    CHECK(e.ok && e.family == "font_misans_regular" && !sysfont::IsBuiltinFamily(e.family));
+    CHECK(sysfont::IsBuiltinFamily("Literata") && sysfont::IsBuiltinFamily("LiterataBook"));
+    CHECK(!sysfont::IsBuiltinFamily("MiSans") && !sysfont::IsBuiltinFamily("Bookerly"));
     CHECK(!sysfont::ParseEfName("literata.ef").ok);
     CHECK(!sysfont::ParseEfName("literata_30_2.ttf").ok);
     CHECK(sysfont::EfRoleFile("literata", 30, 4) == "literata_30_4.ef");
@@ -287,13 +288,16 @@ static void sysfont_coverage_choice() {
     CHECK(sysfont::InClockCoverage(' ') && !sysfont::InClockCoverage('A') && !sysfont::InClockCoverage('/'));
     CHECK(sysfont::kClockSize == 160);
     auto c = sysfont::ParseChoice("");
+    CHECK(c.kind == sysfont::FontKind::kBuiltin);  // absent → built-in Literata
+    c = sysfont::ParseChoice("ttf:Bookerly");
     CHECK(c.kind == sysfont::FontKind::kTtf && c.family == "Bookerly");
     c = sysfont::ParseChoice("builtin");
     CHECK(c.kind == sysfont::FontKind::kBuiltin);
     c = sysfont::ParseChoice("ef:literata");
     CHECK(c.kind == sysfont::FontKind::kEf && c.family == "literata");
     c = sysfont::ParseChoice("ttf:");
-    CHECK(c.kind == sysfont::FontKind::kTtf && c.family == "Bookerly");  // malformed → default
+    CHECK(c.kind == sysfont::FontKind::kBuiltin);  // malformed → default
+    CHECK(sysfont::ParseChoice("junk").kind == sysfont::FontKind::kBuiltin);
     CHECK(sysfont::FormatChoice({sysfont::FontKind::kTtf, "Bookerly"}) == "ttf:Bookerly");
     CHECK(sysfont::FormatChoice({sysfont::FontKind::kBuiltin, ""}) == "builtin");
 }
