@@ -189,6 +189,7 @@ bool BookScreen::OnVkKeyLongPress(const char* key_name) {
         return true;
     }
     if (BookmarkMessageVisible()) return true;
+    if (DictSheetVisible()) return true;  // 取词卡片打开时长按翻页键不连续翻页
     return VkPageRepeatTryStart(key_name, BookPageRepeatStep);
 }
 

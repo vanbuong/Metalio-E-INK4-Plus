@@ -107,6 +107,12 @@ with tempfile.TemporaryDirectory(prefix="metalio-stardict-") as tmp:
     check(entries3 == [("b", "bee")], entries3)
     check(ifo3.get("wordcount") == "1", ifo3)
 
+    # 3a. Headwords over StarDict's 255-byte limit are dropped (the device reads at most 255).
+    src6 = write_source(tmp / "src6", "long", [("x" * 256, b"too long"), ("ok", b"fine")])
+    r = run_tool(src6, "--lang", "en-en", "--out", tmp / "out")
+    ifo6, entries6, _ = read_prepared(tmp / "out/long", "long")
+    check(entries6 == [("ok", "fine")], entries6)
+
     # 3b. Dictionary names containing dots keep their full name.
     src5 = write_source(tmp / "src5", "wn.3.0", [("a", b"letter")])
     r = run_tool(src5, "--lang", "en-en", "--out", tmp / "out")

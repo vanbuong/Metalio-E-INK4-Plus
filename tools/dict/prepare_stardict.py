@@ -126,7 +126,7 @@ def main() -> None:
     words = []
     for word, offset, size in parse_idx(idx):
         text = entry_text(data[offset:offset + size], sametypesequence)
-        if text:
+        if text and len(word) <= 255:  # StarDict headword limit; the device reads at most 255 bytes
             words.append((word, text.encode("utf-8")))
     words.sort(key=lambda w: stardict_key(w[0]))
 

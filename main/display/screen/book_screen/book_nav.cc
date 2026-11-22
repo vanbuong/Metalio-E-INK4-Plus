@@ -744,6 +744,10 @@ void ToggleReadSettingsSheetAsync(void* /*user_data*/) {
         HideReadChrome();
         return;
     }
+    if (DictSheetVisible()) {
+        CloseDictSheet();  // 取词卡片打开时 BOOT 只收起卡片
+        return;
+    }
     if (st.reader.read_chrome == BookUiState::ReadChrome::kReading) {
         ESP_LOGI(TAG, "async ToggleReadSettingsSheet -> show");
         ShowReadSettingsSheet();

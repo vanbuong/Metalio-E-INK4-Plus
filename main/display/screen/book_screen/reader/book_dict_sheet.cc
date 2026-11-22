@@ -6,6 +6,7 @@
 #include "book_screen/book_screen_priv.h"
 #include "book_screen/book_text_util.h"
 #include "book_screen/reader/book_reader_overlay.h"
+#include "book_screen/reader/book_layout_worker.h"
 #include "book_screen/reader/book_reader_prefs.h"
 #include "reader/dictionary.h"
 #include "reader/page_word_hit.h"
@@ -162,20 +163,22 @@ void CloseDictSheet() {
     s_visible.store(false);
 }
 
-void OnReadContentLongPressed(lv_event_t* e) {
+namespace {
+
+// 长按处有单词且可查询时打开卡片并启动查询；否则返回 false
+bool TryStartLookup(lv_event_t* e) {
     auto& st = Book_State();
-    if (st.reader.content == nullptr || lv_event_get_target(e) != st.reader.content) return;
-    if (st.reader.read_chrome != BookUiState::ReadChrome::kReading || DictSheetVisible()) return;
-    if (st.reader.opening.load() || !st.reader.session || !st.reader.session->IsOpen()) return;
-    if (st.reader.session->VerticalWriting() || st.reader.session->IsPageImagesMode()) return;
+    if (st.reader.read_chrome != BookUiState::ReadChrome::kReading) return false;
+    if (st.reader.opening.load() || !st.reader.session || !st.reader.session->IsOpen()) return false;
+    if (st.reader.session->VerticalWriting() || st.reader.session->IsPageImagesMode()) return false;
     // 页面准备任务也在用正文字体，忙时不取词，避免并发访问字形缓存
-    if (ReaderWorkersBusy() || ReaderPageWorkPending() || s_task_busy.load()) return;
+    if (ReaderWorkersBusy() || ReaderPageWorkPending() || s_task_busy.load()) return false;
     lv_point_t pt = {};
     std::string word;
-    if (!ReadEventPoint(e, &pt) || !FindWordAt(pt, word)) return;
+    if (!ReadEventPoint(e, &pt) || !FindWordAt(pt, word)) return false;
 
     ShowSheet(word);
-    if (s_sheet == nullptr) return;
+    if (s_sheet == nullptr) return false;
     auto* job = new LookupJob;
     job->word = word;
     job->generation = s_generation;
@@ -187,4 +190,18 @@ void OnReadContentLongPressed(lv_event_t* e) {
         job->status = LookupStatus::kSdUnavailable;
         ApplyResult(job);
     }
+    return true;
+}
+
+}  // namespace
+
+void OnReadContentLongPressed(lv_event_t* e) {
+    auto& st = Book_State();
+    if (st.reader.content == nullptr || lv_event_get_target(e) != st.reader.content) return;
+    if (DictSheetVisible()) {
+        CloseDictSheet();  // 慢按也能收起卡片
+        return;
+    }
+    // 没取到词：按普通点按处理（长按后不再有 SHORT_CLICKED），保持慢按翻页/菜单
+    if (!TryStartLookup(e)) OnReadContentClicked(e);
 }
