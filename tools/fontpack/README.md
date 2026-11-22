@@ -40,14 +40,17 @@ Data:        width:u16 height:u16 x_offset:i16 y_offset:i16 advance:u16
 
 ## 打包
 
-**生产默认（含 Emoji + Math）：**
+**生产默认（Literata，拉丁 + 越南语，无汉字；含 Emoji + Math）：**
 
 ```bash
 cd tools/fontpack
-./build_misans_mixed.sh
+./build_literata.sh
 ```
 
-产出 `fonts_misans_25_30.fontpack`（汉字 + Noto Emoji 30@2 + Latin Modern Math 18/28/36@2），并同步 `fonts.fontpack` 符号链接。**不要**再单独烧录无 emoji/math 包。
+源字体在 `../ttf-fonts/Literata/`（SIL OFL），字表 `charset_latin_vi.txt`；直接写入
+`main/assets/fonts/font.fontpack` 并用 `check_literata_pack.py` 自检。
+
+**旧的 MiSans 包（含汉字）：** `./build_misans_mixed.sh`，产出 `fonts_misans_25_30.fontpack`（汉字 + Noto Emoji 30@2 + Latin Modern Math 18/28/36@2），并同步 `fonts.fontpack` 符号链接。**不要**再单独烧录无 emoji/math 包。
 
 `.ef` 字集更新后（如 `extend_whitespace.py`），先重打 `.ef` 再跑上脚本。
 

@@ -473,6 +473,11 @@ def main() -> None:
         help="UTF-8 汉字列表文件（逐字）",
     )
     ap.add_argument(
+        "--add-cps",
+        default="",
+        help="额外码点（十六进制，逗号分隔），如字表无法表达的空白 0x20,0xA0",
+    )
+    ap.add_argument(
         "-o",
         "--output",
         type=Path,
@@ -523,6 +528,10 @@ def main() -> None:
         print(
             "  tip: 全量 CJK 很慢且体积大；生产建议 --from-ef ../epdfont/misans/misans_25_1.ef"
         )
+
+    if args.add_cps:
+        codepoints = sorted(set(codepoints) | {int(x, 16) for x in args.add_cps.split(",") if x.strip()})
+        print(f"  + --add-cps → {len(codepoints)} codepoints")
 
     if variant_map:
         print(

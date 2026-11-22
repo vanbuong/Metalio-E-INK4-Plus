@@ -75,6 +75,7 @@ def main() -> None:
     ap.add_argument("--base", type=Path, required=True, help="源 fontpack")
     ap.add_argument("--math-ttf", type=Path, default=DEFAULT_MATH_TTF)
     ap.add_argument("--chars-file", type=Path, default=DEFAULT_CHARS)
+    ap.add_argument("--add-cps", default="", help="额外码点（十六进制，逗号分隔），如字表无法表达的 0xA0")
     ap.add_argument(
         "--sizes",
         default="18,28,36",
@@ -102,6 +103,8 @@ def main() -> None:
     print(f"  base items={len(items)} ({time.time() - t0:.1f}s)")
 
     cps = load_math_codepoints(args.chars_file)
+    if args.add_cps:
+        cps = sorted(set(cps) | {int(x, 16) for x in args.add_cps.split(",") if x.strip()})
     print(f"math charset cps={len(cps)} sizes={sizes} bpp={args.bpp}")
     print(f"  ttf={args.math_ttf}")
 
