@@ -9,6 +9,9 @@
 #include "text_glyph_pen.h"
 #include "page_line_walk.h"
 #include "page_word_hit.h"
+#include "dict_word_rules.h"
+
+#include <algorithm>
 
 using namespace reader;
 
@@ -204,9 +207,45 @@ static void test_page_word_at() {
     CHECK(at(10, 401) == "");
 }
 
+static bool Has(const std::vector<std::string>& v, const char* s) {
+    return std::find(v.begin(), v.end(), s) != v.end();
+}
+
+static void test_lookup_candidates() {
+    const auto running = DictLookupCandidates("Running");
+    CHECK(!running.empty() && running.front() == "Running");
+    CHECK(Has(running, "running"));
+    CHECK(Has(running, "run"));
+    CHECK(Has(DictLookupCandidates("studied"), "study"));
+    CHECK(Has(DictLookupCandidates("stories"), "story"));
+    CHECK(Has(DictLookupCandidates("books"), "book"));
+    CHECK(Has(DictLookupCandidates("boxes"), "box"));
+    CHECK(Has(DictLookupCandidates("John's"), "john"));
+    CHECK(Has(DictLookupCandidates("teachers'"), "teacher"));
+    CHECK(Has(DictLookupCandidates("making"), "make"));
+    CHECK(Has(DictLookupCandidates("walked"), "walk"));
+    CHECK(Has(DictLookupCandidates("hoped"), "hope"));
+    CHECK(Has(DictLookupCandidates("stopped"), "stop"));
+    CHECK(Has(DictLookupCandidates("faster"), "fast"));
+    CHECK(Has(DictLookupCandidates("fastest"), "fast"));
+    const auto nasa = DictLookupCandidates("NASA");
+    CHECK(nasa.size() >= 2 && nasa[0] == "NASA" && nasa[1] == "nasa");
+    CHECK(!Has(DictLookupCandidates("is"), "i"));
+    CHECK(!Has(DictLookupCandidates("glass"), "glas"));  // no "s" stripping after s
+    const std::string nguoi = "ng\xC6\xB0\xE1\xBB\x9Di";
+    const auto vi = DictLookupCandidates(nguoi);
+    CHECK(vi.size() == 1 && vi[0] == nguoi);
+    // No duplicates.
+    auto sorted = DictLookupCandidates("books");
+    std::sort(sorted.begin(), sorted.end());
+    CHECK(std::adjacent_find(sorted.begin(), sorted.end()) == sorted.end());
+    CHECK(DictLookupCandidates("").empty());
+}
+
 int main(int argc, char** argv) {
     (void)argc;
     (void)argv;
+    test_lookup_candidates();
     test_glyph_pen_matches_spacing_width();
     test_word_around();
     test_line_walk_rows_match_raster_rules();
