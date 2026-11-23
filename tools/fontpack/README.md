@@ -47,7 +47,8 @@ cd tools/fontpack
 ./build_literata.sh
 ```
 
-源字体在 `../ttf-fonts/Literata/`（SIL OFL），字表 `charset_latin_vi.txt`；直接写入
+源字体在 `../ttf-fonts/Literata/`（SIL OFL），字表 `charset_latin_vi.txt`；词典字表
+`charset_dict.txt`（IPA 音标、希腊字母、释义标记）先取 Literata，缺的由 `../ttf-fonts/Gentium/`（SIL OFL）补齐；直接写入
 `main/assets/fonts/font.fontpack` 并用 `check_literata_pack.py` 自检。
 
 **旧的 MiSans 包（含汉字）：** `./build_misans_mixed.sh`，产出 `fonts_misans_25_30.fontpack`（汉字 + Noto Emoji 30@2 + Latin Modern Math 18/28/36@2），并同步 `fonts.fontpack` 符号链接。**不要**再单独烧录无 emoji/math 包。

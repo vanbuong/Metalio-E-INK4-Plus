@@ -24,6 +24,10 @@ from pathlib import Path
 
 TEXT_TYPES = set("mlgxhw")      # converted to plain text
 SKIP_TYPES = set("tykr")        # lowercase, NUL-terminated, dropped
+# Zero-width / joiner / variation-selector / BOM characters: no glyph on the device (drawn as boxes)
+INVISIBLE = re.compile("[​-‍⁠︀-️﻿]")
+# Symbols no device font draws, mapped to ones the fontpack has (tools/fontpack/charset_dict.txt)
+SUBSTITUTE = str.maketrans({"★": "◆"})  # ★ -> ◆
 
 
 def fail(msg: str) -> None:
@@ -64,6 +68,7 @@ def markup_to_text(raw: str) -> str:
     text = re.sub(r"(?i)<br\s*/?>|</(p|div|li|tr|h[1-6])\s*>", "\n", raw)
     text = re.sub(r"<[^>]*>", "", text)
     text = html.unescape(text)
+    text = INVISIBLE.sub("", text).translate(SUBSTITUTE)
     lines = (re.sub(r"[ \t\r\f\v]+", " ", line).strip() for line in text.split("\n"))
     return "\n".join(line for line in lines if line)
 

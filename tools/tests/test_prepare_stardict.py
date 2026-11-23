@@ -107,6 +107,14 @@ with tempfile.TemporaryDirectory(prefix="metalio-stardict-") as tmp:
     check(entries3 == [("b", "bee")], entries3)
     check(ifo3.get("wordcount") == "1", ifo3)
 
+    # 2a. Invisible format characters (ZWJ, ZWSP, variation selector, BOM) are removed.
+    src7 = write_source(tmp / "src7", "fmt", [
+        ("swap", "★ a ↔‍️ b​ c﻿".encode()),
+    ])
+    r = run_tool(src7, "--lang", "en-en", "--out", tmp / "out")
+    _, entries7, _ = read_prepared(tmp / "out/fmt", "fmt")
+    check(entries7 == [("swap", "◆ a ↔ b c")], ascii(entries7))  # ★ has no glyph: shown as ◆
+
     # 3a. Headwords over StarDict's 255-byte limit are dropped (the device reads at most 255).
     src6 = write_source(tmp / "src6", "long", [("x" * 256, b"too long"), ("ok", b"fine")])
     r = run_tool(src6, "--lang", "en-en", "--out", tmp / "out")
